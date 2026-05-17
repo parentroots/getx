@@ -24,13 +24,13 @@ class AppDropdown<T> extends StatelessWidget {
   final T? value;
   final void Function(T?) onChanged;
   final DropdownMenuItem<T> Function(T) itemBuilder;
-  
+
   final String? label;
   final String? hint;
   final String? Function(T?)? validator;
-  
+
   final IconData? prefixIcon;
-  
+
   final Color? fillColor;
   final Color? borderColor;
   final Color? focusBorderColor;
@@ -42,11 +42,13 @@ class AppDropdown<T> extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
-    
-    final defaultBorderColor = borderColor ?? (isDark ? Colors.grey.shade700 : Colors.grey.shade300);
+
+    final defaultBorderColor =
+        borderColor ?? (isDark ? Colors.grey.shade700 : Colors.grey.shade300);
     final defaultFocusColor = focusBorderColor ?? theme.primaryColor;
     final defaultErrorColor = errorBorderColor ?? theme.colorScheme.error;
-    final defaultFillColor = fillColor ?? (isDark ? Colors.grey.shade800 : Colors.grey.shade50);
+    final defaultFillColor =
+        fillColor ?? (isDark ? Colors.grey.shade800 : Colors.grey.shade50);
 
     final responsiveBorderRadius = borderRadius.r;
 
@@ -77,7 +79,9 @@ class AppDropdown<T> extends StatelessWidget {
         filled: true,
         fillColor: defaultFillColor,
         prefixIcon: prefixIcon != null ? Icon(prefixIcon, size: 22.r) : null,
-        contentPadding: contentPadding ?? EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+        contentPadding:
+            contentPadding ??
+            EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
         border: border,
         enabledBorder: border,
         focusedBorder: focusBorder,

@@ -139,7 +139,7 @@ class AppDrawer extends StatelessWidget {
                   color: theme.colorScheme.error,
                 ),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
-                tileColor: theme.colorScheme.error.withOpacity(0.08),
+                tileColor: theme.colorScheme.error.withValues(alpha: 0.08),
               ),
             ),
           ),
@@ -154,7 +154,7 @@ class AppDrawer extends StatelessWidget {
       width: double.infinity,
       padding: EdgeInsets.fromLTRB(20.w, 60.h, 20.w, 24.h),
       decoration: BoxDecoration(
-        color: isDark ? Colors.grey.shade900 : theme.primaryColor.withOpacity(0.04),
+        color: isDark ? Colors.grey.shade900 : theme.primaryColor.withValues(alpha: 0.04),
         border: Border(
           bottom: BorderSide(color: theme.dividerColor, width: 1.r),
         ),
@@ -166,14 +166,14 @@ class AppDrawer extends StatelessWidget {
             children: [
               CircleAvatar(
                 radius: 28.r,
-                backgroundColor: theme.primaryColor.withOpacity(0.15),
+                backgroundColor: theme.primaryColor.withValues(alpha: 0.15),
                 child: Icon(Icons.person_rounded, size: 28.r, color: theme.primaryColor),
               ),
               const Spacer(),
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
                 decoration: BoxDecoration(
-                  color: theme.primaryColor.withOpacity(0.12),
+                  color: theme.primaryColor.withValues(alpha: 0.12),
                   borderRadius: BorderRadius.circular(12.r),
                 ),
                 child: AppText(
@@ -228,8 +228,8 @@ class AppDrawer extends StatelessWidget {
         ),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
         selected: isSelected,
-        selectedTileColor: theme.primaryColor.withOpacity(0.08),
-        splashColor: theme.primaryColor.withOpacity(0.05),
+        selectedTileColor: theme.primaryColor.withValues(alpha: 0.08),
+        splashColor: theme.primaryColor.withValues(alpha: 0.05),
       ),
     );
   }

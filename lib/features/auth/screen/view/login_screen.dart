@@ -39,6 +39,7 @@ class LoginScreen extends StatelessWidget {
             ),
             SizedBox(height: AppSpacing.md.h),
             Obx(
+
               () => AppTextField(
                 label: 'Password',
                 controller: controller.passwordController,
@@ -62,6 +63,7 @@ class LoginScreen extends StatelessWidget {
               child: TextButton(
                 onPressed: () => Get.toNamed(AppRoutes.forgotPassword),
                 child: const AppText(
+                  overflow: TextOverflow.ellipsis,
                   'Forgot password?',
                   variant: TextVariant.body,
                   weight: TextWeight.medium,

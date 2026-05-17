@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+/// A premium, highly optimized list view component that supports
+/// high-performance lazy rendering, automatic scroll-to-load pagination,
+/// pull-to-refresh, custom separators, and empty state fallbacks.
 class AppListView<T> extends StatefulWidget {
   const AppListView({
     super.key,
@@ -16,18 +19,37 @@ class AppListView<T> extends StatefulWidget {
     this.scrollDirection = Axis.vertical,
   });
 
+  /// The list of items to render.
   final List<T> items;
+
+  /// Builder function to render each list item.
   final Widget Function(BuildContext context, T item, int index) itemBuilder;
+
+  /// Optional pull-to-refresh callback.
   final Future<void> Function()? onRefresh;
+
+  /// Optional load-more callback triggered during pagination.
   final Future<void> Function()? onLoadMore;
   
+  /// Status showing if a page is currently loading.
   final bool isLoading;
+
+  /// Status showing if there are more items to paginate.
   final bool hasMore;
   
+  /// Custom fallback view when the list is empty.
   final Widget? emptyWidget;
+
+  /// Optional custom divider/separator between items.
   final Widget? separatorWidget;
+
+  /// Padding around the scroll area.
   final EdgeInsetsGeometry padding;
+
+  /// Scroll physics constraint.
   final ScrollPhysics scrollPhysics;
+
+  /// Scroll direction alignment (defaults to vertical).
   final Axis scrollDirection;
 
   @override
@@ -53,6 +75,7 @@ class _AppListViewState<T> extends State<AppListView<T>> {
   }
 
   void _onScroll() {
+    // Triggers loadMore callback when user scrolls within 200px of the bottom limit
     if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent - 200) {
       if (!widget.isLoading && widget.hasMore && widget.onLoadMore != null) {
         widget.onLoadMore!();
@@ -66,52 +89,57 @@ class _AppListViewState<T> extends State<AppListView<T>> {
       return widget.emptyWidget ?? _buildDefaultEmptyState(context);
     }
 
-    Widget listView;
+    // High performance lazy delegation of list children
+    final sliverList = widget.separatorWidget != null
+        ? SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (context, index) {
+                final itemIndex = index ~/ 2;
+                if (index.isEven) {
+                  return widget.itemBuilder(context, widget.items[itemIndex], itemIndex);
+                }
+                return widget.separatorWidget!;
+              },
+              childCount: widget.items.isEmpty ? 0 : widget.items.length * 2 - 1,
+            ),
+          )
+        : SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (context, index) => widget.itemBuilder(context, widget.items[index], index),
+              childCount: widget.items.length,
+            ),
+          );
 
-    if (widget.separatorWidget != null) {
-      listView = ListView.separated(
-        controller: _scrollController,
-        physics: widget.scrollPhysics,
-        scrollDirection: widget.scrollDirection,
-        padding: widget.padding,
-        itemCount: widget.items.length + (widget.hasMore ? 1 : 0),
-        separatorBuilder: (context, index) => widget.separatorWidget!,
-        itemBuilder: (context, index) {
-          if (index == widget.items.length) {
-            return _buildLoadingIndicator();
-          }
-          return widget.itemBuilder(context, widget.items[index], index);
-        },
-      );
-    } else {
-      listView = ListView.builder(
-        controller: _scrollController,
-        physics: widget.scrollPhysics,
-        scrollDirection: widget.scrollDirection,
-        padding: widget.padding,
-        itemCount: widget.items.length + (widget.hasMore ? 1 : 0),
-        itemBuilder: (context, index) {
-          if (index == widget.items.length) {
-            return _buildLoadingIndicator();
-          }
-          return widget.itemBuilder(context, widget.items[index], index);
-        },
-      );
-    }
+    // Dynamic high-performance scroll structure
+    Widget scrollView = CustomScrollView(
+      controller: _scrollController,
+      physics: widget.scrollPhysics,
+      scrollDirection: widget.scrollDirection,
+      slivers: [
+        SliverPadding(
+          padding: widget.padding,
+          sliver: sliverList,
+        ),
+        if (widget.hasMore)
+          SliverToBoxAdapter(
+            child: _buildLoadingIndicator(),
+          ),
+      ],
+    );
 
     if (widget.onRefresh != null) {
       return RefreshIndicator(
         onRefresh: widget.onRefresh!,
-        child: listView,
+        child: scrollView,
       );
     }
 
-    return listView;
+    return scrollView;
   }
 
   Widget _buildLoadingIndicator() {
     return const Padding(
-      padding: EdgeInsets.symmetric(vertical: 16.0),
+      padding: EdgeInsets.symmetric(vertical: 20.0),
       child: Center(
         child: SizedBox(
           height: 24,

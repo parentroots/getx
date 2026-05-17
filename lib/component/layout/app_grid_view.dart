@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+/// A premium, highly optimized grid view component that supports
+/// high-performance lazy rendering, automatic scroll-to-load pagination,
+/// pull-to-refresh, custom empty states, and dynamic sizing parameters.
 class AppGridView<T> extends StatefulWidget {
   const AppGridView({
     super.key,
@@ -18,21 +21,43 @@ class AppGridView<T> extends StatefulWidget {
     this.scrollPhysics = const AlwaysScrollableScrollPhysics(),
   });
 
+  /// The list of items to render.
   final List<T> items;
+
+  /// Builder function to render each grid item.
   final Widget Function(BuildContext context, T item, int index) itemBuilder;
+
+  /// Number of columns in the grid.
   final int crossAxisCount;
+
+  /// Ratio of cross-axis to main-axis extent.
   final double childAspectRatio;
+
+  /// Spacing between columns.
   final double crossAxisSpacing;
+
+  /// Spacing between rows.
   final double mainAxisSpacing;
   
+  /// Optional pull-to-refresh callback.
   final Future<void> Function()? onRefresh;
+
+  /// Optional load-more callback triggered during pagination.
   final Future<void> Function()? onLoadMore;
   
+  /// Status showing if a page is currently loading.
   final bool isLoading;
+
+  /// Status showing if there are more items to paginate.
   final bool hasMore;
   
+  /// Custom fallback view when the grid is empty.
   final Widget? emptyWidget;
+
+  /// Padding around the scroll area.
   final EdgeInsetsGeometry padding;
+
+  /// Scroll physics constraint.
   final ScrollPhysics scrollPhysics;
 
   @override
@@ -58,6 +83,7 @@ class _AppGridViewState<T> extends State<AppGridView<T>> {
   }
 
   void _onScroll() {
+    // Triggers loadMore callback when user scrolls within 200px of the bottom limit
     if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent - 200) {
       if (!widget.isLoading && widget.hasMore && widget.onLoadMore != null) {
         widget.onLoadMore!();
@@ -71,42 +97,52 @@ class _AppGridViewState<T> extends State<AppGridView<T>> {
       return widget.emptyWidget ?? _buildDefaultEmptyState(context);
     }
 
-    Widget gridView = GridView.builder(
+    // Dynamic sliver grid scroll structure
+    Widget scrollView = CustomScrollView(
       controller: _scrollController,
       physics: widget.scrollPhysics,
-      padding: widget.padding,
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: widget.crossAxisCount,
-        childAspectRatio: widget.childAspectRatio,
-        crossAxisSpacing: widget.crossAxisSpacing,
-        mainAxisSpacing: widget.mainAxisSpacing,
-      ),
-      itemCount: widget.items.length + (widget.hasMore ? widget.crossAxisCount : 0),
-      itemBuilder: (context, index) {
-        if (index >= widget.items.length) {
-          // Show loading indicator at the bottom (centered across the remaining cross-axis space ideally, but simplified here)
-          return _buildLoadingIndicator();
-        }
-        return widget.itemBuilder(context, widget.items[index], index);
-      },
+      slivers: [
+        SliverPadding(
+          padding: widget.padding,
+          sliver: SliverGrid(
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: widget.crossAxisCount,
+              childAspectRatio: widget.childAspectRatio,
+              crossAxisSpacing: widget.crossAxisSpacing,
+              mainAxisSpacing: widget.mainAxisSpacing,
+            ),
+            delegate: SliverChildBuilderDelegate(
+              (context, index) => widget.itemBuilder(context, widget.items[index], index),
+              childCount: widget.items.length,
+            ),
+          ),
+        ),
+        if (widget.hasMore)
+          SliverToBoxAdapter(
+            child: _buildLoadingIndicator(),
+          ),
+      ],
     );
 
     if (widget.onRefresh != null) {
       return RefreshIndicator(
         onRefresh: widget.onRefresh!,
-        child: gridView,
+        child: scrollView,
       );
     }
 
-    return gridView;
+    return scrollView;
   }
 
   Widget _buildLoadingIndicator() {
-    return const Center(
-      child: SizedBox(
-        height: 24,
-        width: 24,
-        child: CircularProgressIndicator(strokeWidth: 2),
+    return const Padding(
+      padding: EdgeInsets.symmetric(vertical: 20.0),
+      child: Center(
+        child: SizedBox(
+          height: 24,
+          width: 24,
+          child: CircularProgressIndicator(strokeWidth: 2),
+        ),
       ),
     );
   }

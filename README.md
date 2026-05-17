@@ -148,35 +148,66 @@ Adding a new module (e.g., `chat`) is extremely simple:
     ```
 4.  **Inject the Controller inside your View**:
     ```dart
-    class ChatScreen extends GetView<ChatController> { ... }
+    class ChatScreen extends StatelessWidget {
+      const ChatScreen({super.key});
+
+      @override
+      Widget build(BuildContext context) {
+        final controller = Get.find<ChatController>();
+        return ResponsiveScaffold(
+          appBar: const AppTopBar(title: 'Chat'),
+          body: ...
+        );
+      }
+    }
     ```
 
 ---
 
-## 📱 Responsive Layouts & Spacing System
+## 📱 Premium High-Readability Extensions
 
-We have integrated the **`flutter_screenutil`** package for robust, responsive UI layouts across all device form factors (mobile, tablets, etc.). 
+We have added unified Dart extensions to make your code extremely clean, concise, flat, and readable.
 
-To initialize, the app is wrapped in `ScreenUtilInit` inside `lib/app.dart` with a baseline screen design size of **375 x 812** (Standard iPhone/Android layout proportion).
+### 1. Spacing Extensions (`lib/core/utils/screen_extensions.dart`)
+Instead of nesting `SizedBox` widgets, append `.height` or `.width` directly to any number:
+- `16.height` — Returns a responsive `SizedBox(height: 16.h)`
+- `24.width` — Returns a responsive `SizedBox(width: 24.w)`
 
-### Premium Responsive Size Extensions
-We've added a highly intuitive spacing extension in `lib/core/utils/screen_extensions.dart`. You no longer need to write verbose `SizedBox` widget declarations. Just append `.height` or `.width` directly to any number:
+### 2. Context Extensions (`lib/core/utils/context_extensions.dart`)
+Quickly access your Material Design theme, color palettes, and device constraints directly from `context`:
+- `context.theme` — Quick access to `Theme.of(context)`
+- `context.colorScheme` — Quick access to `Theme.of(context).colorScheme`
+- `context.textTheme` — Quick access to `Theme.of(context).textTheme`
+- `context.screenWidth` — Device width
+- `context.screenHeight` — Device height
 
-*   `16.height` — Returns a responsive `SizedBox(height: 16.h)`
-*   `24.width` — Returns a responsive `SizedBox(width: 24.w)`
+### 3. Widget Padding & Layout Extensions (`lib/core/utils/widget_extensions.dart`)
+Instantly add responsive paddings or conditional visibility directly inline, avoiding deep layout tree nesting:
+- `widget.paddingAll(16.h)` — Wraps with `EdgeInsets.all(16.h)`
+- `widget.paddingSymmetric(horizontal: 20.w, vertical: 10.h)` — Wraps with `EdgeInsets.symmetric`
+- `widget.visible(isPremiumUser)` — Shows widget only if condition is met
 
 #### Example usage:
 ```dart
 import 'package:getx_template/core/utils/screen_extensions.dart';
+import 'package:getx_template/core/utils/context_extensions.dart';
+import 'package:getx_template/core/utils/widget_extensions.dart';
 
-Column(
-  children: [
-    const AppText('Title', variant: TextVariant.header),
-    12.height, // Responsive gap of 12.h
-    const AppText('Subheading', variant: TextVariant.body),
-    24.height, // Responsive gap of 24.h
-  ],
-)
+@override
+Widget build(BuildContext context) {
+  return Column(
+    children: [
+      AppText(
+        'Workspace Settings',
+        variant: TextVariant.header,
+        color: context.colorScheme.primary, // context.colorScheme!
+      ),
+      12.height, // 12.height spacer!
+      const AppText('Subheading', variant: TextVariant.body)
+          .paddingSymmetric(horizontal: 16.w), // inline padding!
+    ],
+  );
+}
 ```
 
 ---

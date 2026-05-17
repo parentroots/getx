@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class AppSearchBar extends StatelessWidget {
+class AppSearchBar extends StatefulWidget {
   const AppSearchBar({
     super.key,
     this.controller,
@@ -13,17 +13,57 @@ class AppSearchBar extends StatelessWidget {
   final String hintText;
 
   @override
+  State<AppSearchBar> createState() => _AppSearchBarState();
+}
+
+class _AppSearchBarState extends State<AppSearchBar> {
+  late TextEditingController _controller;
+  bool _isLocalController = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    if (widget.controller == null) {
+      _controller = TextEditingController();
+      _isLocalController = true;
+    } else {
+      _controller = widget.controller!;
+    }
+
+    _controller.addListener(_onTextChanged);
+  }
+
+  void _onTextChanged() {
+    setState(() {});
+  }
+
+  @override
+  void dispose() {
+    _controller.removeListener(_onTextChanged);
+
+    if (_isLocalController) {
+      _controller.dispose();
+    }
+
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return SearchBar(
-      controller: controller,
-      onChanged: onChanged,
-      hintText: hintText,
+      controller: _controller,
+      onChanged: widget.onChanged,
+      hintText: widget.hintText,
       leading: const Icon(Icons.search),
       trailing: [
-        if (controller?.text.isNotEmpty ?? false)
+        if (_controller.text.isNotEmpty)
           IconButton(
             tooltip: 'Clear',
-            onPressed: controller?.clear,
+            onPressed: () {
+              _controller.clear();
+              widget.onChanged?.call('');
+            },
             icon: const Icon(Icons.close),
           ),
       ],
