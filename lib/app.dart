@@ -13,6 +13,7 @@ class StarterApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Get.put<AppConfig>(config, permanent: true);
     return ScreenUtilInit(
       designSize: const Size(375, 812), // Premium baseline layout design size
       minTextAdapt: true,

@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:getx_template/component/app_app_bar.dart';
 import 'package:getx_template/component/layout/responsive_scaffold.dart';
 import 'package:getx_template/component/states/empty_state_widget.dart';
-import 'package:getx_template/features/notifications/screen/controller/notifications_controller.dart';
 
-class NotificationScreen extends GetView<NotificationsController> {
+class NotificationScreen extends StatelessWidget {
   const NotificationScreen({super.key});
 
   @override

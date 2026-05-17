@@ -2,21 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getx_template/component/app_app_bar.dart';
 import 'package:getx_template/component/app_card.dart';
+import 'package:getx_template/component/layout/app_bottom_nav_bar.dart';
+import 'package:getx_template/component/layout/app_drawer.dart';
 import 'package:getx_template/component/layout/responsive_scaffold.dart';
 import 'package:getx_template/component/states/empty_state_widget.dart';
 import 'package:getx_template/core/routing/app_routes.dart';
 import 'package:getx_template/core/theme/app_spacing.dart';
-import 'package:getx_template/features/home/screen/controller/home_controller.dart';
 
-class HomeScreen extends GetView<HomeController> {
+class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return ResponsiveScaffold(
+      drawer: const AppDrawer(),
+      bottomNavigationBar: const AppBottomNavBar(),
       appBar: AppTopBar(
         title: 'Home',
-        showBack: false,
+        showBack: true, // Automatically implies leading (hamburger icon) for the drawer
         actions: [
           IconButton(
             tooltip: 'Notifications',

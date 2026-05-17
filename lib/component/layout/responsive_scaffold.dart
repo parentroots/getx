@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:getx_template/core/theme/app_dimensions.dart';
 import 'package:getx_template/core/theme/app_spacing.dart';
 
@@ -9,6 +9,7 @@ class ResponsiveScaffold extends StatelessWidget {
     this.appBar,
     this.bottomNavigationBar,
     this.floatingActionButton,
+    this.drawer,
     this.safeArea = true,
     this.padding = const EdgeInsets.all(AppSpacing.md),
   });
@@ -17,6 +18,7 @@ class ResponsiveScaffold extends StatelessWidget {
   final PreferredSizeWidget? appBar;
   final Widget? bottomNavigationBar;
   final Widget? floatingActionButton;
+  final Widget? drawer;
   final bool safeArea;
   final EdgeInsetsGeometry padding;
 
@@ -33,6 +35,7 @@ class ResponsiveScaffold extends StatelessWidget {
 
     return Scaffold(
       appBar: appBar,
+      drawer: drawer,
       bottomNavigationBar: bottomNavigationBar,
       floatingActionButton: floatingActionButton,
       body: safeArea ? SafeArea(child: content) : content,

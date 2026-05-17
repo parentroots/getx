@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:getx_template/component/layout/app_text.dart';
 import 'package:getx_template/core/config/app_config.dart';
 import 'package:getx_template/core/theme/app_spacing.dart';
-import 'package:getx_template/features/splash/screen/controller/splash_controller.dart';
 
-class SplashScreen extends GetView<SplashController> {
+class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
 
   @override
@@ -17,24 +18,29 @@ class SplashScreen extends GetView<SplashController> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Container(
-                width: 84,
-                height: 84,
+                width: 84.w,
+                height: 84.h,
                 decoration: BoxDecoration(
                   color: Theme.of(context).colorScheme.primaryContainer,
-                  borderRadius: BorderRadius.circular(20),
+                  borderRadius: BorderRadius.circular(20.r),
                 ),
                 child: Icon(
                   Icons.layers_rounded,
-                  size: 42,
+                  size: 42.r,
                   color: Theme.of(context).colorScheme.primary,
                 ),
               ),
-              const SizedBox(height: AppSpacing.lg),
-              Text(appName, style: Theme.of(context).textTheme.headlineMedium),
-              const SizedBox(height: AppSpacing.md),
-              const SizedBox.square(
-                dimension: 24,
-                child: CircularProgressIndicator(strokeWidth: 2),
+              SizedBox(height: AppSpacing.lg.h),
+              AppText(
+                appName,
+                variant: TextVariant.header,
+                weight: TextWeight.bold,
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: AppSpacing.md.h),
+              SizedBox.square(
+                dimension: 24.r,
+                child: const CircularProgressIndicator(strokeWidth: 2),
               ),
             ],
           ),
