@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Documentation
+    url: https://github.com/your-username/getx_template/tree/main/docs
+    about: Read the template documentation before opening an issue.

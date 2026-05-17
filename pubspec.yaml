@@ -1,0 +1,44 @@
+name: getx_template
+description: "Production-ready generic Flutter starter template with GetX and Clean Architecture."
+repository: https://github.com/your-username/getx_template
+issue_tracker: https://github.com/your-username/getx_template/issues
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.9.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cached_network_image: ^3.4.1
+  connectivity_plus: ^6.1.5
+  cupertino_icons: ^1.0.8
+  dio: ^5.9.0
+  file_picker: ^10.3.3
+  firebase_core: ^4.1.1
+  firebase_messaging: ^16.0.2
+  flutter_secure_storage: ^9.2.4
+  flutter_svg: ^2.2.1
+  get: ^4.7.2
+  image_picker: ^1.2.0
+  intl: ^0.20.2
+  logger: ^2.6.1
+  permission_handler: ^12.0.1
+  shared_preferences: ^2.5.3
+  shimmer: ^3.0.0
+  url_launcher: ^6.3.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/
+    - assets/icons/
+    - assets/animations/

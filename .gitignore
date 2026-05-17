@@ -1,0 +1,47 @@
+# Dart and Flutter
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+build/
+coverage/
+
+# Template note:
+# pubspec.lock is intentionally ignored for this starter template so every new
+# app resolves dependencies for its own Flutter SDK. Remove this line if your
+# cloned app wants to commit a lockfile.
+pubspec.lock
+
+# IDEs
+.idea/
+*.iml
+.vscode/
+
+# Android
+android/.gradle/
+android/local.properties
+android/**/generated_plugin_registrant.*
+
+# iOS and macOS
+ios/Flutter/Generated.xcconfig
+ios/Flutter/flutter_export_environment.sh
+ios/Flutter/ephemeral/
+macos/Flutter/GeneratedPluginRegistrant.swift
+macos/Flutter/ephemeral/
+
+# Secrets and environment files
+.env
+.env.*
+!.env.example
+*.keystore
+*.jks
+*.p8
+*.p12
+*.mobileprovision
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# FVM Version Cache
+.fvm/
