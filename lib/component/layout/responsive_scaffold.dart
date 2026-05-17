@@ -1,0 +1,41 @@
+﻿import 'package:flutter/material.dart';
+import 'package:getx_template/core/theme/app_dimensions.dart';
+import 'package:getx_template/core/theme/app_spacing.dart';
+
+class ResponsiveScaffold extends StatelessWidget {
+  const ResponsiveScaffold({
+    super.key,
+    required this.body,
+    this.appBar,
+    this.bottomNavigationBar,
+    this.floatingActionButton,
+    this.safeArea = true,
+    this.padding = const EdgeInsets.all(AppSpacing.md),
+  });
+
+  final Widget body;
+  final PreferredSizeWidget? appBar;
+  final Widget? bottomNavigationBar;
+  final Widget? floatingActionButton;
+  final bool safeArea;
+  final EdgeInsetsGeometry padding;
+
+  @override
+  Widget build(BuildContext context) {
+    final content = Center(
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(
+          maxWidth: AppDimensions.desktopContentWidth,
+        ),
+        child: Padding(padding: padding, child: body),
+      ),
+    );
+
+    return Scaffold(
+      appBar: appBar,
+      bottomNavigationBar: bottomNavigationBar,
+      floatingActionButton: floatingActionButton,
+      body: safeArea ? SafeArea(child: content) : content,
+    );
+  }
+}

@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:getx_template/widgets/dialogs/confirmation_dialog.dart';
-import 'package:getx_template/widgets/dialogs/loading_dialog.dart';
+import 'package:getx_template/component/dialogs/confirmation_dialog.dart';
+import 'package:getx_template/component/dialogs/loading_dialog.dart';
 
 class DialogService extends GetxService {
   void showSnack({
