@@ -1,7 +1,7 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:getx_template/component/common_app_bar.dart';
 import 'package:getx_template/component/common_button.dart';
-import 'package:getx_template/component/layout/responsive_scaffold.dart';
+import 'package:getx_template/component/layout/common_scaffold.dart';
 import 'package:getx_template/core/theme/app_spacing.dart';
 
 class UpdateRequiredScreen extends StatelessWidget {
@@ -9,7 +9,7 @@ class UpdateRequiredScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ResponsiveScaffold(
+    return CommonScaffold(
       appBar: const CommonTopBar(title: 'Update required', showBack: false),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,

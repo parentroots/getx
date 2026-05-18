@@ -6,7 +6,7 @@ import 'package:getx_template/component/common_button.dart';
 import 'package:getx_template/component/common_card.dart';
 import 'package:getx_template/component/layout/common_bottom_nav_bar.dart';
 import 'package:getx_template/component/layout/common_drawer.dart';
-import 'package:getx_template/component/layout/responsive_scaffold.dart';
+import 'package:getx_template/component/layout/common_scaffold.dart';
 import 'package:getx_template/component/states/empty_state_widget.dart';
 import 'package:getx_template/core/routing/app_routes.dart';
 import 'package:getx_template/core/theme/app_spacing.dart';
@@ -16,7 +16,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ResponsiveScaffold(
+    return CommonScaffold(
       drawer: const CommonDrawer(),
       bottomNavigationBar: const CommonBottomNavBar(),
       appBar: CommonTopBar(

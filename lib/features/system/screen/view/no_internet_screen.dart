@@ -1,7 +1,7 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getx_template/component/common_app_bar.dart';
-import 'package:getx_template/component/layout/responsive_scaffold.dart';
+import 'package:getx_template/component/layout/common_scaffold.dart';
 import 'package:getx_template/component/states/no_internet_widget.dart';
 import 'package:getx_template/features/system/screen/controller/system_controller.dart';
 
@@ -11,7 +11,7 @@ class NoInternetScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<SystemController>();
-    return ResponsiveScaffold(
+    return CommonScaffold(
       appBar: const CommonTopBar(title: 'No internet'),
       body: NoInternetWidget(onRetry: controller.retryConnection),
     );

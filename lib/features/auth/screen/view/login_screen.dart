@@ -5,7 +5,7 @@ import 'package:getx_template/component/common_app_bar.dart';
 import 'package:getx_template/component/common_button.dart';
 import 'package:getx_template/component/common_text_field.dart';
 import 'package:getx_template/component/layout/common_text.dart';
-import 'package:getx_template/component/layout/responsive_scaffold.dart';
+import 'package:getx_template/component/layout/common_scaffold.dart';
 import 'package:getx_template/core/routing/app_routes.dart';
 import 'package:getx_template/core/theme/app_spacing.dart';
 import 'package:getx_template/core/utils/validators.dart';
@@ -18,7 +18,7 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.find<AuthController>();
 
-    return ResponsiveScaffold(
+    return CommonScaffold(
       appBar: const CommonTopBar(title: 'Log in'),
       body: Form(
         key: controller.loginFormKey,

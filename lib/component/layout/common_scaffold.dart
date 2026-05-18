@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:getx_template/core/theme/app_dimensions.dart';
 import 'package:getx_template/core/theme/app_spacing.dart';
 
-class ResponsiveScaffold extends StatelessWidget {
-  const ResponsiveScaffold({
+class CommonScaffold extends StatelessWidget {
+  const CommonScaffold({
     super.key,
     required this.body,
     this.appBar,

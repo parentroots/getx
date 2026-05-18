@@ -1,7 +1,7 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getx_template/component/common_button.dart';
-import 'package:getx_template/component/layout/responsive_scaffold.dart';
+import 'package:getx_template/component/layout/common_scaffold.dart';
 import 'package:getx_template/core/routing/app_routes.dart';
 import 'package:getx_template/core/theme/app_spacing.dart';
 
@@ -10,7 +10,7 @@ class AuthWelcomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ResponsiveScaffold(
+    return CommonScaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [

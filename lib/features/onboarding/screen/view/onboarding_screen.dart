@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:getx_template/component/common_button.dart';
 import 'package:getx_template/component/layout/common_text.dart';
-import 'package:getx_template/component/layout/responsive_scaffold.dart';
+import 'package:getx_template/component/layout/common_scaffold.dart';
 import 'package:getx_template/core/routing/app_routes.dart';
 import 'package:getx_template/core/theme/app_spacing.dart';
 import 'package:getx_template/features/onboarding/screen/controller/onboarding_controller.dart';
@@ -15,7 +15,7 @@ class OnboardingScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.find<OnboardingController>();
 
-    return ResponsiveScaffold(
+    return CommonScaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
