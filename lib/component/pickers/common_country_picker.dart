@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 
 class CountryModel {
   final String name;
@@ -15,19 +15,19 @@ class CountryModel {
 }
 
 const List<CountryModel> _defaultCountries = [
-  CountryModel(name: 'United States', code: 'US', dialCode: '+1', flagEmoji: '🇺🇸'),
-  CountryModel(name: 'United Kingdom', code: 'GB', dialCode: '+44', flagEmoji: '🇬🇧'),
-  CountryModel(name: 'Bangladesh', code: 'BD', dialCode: '+880', flagEmoji: '🇧🇩'),
-  CountryModel(name: 'India', code: 'IN', dialCode: '+91', flagEmoji: '🇮🇳'),
-  CountryModel(name: 'Canada', code: 'CA', dialCode: '+1', flagEmoji: '🇨🇦'),
-  CountryModel(name: 'Australia', code: 'AU', dialCode: '+61', flagEmoji: '🇦🇺'),
-  CountryModel(name: 'Germany', code: 'DE', dialCode: '+49', flagEmoji: '🇩🇪'),
-  CountryModel(name: 'France', code: 'FR', dialCode: '+33', flagEmoji: '🇫🇷'),
-  CountryModel(name: 'Japan', code: 'JP', dialCode: '+81', flagEmoji: '🇯🇵'),
+  CountryModel(name: 'United States', code: 'US', dialCode: '+1', flagEmoji: 'ðŸ‡ºðŸ‡¸'),
+  CountryModel(name: 'United Kingdom', code: 'GB', dialCode: '+44', flagEmoji: 'ðŸ‡¬ðŸ‡§'),
+  CountryModel(name: 'Bangladesh', code: 'BD', dialCode: '+880', flagEmoji: 'ðŸ‡§ðŸ‡©'),
+  CountryModel(name: 'India', code: 'IN', dialCode: '+91', flagEmoji: 'ðŸ‡®ðŸ‡³'),
+  CountryModel(name: 'Canada', code: 'CA', dialCode: '+1', flagEmoji: 'ðŸ‡¨ðŸ‡¦'),
+  CountryModel(name: 'Australia', code: 'AU', dialCode: '+61', flagEmoji: 'ðŸ‡¦ðŸ‡º'),
+  CountryModel(name: 'Germany', code: 'DE', dialCode: '+49', flagEmoji: 'ðŸ‡©ðŸ‡ª'),
+  CountryModel(name: 'France', code: 'FR', dialCode: '+33', flagEmoji: 'ðŸ‡«ðŸ‡·'),
+  CountryModel(name: 'Japan', code: 'JP', dialCode: '+81', flagEmoji: 'ðŸ‡¯ðŸ‡µ'),
   // Add more as needed or pass a full list dynamically.
 ];
 
-class AppCountryPicker {
+class CommonCountryPicker {
   /// Shows a beautiful, searchable bottom sheet to select a country.
   static Future<CountryModel?> show({
     required BuildContext context,

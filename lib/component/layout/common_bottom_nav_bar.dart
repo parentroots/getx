@@ -1,10 +1,10 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:getx_template/core/routing/app_routes.dart';
 
-class AppBottomNavBar extends StatelessWidget {
-  const AppBottomNavBar({super.key});
+class CommonBottomNavBar extends StatelessWidget {
+  const CommonBottomNavBar({super.key});
 
   int _getCurrentIndex() {
     final route = Get.currentRoute;

@@ -1,11 +1,11 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:getx_template/component/loading/shimmer_box.dart';
 
 /// A premium, highly customizable skeleton loading mockup card
 /// used to show outstanding skeleton layouts during asynchronous data fetching.
-class AppShimmerCard extends StatelessWidget {
-  const AppShimmerCard({
+class CommonShimmerCard extends StatelessWidget {
+  const CommonShimmerCard({
     super.key,
     this.width,
     this.height,
@@ -126,8 +126,8 @@ class AppShimmerCard extends StatelessWidget {
 }
 
 /// A companion list utility to easily mock up a series of shimmering cards.
-class AppShimmerList extends StatelessWidget {
-  const AppShimmerList({
+class CommonShimmerList extends StatelessWidget {
+  const CommonShimmerList({
     super.key,
     this.itemCount = 3,
     this.padding = const EdgeInsets.all(16.0),
@@ -155,7 +155,7 @@ class AppShimmerList extends StatelessWidget {
       padding: padding,
       itemCount: itemCount,
       separatorBuilder: (context, index) => SizedBox(height: spacing.h),
-      itemBuilder: (context, index) => AppShimmerCard(showImage: showImage),
+      itemBuilder: (context, index) => CommonShimmerCard(showImage: showImage),
     );
   }
 }

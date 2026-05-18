@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:getx_template/component/app_button.dart';
-import 'package:getx_template/component/layout/app_text.dart';
+import 'package:getx_template/component/common_button.dart';
+import 'package:getx_template/component/layout/common_text.dart';
 
 class NoInternetWidget extends StatelessWidget {
   const NoInternetWidget({super.key, this.onRetry});
@@ -22,14 +22,14 @@ class NoInternetWidget extends StatelessWidget {
               color: Theme.of(context).colorScheme.primary,
             ),
             SizedBox(height: 16.h),
-            AppText(
+            CommonText(
               'No internet connection',
               variant: TextVariant.title,
               weight: TextWeight.bold,
               textAlign: TextAlign.center,
             ),
             SizedBox(height: 8.h),
-            const AppText(
+            const CommonText(
               'Check your connection and try again.',
               variant: TextVariant.body,
               textAlign: TextAlign.center,
@@ -37,7 +37,7 @@ class NoInternetWidget extends StatelessWidget {
             ),
             if (onRetry != null) ...[
               SizedBox(height: 24.h),
-              AppButton(
+              CommonButton(
                 label: 'Retry',
                 icon: const Icon(Icons.refresh),
                 onPressed: onRetry,

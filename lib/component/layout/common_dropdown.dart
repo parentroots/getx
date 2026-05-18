@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class AppDropdown<T> extends StatelessWidget {
-  const AppDropdown({
+class CommonDropdown<T> extends StatelessWidget {
+  const CommonDropdown({
     super.key,
     required this.items,
     required this.value,

@@ -1,10 +1,10 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:getx_template/component/app_app_bar.dart';
-import 'package:getx_template/component/app_button.dart';
-import 'package:getx_template/component/app_text_field.dart';
-import 'package:getx_template/component/layout/app_text.dart';
+import 'package:getx_template/component/common_app_bar.dart';
+import 'package:getx_template/component/common_button.dart';
+import 'package:getx_template/component/common_text_field.dart';
+import 'package:getx_template/component/layout/common_text.dart';
 import 'package:getx_template/component/layout/responsive_scaffold.dart';
 import 'package:getx_template/core/routing/app_routes.dart';
 import 'package:getx_template/core/theme/app_spacing.dart';
@@ -19,19 +19,19 @@ class LoginScreen extends StatelessWidget {
     final controller = Get.find<AuthController>();
 
     return ResponsiveScaffold(
-      appBar: const AppTopBar(title: 'Log in'),
+      appBar: const CommonTopBar(title: 'Log in'),
       body: Form(
         key: controller.loginFormKey,
         child: ListView(
           padding: EdgeInsets.symmetric(vertical: 16.h),
           children: [
-            AppText(
+            CommonText(
               'Access your workspace',
               variant: TextVariant.header,
               weight: TextWeight.bold,
             ),
             SizedBox(height: AppSpacing.xl.h),
-            AppTextField(
+            CommonTextField(
               label: 'Email',
               controller: controller.emailController,
               validator: Validators.email,
@@ -40,7 +40,7 @@ class LoginScreen extends StatelessWidget {
             SizedBox(height: AppSpacing.md.h),
             Obx(
 
-              () => AppTextField(
+              () => CommonTextField(
                 label: 'Password',
                 controller: controller.passwordController,
                 validator: Validators.password,
@@ -62,7 +62,7 @@ class LoginScreen extends StatelessWidget {
               alignment: Alignment.centerRight,
               child: TextButton(
                 onPressed: () => Get.toNamed(AppRoutes.forgotPassword),
-                child: const AppText(
+                child: const CommonText(
                   overflow: TextOverflow.ellipsis,
                   'Forgot password?',
                   variant: TextVariant.body,
@@ -71,7 +71,8 @@ class LoginScreen extends StatelessWidget {
               ),
             ),
             SizedBox(height: AppSpacing.lg.h),
-            AppButton(label: 'Log in', onPressed: controller.submitLogin),
+            CommonButton(label: 'Log in', onPressed: controller.submitLogin),
+
           ],
         ),
       ),

@@ -1,10 +1,10 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 enum SnackbarType { success, error, warning, info }
 
-class AppSnackbar {
+class CommonSnackbar {
   /// Shows a generic or custom snackbar
   static void show({
     required String title,

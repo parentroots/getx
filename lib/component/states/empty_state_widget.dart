@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:getx_template/component/app_button.dart';
-import 'package:getx_template/component/layout/app_text.dart';
+import 'package:getx_template/component/common_button.dart';
+import 'package:getx_template/component/layout/common_text.dart';
 
 class EmptyStateWidget extends StatelessWidget {
   const EmptyStateWidget({
@@ -54,14 +54,14 @@ class _StateShell extends StatelessWidget {
           children: [
             Icon(icon, size: 48.r, color: Theme.of(context).colorScheme.primary),
             SizedBox(height: 16.h),
-            AppText(
+            CommonText(
               title,
               variant: TextVariant.title,
               weight: TextWeight.bold,
               textAlign: TextAlign.center,
             ),
             SizedBox(height: 8.h),
-            AppText(
+            CommonText(
               message,
               variant: TextVariant.body,
               textAlign: TextAlign.center,
@@ -69,7 +69,7 @@ class _StateShell extends StatelessWidget {
             ),
             if (actionLabel != null && onAction != null) ...[
               SizedBox(height: 24.h),
-              AppButton(label: actionLabel!, onPressed: onAction),
+              CommonButton(label: actionLabel!, onPressed: onAction),
             ],
           ],
         ),

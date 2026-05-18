@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:getx_template/component/app_app_bar.dart';
+import 'package:getx_template/component/common_app_bar.dart';
 import 'package:getx_template/component/layout/responsive_scaffold.dart';
 import 'package:getx_template/component/states/error_state_widget.dart';
 
@@ -17,7 +17,7 @@ class ErrorScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ResponsiveScaffold(
-      appBar: const AppTopBar(title: 'Error'),
+      appBar: const CommonTopBar(title: 'Error'),
       body: ErrorStateWidget(
         title: title,
         message: message,

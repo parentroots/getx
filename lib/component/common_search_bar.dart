@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 
-class AppSearchBar extends StatefulWidget {
-  const AppSearchBar({
+class CommonSearchBar extends StatefulWidget {
+  const CommonSearchBar({
     super.key,
     this.controller,
     this.onChanged,
@@ -13,10 +13,10 @@ class AppSearchBar extends StatefulWidget {
   final String hintText;
 
   @override
-  State<AppSearchBar> createState() => _AppSearchBarState();
+  State<CommonSearchBar> createState() => _CommonSearchBarState();
 }
 
-class _AppSearchBarState extends State<AppSearchBar> {
+class _CommonSearchBarState extends State<CommonSearchBar> {
   late TextEditingController _controller;
   bool _isLocalController = false;
 

@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:getx_template/component/layout/app_text.dart';
+import 'package:getx_template/component/layout/common_text.dart';
 
-class AppButton extends StatelessWidget {
-  const AppButton({
+class CommonButton extends StatelessWidget {
+  const CommonButton({
     super.key,
     required this.onPressed,
     this.label,
@@ -81,7 +81,7 @@ class AppButton extends StatelessWidget {
                 child! 
               else 
                 Flexible(
-                  child: AppText(
+                  child: CommonText(
                     label!,
                     variant: TextVariant.title,
                     weight: textStyle?.fontWeight == FontWeight.bold ? TextWeight.bold : TextWeight.medium,

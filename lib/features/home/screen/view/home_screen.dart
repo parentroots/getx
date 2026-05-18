@@ -1,9 +1,11 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:getx_template/component/app_app_bar.dart';
-import 'package:getx_template/component/app_card.dart';
-import 'package:getx_template/component/layout/app_bottom_nav_bar.dart';
-import 'package:getx_template/component/layout/app_drawer.dart';
+import 'package:getx_template/component/common_app_bar.dart';
+import 'package:getx_template/component/common_button.dart';
+import 'package:getx_template/component/common_card.dart';
+import 'package:getx_template/component/layout/common_bottom_nav_bar.dart';
+import 'package:getx_template/component/layout/common_drawer.dart';
 import 'package:getx_template/component/layout/responsive_scaffold.dart';
 import 'package:getx_template/component/states/empty_state_widget.dart';
 import 'package:getx_template/core/routing/app_routes.dart';
@@ -15,11 +17,12 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ResponsiveScaffold(
-      drawer: const AppDrawer(),
-      bottomNavigationBar: const AppBottomNavBar(),
-      appBar: AppTopBar(
+      drawer: const CommonDrawer(),
+      bottomNavigationBar: const CommonBottomNavBar(),
+      appBar: CommonTopBar(
         title: 'Home',
-        showBack: true, // Automatically implies leading (hamburger icon) for the drawer
+        showBack: true,
+        // Automatically implies leading (hamburger icon) for the drawer
         actions: [
           IconButton(
             tooltip: 'Notifications',
@@ -44,7 +47,7 @@ class HomeScreen extends StatelessWidget {
             'Replace these neutral surfaces with your app modules while keeping the infrastructure intact.',
           ),
           const SizedBox(height: AppSpacing.lg),
-          AppCard(
+          CommonCard(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -53,6 +56,7 @@ class HomeScreen extends StatelessWidget {
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
                 const SizedBox(height: AppSpacing.sm),
+
                 const Text(
                   'GetX routes, dependency injection, services, themes, utilities, and reusable widgets are wired.',
                 ),

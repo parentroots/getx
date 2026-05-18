@@ -1,7 +1,7 @@
-import 'package:flutter/cupertino.dart';
+﻿import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class AppDatePicker {
+class CommonDatePicker {
   /// Shows an iOS-style (Cupertino) date picker in a beautiful bottom sheet.
   static Future<DateTime?> show({
     required BuildContext context,

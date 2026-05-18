@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:getx_template/component/layout/app_text.dart';
+import 'package:getx_template/component/layout/common_text.dart';
 
 /// A country model containing dialing details and matching regex validations.
 class CountryPhoneCode {
@@ -27,7 +27,7 @@ final List<CountryPhoneCode> defaultCountries = [
     name: 'Bangladesh',
     code: 'BD',
     dialCode: '+880',
-    flag: '🇧🇩',
+    flag: 'ðŸ‡§ðŸ‡©',
     regexPattern: RegExp(r'^(?:1[3-9]\d{8})$'), // Matches 1XXXXXXXXX (10 digits)
     example: '1712345678',
   ),
@@ -35,7 +35,7 @@ final List<CountryPhoneCode> defaultCountries = [
     name: 'United States',
     code: 'US',
     dialCode: '+1',
-    flag: '🇺🇸',
+    flag: 'ðŸ‡ºðŸ‡¸',
     regexPattern: RegExp(r'^[2-9]\d{9}$'), // Standard 10-digit US number
     example: '2025550191',
   ),
@@ -43,7 +43,7 @@ final List<CountryPhoneCode> defaultCountries = [
     name: 'United Kingdom',
     code: 'GB',
     dialCode: '+44',
-    flag: '🇬🇧',
+    flag: 'ðŸ‡¬ðŸ‡§',
     regexPattern: RegExp(r'^7\d{9}$'), // Standard UK mobile starts with 7
     example: '7911123456',
   ),
@@ -51,7 +51,7 @@ final List<CountryPhoneCode> defaultCountries = [
     name: 'India',
     code: 'IN',
     dialCode: '+91',
-    flag: '🇮🇳',
+    flag: 'ðŸ‡®ðŸ‡³',
     regexPattern: RegExp(r'^[6-9]\d{9}$'), // Standard 10-digit India number
     example: '9876543210',
   ),
@@ -59,7 +59,7 @@ final List<CountryPhoneCode> defaultCountries = [
     name: 'Canada',
     code: 'CA',
     dialCode: '+1',
-    flag: '🇨🇦',
+    flag: 'ðŸ‡¨ðŸ‡¦',
     regexPattern: RegExp(r'^[2-9]\d{9}$'), // Canada matching US number pattern
     example: '6135550142',
   ),
@@ -67,8 +67,8 @@ final List<CountryPhoneCode> defaultCountries = [
 
 /// A premium Phone Input textfield featuring a dynamic country dial-code prefix,
 /// a modern searchable bottom sheet picker, and integrated regex pattern validations.
-class AppPhoneTextField extends StatefulWidget {
-  const AppPhoneTextField({
+class CommonPhoneTextField extends StatefulWidget {
+  const CommonPhoneTextField({
     super.key,
     required this.controller,
     this.label = 'Phone Number',
@@ -113,10 +113,10 @@ class AppPhoneTextField extends StatefulWidget {
   final double borderRadius;
 
   @override
-  State<AppPhoneTextField> createState() => _AppPhoneTextFieldState();
+  State<CommonPhoneTextField> createState() => _CommonPhoneTextFieldState();
 }
 
-class _AppPhoneTextFieldState extends State<AppPhoneTextField> {
+class _CommonPhoneTextFieldState extends State<CommonPhoneTextField> {
   late CountryPhoneCode _selectedCountry;
 
   @override
@@ -161,7 +161,7 @@ class _AppPhoneTextFieldState extends State<AppPhoneTextField> {
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: 8.h),
-                    child: const AppText(
+                    child: const CommonText(
                       'Select Country',
                       variant: TextVariant.title,
                       weight: TextWeight.bold,
@@ -183,16 +183,16 @@ class _AppPhoneTextFieldState extends State<AppPhoneTextField> {
                             widget.onCountryChanged?.call(country);
                             Navigator.pop(context);
                           },
-                          leading: AppText(
+                          leading: CommonText(
                             country.flag,
                             variant: TextVariant.title,
                           ),
-                          title: AppText(
+                          title: CommonText(
                             country.name,
                             variant: TextVariant.body,
                             weight: isSelected ? TextWeight.bold : TextWeight.regular,
                           ),
-                          trailing: AppText(
+                          trailing: CommonText(
                             country.dialCode,
                             variant: TextVariant.body,
                             color: isSelected ? theme.primaryColor : Colors.grey,
@@ -251,7 +251,7 @@ class _AppPhoneTextFieldState extends State<AppPhoneTextField> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (widget.label.isNotEmpty) ...[
-          AppText(
+          CommonText(
             widget.label,
             variant: TextVariant.body,
             weight: TextWeight.medium,
@@ -292,12 +292,12 @@ class _AppPhoneTextFieldState extends State<AppPhoneTextField> {
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    AppText(
+                    CommonText(
                       _selectedCountry.flag,
                       variant: TextVariant.title,
                     ),
                     SizedBox(width: 6.w),
-                    AppText(
+                    CommonText(
                       _selectedCountry.dialCode,
                       variant: TextVariant.body,
                       weight: TextWeight.bold,

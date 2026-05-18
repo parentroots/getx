@@ -1,44 +1,30 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 
-/// A premium, highly optimized grid view component that supports
+/// A premium, highly optimized list view component that supports
 /// high-performance lazy rendering, automatic scroll-to-load pagination,
-/// pull-to-refresh, custom empty states, and dynamic sizing parameters.
-class AppGridView<T> extends StatefulWidget {
-  const AppGridView({
+/// pull-to-refresh, custom separators, and empty state fallbacks.
+class CommonListView<T> extends StatefulWidget {
+  const CommonListView({
     super.key,
     required this.items,
     required this.itemBuilder,
-    this.crossAxisCount = 2,
-    this.childAspectRatio = 1.0,
-    this.crossAxisSpacing = 16.0,
-    this.mainAxisSpacing = 16.0,
     this.onRefresh,
     this.onLoadMore,
     this.isLoading = false,
     this.hasMore = false,
     this.emptyWidget,
+    this.separatorWidget,
     this.padding = const EdgeInsets.all(16.0),
     this.scrollPhysics = const AlwaysScrollableScrollPhysics(),
+    this.scrollDirection = Axis.vertical,
   });
 
   /// The list of items to render.
   final List<T> items;
 
-  /// Builder function to render each grid item.
+  /// Builder function to render each list item.
   final Widget Function(BuildContext context, T item, int index) itemBuilder;
 
-  /// Number of columns in the grid.
-  final int crossAxisCount;
-
-  /// Ratio of cross-axis to main-axis extent.
-  final double childAspectRatio;
-
-  /// Spacing between columns.
-  final double crossAxisSpacing;
-
-  /// Spacing between rows.
-  final double mainAxisSpacing;
-  
   /// Optional pull-to-refresh callback.
   final Future<void> Function()? onRefresh;
 
@@ -51,8 +37,11 @@ class AppGridView<T> extends StatefulWidget {
   /// Status showing if there are more items to paginate.
   final bool hasMore;
   
-  /// Custom fallback view when the grid is empty.
+  /// Custom fallback view when the list is empty.
   final Widget? emptyWidget;
+
+  /// Optional custom divider/separator between items.
+  final Widget? separatorWidget;
 
   /// Padding around the scroll area.
   final EdgeInsetsGeometry padding;
@@ -60,11 +49,14 @@ class AppGridView<T> extends StatefulWidget {
   /// Scroll physics constraint.
   final ScrollPhysics scrollPhysics;
 
+  /// Scroll direction alignment (defaults to vertical).
+  final Axis scrollDirection;
+
   @override
-  State<AppGridView<T>> createState() => _AppGridViewState<T>();
+  State<CommonListView<T>> createState() => _CommonListViewState<T>();
 }
 
-class _AppGridViewState<T> extends State<AppGridView<T>> {
+class _CommonListViewState<T> extends State<CommonListView<T>> {
   final ScrollController _scrollController = ScrollController();
 
   @override
@@ -97,25 +89,36 @@ class _AppGridViewState<T> extends State<AppGridView<T>> {
       return widget.emptyWidget ?? _buildDefaultEmptyState(context);
     }
 
-    // Dynamic sliver grid scroll structure
-    Widget scrollView = CustomScrollView(
-      controller: _scrollController,
-      physics: widget.scrollPhysics,
-      slivers: [
-        SliverPadding(
-          padding: widget.padding,
-          sliver: SliverGrid(
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: widget.crossAxisCount,
-              childAspectRatio: widget.childAspectRatio,
-              crossAxisSpacing: widget.crossAxisSpacing,
-              mainAxisSpacing: widget.mainAxisSpacing,
+    // High performance lazy delegation of list children
+    final sliverList = widget.separatorWidget != null
+        ? SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (context, index) {
+                final itemIndex = index ~/ 2;
+                if (index.isEven) {
+                  return widget.itemBuilder(context, widget.items[itemIndex], itemIndex);
+                }
+                return widget.separatorWidget!;
+              },
+              childCount: widget.items.isEmpty ? 0 : widget.items.length * 2 - 1,
             ),
+          )
+        : SliverList(
             delegate: SliverChildBuilderDelegate(
               (context, index) => widget.itemBuilder(context, widget.items[index], index),
               childCount: widget.items.length,
             ),
-          ),
+          );
+
+    // Dynamic high-performance scroll structure
+    Widget scrollView = CustomScrollView(
+      controller: _scrollController,
+      physics: widget.scrollPhysics,
+      scrollDirection: widget.scrollDirection,
+      slivers: [
+        SliverPadding(
+          padding: widget.padding,
+          sliver: sliverList,
         ),
         if (widget.hasMore)
           SliverToBoxAdapter(
@@ -154,7 +157,7 @@ class _AppGridViewState<T> extends State<AppGridView<T>> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.grid_view, size: 64, color: Colors.grey.shade400),
+            Icon(Icons.inbox_outlined, size: 64, color: Colors.grey.shade400),
             const SizedBox(height: 16),
             Text(
               'No items found',

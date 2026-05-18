@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:getx_template/component/layout/app_text.dart';
+﻿import 'package:flutter/material.dart';
+import 'package:getx_template/component/layout/common_text.dart';
 
-class AppTopBar extends StatelessWidget implements PreferredSizeWidget {
-  const AppTopBar({
+class CommonTopBar extends StatelessWidget implements PreferredSizeWidget {
+  const CommonTopBar({
     super.key,
     required this.title,
     this.leading,
@@ -20,7 +20,7 @@ class AppTopBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       leading: leading,
       automaticallyImplyLeading: showBack,
-      title: AppText(
+      title: CommonText(
         title,
         variant: TextVariant.title,
         weight: TextWeight.bold,

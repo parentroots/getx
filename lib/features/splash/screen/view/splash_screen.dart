@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:getx_template/component/layout/app_text.dart';
+import 'package:getx_template/component/layout/common_text.dart';
 import 'package:getx_template/core/config/app_config.dart';
 import 'package:getx_template/core/routing/app_routes.dart';
 import 'package:getx_template/core/theme/app_spacing.dart';
@@ -48,7 +48,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 ),
               ),
               SizedBox(height: AppSpacing.lg.h),
-              AppText(
+              CommonText(
                 appName,
                 variant: TextVariant.header,
                 weight: TextWeight.bold,

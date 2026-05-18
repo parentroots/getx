@@ -1,5 +1,4 @@
 import 'package:logger/logger.dart';
-
 abstract final class LoggerHelper {
   static final Logger _logger = Logger(printer: PrettyPrinter(methodCount: 0));
 

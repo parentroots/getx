@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:getx_template/component/loading/shimmer_box.dart';
 
-class AppImage extends StatelessWidget {
-  const AppImage({
+class CommonImage extends StatelessWidget {
+  const CommonImage({
     super.key,
     required this.src,
     this.width,

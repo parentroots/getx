@@ -1,12 +1,12 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 enum TextVariant { display, header, title, body, caption, overline }
 
 enum TextWeight { light, regular, medium, bold }
 
-class AppText extends StatelessWidget {
-  const AppText(
+class CommonText extends StatelessWidget {
+  const CommonText(
     this.text, {
     super.key,
     this.variant = TextVariant.body,

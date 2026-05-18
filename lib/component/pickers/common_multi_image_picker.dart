@@ -1,11 +1,11 @@
-import 'dart:io';
+﻿import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:getx_template/component/layout/app_text.dart';
+import 'package:getx_template/component/layout/common_text.dart';
 import 'package:image_picker/image_picker.dart';
 
-class AppMultiImagePicker extends StatefulWidget {
-  const AppMultiImagePicker({
+class CommonMultiImagePicker extends StatefulWidget {
+  const CommonMultiImagePicker({
     super.key,
     required this.onImagesChanged,
     this.initialImages = const [],
@@ -35,10 +35,10 @@ class AppMultiImagePicker extends StatefulWidget {
   final Color errorColor;
 
   @override
-  State<AppMultiImagePicker> createState() => _AppMultiImagePickerState();
+  State<CommonMultiImagePicker> createState() => _CommonMultiImagePickerState();
 }
 
-class _AppMultiImagePickerState extends State<AppMultiImagePicker> {
+class _CommonMultiImagePickerState extends State<CommonMultiImagePicker> {
   late List<File> _selectedImages;
   final ImagePicker _picker = ImagePicker();
 
@@ -147,7 +147,7 @@ class _AppMultiImagePickerState extends State<AppMultiImagePicker> {
           children: [
             Icon(Icons.add_photo_alternate_outlined, size: 32.r, color: Colors.grey.shade600),
             SizedBox(height: 8.h),
-            AppText(
+            CommonText(
               '${_selectedImages.length}/${widget.maxImages}',
               variant: TextVariant.caption,
               color: Colors.grey.shade600,

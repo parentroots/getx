@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class AppTextField extends StatelessWidget {
-  const AppTextField({
+class CommonTextField extends StatelessWidget {
+  const CommonTextField({
     super.key,
     this.label,
     this.hint,

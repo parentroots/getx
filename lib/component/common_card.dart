@@ -1,8 +1,8 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:getx_template/core/theme/app_spacing.dart';
 
-class AppCard extends StatelessWidget {
-  const AppCard({
+class CommonCard extends StatelessWidget {
+  const CommonCard({
     super.key,
     required this.child,
     this.padding = const EdgeInsets.all(AppSpacing.md),

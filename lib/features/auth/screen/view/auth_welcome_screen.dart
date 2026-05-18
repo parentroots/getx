@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:getx_template/component/app_button.dart';
+import 'package:getx_template/component/common_button.dart';
 import 'package:getx_template/component/layout/responsive_scaffold.dart';
 import 'package:getx_template/core/routing/app_routes.dart';
 import 'package:getx_template/core/theme/app_spacing.dart';
@@ -32,12 +32,12 @@ class AuthWelcomeScreen extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
           const Spacer(),
-          AppButton(
+          CommonButton(
             label: 'Log in',
             onPressed: () => Get.toNamed(AppRoutes.login),
           ),
           const SizedBox(height: AppSpacing.md),
-          AppButton(
+          CommonButton(
             label: 'Create account',
             isOutlined: true,
             onPressed: () => Get.toNamed(AppRoutes.register),

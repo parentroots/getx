@@ -1,11 +1,11 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:getx_template/component/layout/app_text.dart';
+import 'package:getx_template/component/layout/common_text.dart';
 import 'package:getx_template/core/routing/app_routes.dart';
 
-class AppDrawer extends StatelessWidget {
-  const AppDrawer({super.key});
+class CommonDrawer extends StatelessWidget {
+  const CommonDrawer({super.key});
 
   void _navigateTo(String route) {
     // If we're already on that route, just close the drawer
@@ -26,19 +26,19 @@ class AppDrawer extends StatelessWidget {
       context: context,
       builder: (context) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.r)),
-        title: AppText(
+        title: CommonText(
           'Logout',
           variant: TextVariant.title,
           weight: TextWeight.bold,
         ),
-        content: AppText(
+        content: CommonText(
           'Are you sure you want to log out of your account?',
           variant: TextVariant.body,
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: AppText(
+            child: CommonText(
               'Cancel',
               variant: TextVariant.body,
               color: Colors.grey,
@@ -55,7 +55,7 @@ class AppDrawer extends StatelessWidget {
               foregroundColor: Colors.white,
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.r)),
             ),
-            child: AppText(
+            child: CommonText(
               'Logout',
               variant: TextVariant.body,
               color: Colors.white,
@@ -132,7 +132,7 @@ class AppDrawer extends StatelessWidget {
                   color: theme.colorScheme.error,
                   size: 22.r,
                 ),
-                title: AppText(
+                title: CommonText(
                   'Logout',
                   variant: TextVariant.body,
                   weight: TextWeight.medium,
@@ -176,7 +176,7 @@ class AppDrawer extends StatelessWidget {
                   color: theme.primaryColor.withValues(alpha: 0.12),
                   borderRadius: BorderRadius.circular(12.r),
                 ),
-                child: AppText(
+                child: CommonText(
                   'Starter PRO',
                   variant: TextVariant.caption,
                   weight: TextWeight.bold,
@@ -186,13 +186,13 @@ class AppDrawer extends StatelessWidget {
             ],
           ),
           SizedBox(height: 16.h),
-          AppText(
+          CommonText(
             'Md. Ibrahim Khalil',
             variant: TextVariant.title,
             weight: TextWeight.bold,
           ),
           SizedBox(height: 4.h),
-          AppText(
+          CommonText(
             'ibrahim@parentroots.com',
             variant: TextVariant.caption,
             color: Colors.grey,
@@ -220,7 +220,7 @@ class AppDrawer extends StatelessWidget {
           color: isSelected ? theme.primaryColor : Colors.grey.shade600,
           size: 22.r,
         ),
-        title: AppText(
+        title: CommonText(
           label,
           variant: TextVariant.body,
           weight: isSelected ? TextWeight.bold : TextWeight.medium,
@@ -248,7 +248,7 @@ class AppDrawer extends StatelessWidget {
           color: theme.primaryColor,
           size: 22.r,
         ),
-        title: AppText(
+        title: CommonText(
           isDark ? 'Dark Mode' : 'Light Mode',
           variant: TextVariant.body,
           weight: TextWeight.medium,

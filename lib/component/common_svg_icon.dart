@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class AppSvgIcon extends StatelessWidget {
-  const AppSvgIcon({
+class CommonSvgIcon extends StatelessWidget {
+  const CommonSvgIcon({
     super.key,
     required this.asset,
     this.size = 24,

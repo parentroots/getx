@@ -1,11 +1,11 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:getx_template/component/layout/app_text.dart';
+import 'package:getx_template/component/layout/common_text.dart';
 
 /// A premium, highly customizable animated sliding tab selector.
 /// Perfect for switching categories, toggling filter statuses, or tab navigation.
-class AppTabBar extends StatelessWidget {
-  const AppTabBar({
+class CommonTabBar extends StatelessWidget {
+  const CommonTabBar({
     super.key,
     required this.tabs,
     required this.selectedIndex,
@@ -122,7 +122,7 @@ class AppTabBar extends StatelessWidget {
                           fontWeight:
                               isSelected ? FontWeight.bold : FontWeight.normal,
                         ),
-                        child: AppText(
+                        child: CommonText(
                           tabs[index],
                           variant: TextVariant.body,
                           weight: isSelected ? TextWeight.bold : TextWeight.regular,

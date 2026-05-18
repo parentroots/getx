@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:getx_template/component/app_button.dart';
-import 'package:getx_template/component/layout/app_text.dart';
+import 'package:getx_template/component/common_button.dart';
+import 'package:getx_template/component/layout/common_text.dart';
 import 'package:getx_template/component/layout/responsive_scaffold.dart';
 import 'package:getx_template/core/routing/app_routes.dart';
 import 'package:getx_template/core/theme/app_spacing.dart';
@@ -26,25 +26,25 @@ class OnboardingScreen extends StatelessWidget {
             color: Theme.of(context).colorScheme.primary,
           ),
           SizedBox(height: AppSpacing.xl.h),
-          AppText(
+          CommonText(
             'A clean foundation for your next app',
             variant: TextVariant.title,
             weight: TextWeight.bold,
             textAlign: TextAlign.center,
           ),
           SizedBox(height: AppSpacing.md.h),
-          const AppText(
+          const CommonText(
             'Routes, services, theme, widgets, networking, storage, and Firebase-ready setup are already wired so you can focus on your product.',
             textAlign: TextAlign.center,
             variant: TextVariant.body,
             color: Colors.grey,
           ),
           const Spacer(),
-          AppButton(label: 'Get started', onPressed: controller.finish),
+          CommonButton(label: 'Get started', onPressed: controller.finish),
           SizedBox(height: AppSpacing.sm.h),
           TextButton(
             onPressed: () => Get.offAllNamed(AppRoutes.authWelcome),
-            child: const AppText(
+            child: const CommonText(
               'Skip',
               variant: TextVariant.body,
               weight: TextWeight.medium,

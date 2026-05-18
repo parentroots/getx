@@ -1,11 +1,11 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 /// A premium, highly customizable rating bar component.
 /// Supports both interactive rating selection and static read-only star previews
 /// with pixel-accurate half/fractional star configurations.
-class AppRatingBar extends StatelessWidget {
-  const AppRatingBar({
+class CommonRatingBar extends StatelessWidget {
+  const CommonRatingBar({
     super.key,
     required this.rating,
     this.onRatingChanged,

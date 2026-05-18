@@ -1,10 +1,10 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:getx_template/component/app_app_bar.dart';
-import 'package:getx_template/component/app_button.dart';
-import 'package:getx_template/component/app_text_field.dart';
-import 'package:getx_template/component/layout/app_text.dart';
+import 'package:getx_template/component/common_app_bar.dart';
+import 'package:getx_template/component/common_button.dart';
+import 'package:getx_template/component/common_text_field.dart';
+import 'package:getx_template/component/layout/common_text.dart';
 import 'package:getx_template/component/layout/responsive_scaffold.dart';
 import 'package:getx_template/core/theme/app_spacing.dart';
 import 'package:getx_template/core/utils/validators.dart';
@@ -18,33 +18,33 @@ class RegisterScreen extends StatelessWidget {
     final controller = Get.find<AuthController>();
 
     return ResponsiveScaffold(
-      appBar: const AppTopBar(title: 'Create account'),
+      appBar: const CommonTopBar(title: 'Create account'),
       body: Form(
         key: controller.registerFormKey,
         child: ListView(
           padding: EdgeInsets.symmetric(vertical: 16.h),
           children: [
-            AppText(
+            CommonText(
               'Start with a clean account surface',
               variant: TextVariant.header,
               weight: TextWeight.bold,
             ),
             SizedBox(height: AppSpacing.xl.h),
-            AppTextField(
+            CommonTextField(
               label: 'Name',
               controller: controller.nameController,
               validator: (value) => Validators.required(value, field: 'Name'),
               prefixIcon: Icons.person_outline,
             ),
             SizedBox(height: AppSpacing.md.h),
-            AppTextField(
+            CommonTextField(
               label: 'Email',
               controller: controller.emailController,
               validator: Validators.email,
               prefixIcon: Icons.email_outlined,
             ),
             SizedBox(height: AppSpacing.md.h),
-            AppTextField(
+            CommonTextField(
               label: 'Password',
               controller: controller.passwordController,
               validator: Validators.password,
@@ -52,7 +52,7 @@ class RegisterScreen extends StatelessWidget {
               prefixIcon: Icons.lock_outline,
             ),
             SizedBox(height: AppSpacing.lg.h),
-            AppButton(
+            CommonButton(
               label: 'Create account',
               onPressed: controller.submitRegister,
             ),

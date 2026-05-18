@@ -1,10 +1,10 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 /// A premium, highly customizable, and animated toggle switch widget
 /// designed to override standard, platform-dependent defaults.
-class AppSwitch extends StatelessWidget {
-  const AppSwitch({
+class CommonSwitch extends StatelessWidget {
+  const CommonSwitch({
     super.key,
     required this.value,
     required this.onChanged,

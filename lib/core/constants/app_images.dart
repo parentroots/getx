@@ -1,4 +1,4 @@
-abstract final class AppImages {
+﻿abstract final class CommonImages {
   static const String _path = 'assets/images';
 
   // PNG/JPEG Assets

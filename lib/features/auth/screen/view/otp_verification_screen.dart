@@ -1,10 +1,10 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:getx_template/component/app_app_bar.dart';
-import 'package:getx_template/component/app_button.dart';
-import 'package:getx_template/component/app_text_field.dart';
-import 'package:getx_template/component/layout/app_text.dart';
+import 'package:getx_template/component/common_app_bar.dart';
+import 'package:getx_template/component/common_button.dart';
+import 'package:getx_template/component/common_text_field.dart';
+import 'package:getx_template/component/layout/common_text.dart';
 import 'package:getx_template/component/layout/responsive_scaffold.dart';
 import 'package:getx_template/core/theme/app_spacing.dart';
 import 'package:getx_template/core/utils/validators.dart';
@@ -18,26 +18,26 @@ class OtpVerificationScreen extends StatelessWidget {
     final controller = Get.find<AuthController>();
 
     return ResponsiveScaffold(
-      appBar: const AppTopBar(title: 'Verification'),
+      appBar: const CommonTopBar(title: 'Verification'),
       body: Form(
         key: controller.otpFormKey,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             SizedBox(height: 16.h),
-            AppText(
+            CommonText(
               'Enter code',
               variant: TextVariant.header,
               weight: TextWeight.bold,
             ),
             SizedBox(height: AppSpacing.md.h),
-            const AppText(
+            const CommonText(
               'This screen is provider-neutral and ready for SMS, email, or authenticator-code flows.',
               variant: TextVariant.body,
               color: Colors.grey,
             ),
             SizedBox(height: AppSpacing.xl.h),
-            AppTextField(
+            CommonTextField(
               label: 'Code',
               controller: controller.otpController,
               validator: (value) => Validators.required(value, field: 'Code'),
@@ -45,7 +45,7 @@ class OtpVerificationScreen extends StatelessWidget {
               keyboardType: TextInputType.number,
             ),
             SizedBox(height: AppSpacing.lg.h),
-            AppButton(label: 'Verify', onPressed: controller.verifyOtp),
+            CommonButton(label: 'Verify', onPressed: controller.verifyOtp),
           ],
         ),
       ),

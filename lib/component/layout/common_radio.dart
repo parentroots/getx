@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:getx_template/component/layout/app_text.dart';
+import 'package:getx_template/component/layout/common_text.dart';
 
-class AppRadio<T> extends StatelessWidget {
-  const AppRadio({
+class CommonRadio<T> extends StatelessWidget {
+  const CommonRadio({
     super.key,
     required this.value,
     required this.groupValue,
@@ -52,13 +52,13 @@ class AppRadio<T> extends StatelessWidget {
         tileColor: isSelected ? defaultSelectedTileColor : defaultTileColor,
         shape: shape ?? RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
         contentPadding: contentPadding ?? EdgeInsets.symmetric(horizontal: 16.w, vertical: 4.h),
-        title: AppText(
+        title: CommonText(
           title,
           variant: TextVariant.title,
           weight: isSelected ? TextWeight.medium : TextWeight.regular,
         ),
         subtitle: subtitle != null
-            ? AppText(
+            ? CommonText(
                 subtitle!,
                 variant: TextVariant.body,
                 color: Colors.grey,
@@ -70,8 +70,8 @@ class AppRadio<T> extends StatelessWidget {
   }
 }
 
-class AppMultiRadio<T> extends StatelessWidget {
-  const AppMultiRadio({
+class CommonMultiRadio<T> extends StatelessWidget {
+  const CommonMultiRadio({
     super.key,
     required this.items,
     required this.groupValue,
@@ -99,7 +99,7 @@ class AppMultiRadio<T> extends StatelessWidget {
         final title = itemTitleBuilder != null ? itemTitleBuilder!(item) : item.toString();
         final subtitle = itemSubtitleBuilder?.call(item);
 
-        final radio = AppRadio<T>(
+        final radio = CommonRadio<T>(
           value: item,
           groupValue: groupValue,
           onChanged: onChanged,

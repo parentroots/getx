@@ -1,11 +1,11 @@
-import 'package:flutter/cupertino.dart';
+﻿import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:getx_template/component/layout/app_text.dart';
+import 'package:getx_template/component/layout/common_text.dart';
 
 /// A premium, responsive iOS-style (Cupertino) time picker
 /// displayed in a beautifully styled and dark-mode-ready bottom sheet.
-class AppTimePicker {
+class CommonTimePicker {
   /// Shows an iOS-style time picker in a custom bottom sheet.
   static Future<TimeOfDay?> show({
     required BuildContext context,
@@ -71,21 +71,21 @@ class AppTimePicker {
                   children: [
                     TextButton(
                       onPressed: () => Navigator.of(context).pop(),
-                      child: AppText(
+                      child: CommonText(
                         cancelText,
                         variant: TextVariant.body,
                         color: cancelColor ?? (isDark ? Colors.grey.shade400 : Colors.grey.shade600),
                         weight: TextWeight.medium,
                       ),
                     ),
-                    AppText(
+                    CommonText(
                       title,
                       variant: TextVariant.title,
                       weight: TextWeight.bold,
                     ),
                     TextButton(
                       onPressed: () => Navigator.of(context).pop(selectedDateTime),
-                      child: AppText(
+                      child: CommonText(
                         confirmText,
                         variant: TextVariant.body,
                         color: confirmColor ?? theme.primaryColor,
