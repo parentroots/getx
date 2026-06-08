@@ -11,7 +11,6 @@ import 'package:getx_template/component/common_switch.dart';
 import 'package:getx_template/component/common_tab_bar.dart';
 import 'package:getx_template/component/common_text_field.dart';
 import 'package:getx_template/component/dialogs/common_snackbar.dart';
-import 'package:getx_template/component/dialogs/loading_dialog.dart';
 import 'package:getx_template/component/dialogs/common_dialog.dart';
 import 'package:getx_template/component/layout/common_list_view.dart';
 import 'package:getx_template/component/layout/common_scaffold.dart';

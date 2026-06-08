@@ -249,7 +249,6 @@ class CommonDialog extends StatelessWidget {
       case DialogType.info:
         return AppColors.info;
       case DialogType.confirmation:
-      default:
         return AppColors.primary;
     }
   }
@@ -280,7 +279,6 @@ class CommonDialog extends StatelessWidget {
         iconData = icon ?? Icons.info_outline_rounded;
         break;
       case DialogType.confirmation:
-      default:
         iconData = icon ?? Icons.help_outline_rounded;
         break;
     }
@@ -291,7 +289,7 @@ class CommonDialog extends StatelessWidget {
       width: 80.w,
       height: 80.w,
       decoration: BoxDecoration(
-        color: finalIconColor.withOpacity(0.12),
+        color: finalIconColor.withValues(alpha: 0.12),
         shape: BoxShape.circle,
       ),
       child: Icon(
@@ -411,7 +409,7 @@ class CommonDialog extends StatelessWidget {
                     width: 28.w,
                     height: 28.w,
                     decoration: BoxDecoration(
-                      color: isDark ? Colors.white.withOpacity(0.1) : Colors.black.withOpacity(0.05),
+                      color: isDark ? Colors.white.withValues(alpha: 0.1) : Colors.black.withValues(alpha: 0.05),
                       shape: BoxShape.circle,
                     ),
                     child: Icon(
