@@ -10,7 +10,7 @@ class UpdateRequiredScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CommonScaffold(
-      appBar: const CommonTopBar(title: 'Update required', showBack: false),
+      appBar: const CommonAppBar(title: 'Update required', showBack: false),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -32,7 +32,7 @@ class UpdateRequiredScreen extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: AppSpacing.xl),
-          CommonButton(label: 'Open store', onPressed: () {}),
+          CommonButton(titleText: 'Open store', onTap: () {}),
         ],
       ),
     );

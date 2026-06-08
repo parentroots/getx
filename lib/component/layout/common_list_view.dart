@@ -1,17 +1,28 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:getx_template/data/models/paginated_response.dart';
 
 /// A premium, highly optimized list view component that supports
 /// high-performance lazy rendering, automatic scroll-to-load pagination,
 /// pull-to-refresh, custom separators, and empty state fallbacks.
+/// 
+/// Can run in **Autonomous Mode** (simply pass [onLoadPage] and the widget
+/// manages all list data and page states internally) or **Manual Mode** (pass
+/// [items], [isLoading], [hasMore], and scroll/refresh callbacks).
 class CommonListView<T> extends StatefulWidget {
   const CommonListView({
     super.key,
-    required this.items,
+    this.items = const [],
     required this.itemBuilder,
     this.onRefresh,
     this.onLoadMore,
+    this.onLoadPage,
     this.isLoading = false,
     this.hasMore = false,
+    this.enablePagination = false,
+    this.currentPage,
+    this.lastPage,
+    this.total,
     this.emptyWidget,
     this.separatorWidget,
     this.padding = const EdgeInsets.all(16.0),
@@ -19,23 +30,39 @@ class CommonListView<T> extends StatefulWidget {
     this.scrollDirection = Axis.vertical,
   });
 
-  /// The list of items to render.
+  /// The list of items to render (used in Manual Mode).
   final List<T> items;
 
   /// Builder function to render each list item.
   final Widget Function(BuildContext context, T item, int index) itemBuilder;
 
-  /// Optional pull-to-refresh callback.
+  /// Optional pull-to-refresh callback (used in Manual Mode).
   final Future<void> Function()? onRefresh;
 
-  /// Optional load-more callback triggered during pagination.
+  /// Optional load-more callback triggered during pagination (used in Manual Mode).
   final Future<void> Function()? onLoadMore;
+
+  /// Page fetching callback (activates **Autonomous Mode**).
+  /// Receives the target page index and returns a [PaginatedResponse] containing the items.
+  final Future<PaginatedResponse<T>> Function(int page)? onLoadPage;
   
-  /// Status showing if a page is currently loading.
+  /// Status showing if a page is currently loading (used in Manual Mode).
   final bool isLoading;
 
-  /// Status showing if there are more items to paginate.
+  /// Status showing if there are more items to paginate (used in Manual Mode).
   final bool hasMore;
+
+  /// Manually enable/disable scroll pagination actions (defaults to false, auto-enabled if [onLoadMore]/[onLoadPage] is active).
+  final bool enablePagination;
+
+  /// The active paginated page index (used in Manual Mode).
+  final int? currentPage;
+
+  /// The total pages index limit (used in Manual Mode).
+  final int? lastPage;
+
+  /// The total count of items across all pages.
+  final int? total;
   
   /// Custom fallback view when the list is empty.
   final Widget? emptyWidget;
@@ -59,11 +86,72 @@ class CommonListView<T> extends StatefulWidget {
 class _CommonListViewState<T> extends State<CommonListView<T>> {
   final ScrollController _scrollController = ScrollController();
 
+  // Internal states for Autonomous Mode
+  final List<T> _internalItems = [];
+  int _currentPage = 1;
+  int _lastPage = 1;
+  bool _isLoading = false;
+
+  bool get _isAutonomousMode => widget.onLoadPage != null;
+
+  bool get _isPaginationActive =>
+      widget.enablePagination ||
+      widget.onLoadMore != null ||
+      _isAutonomousMode;
+
+  bool get _hasMoreItems {
+    if (_isAutonomousMode) {
+      return _currentPage < _lastPage;
+    }
+    if (widget.currentPage != null && widget.lastPage != null) {
+      return widget.currentPage! < widget.lastPage!;
+    }
+    return widget.hasMore;
+  }
+
+  bool get _isLoadingState {
+    if (_isAutonomousMode) {
+      return _isLoading;
+    }
+    return widget.isLoading;
+  }
+
+  List<T> get _displayItems {
+    if (_isAutonomousMode) {
+      return _internalItems;
+    }
+    return widget.items;
+  }
+
   @override
   void initState() {
     super.initState();
-    if (widget.onLoadMore != null) {
+    if (_isPaginationActive) {
       _scrollController.addListener(_onScroll);
+    }
+    if (_isAutonomousMode) {
+      _loadFirstPage();
+    }
+  }
+
+  @override
+  void didUpdateWidget(covariant CommonListView<T> oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    
+    // Dynamically manage scroll listener on parameter updates
+    final oldActive = oldWidget.enablePagination || oldWidget.onLoadMore != null || oldWidget.onLoadPage != null;
+    final newActive = _isPaginationActive;
+    
+    if (newActive != oldActive) {
+      if (newActive) {
+        _scrollController.addListener(_onScroll);
+      } else {
+        _scrollController.removeListener(_onScroll);
+      }
+    }
+
+    if (_isAutonomousMode && oldWidget.onLoadPage != widget.onLoadPage) {
+      _loadFirstPage();
     }
   }
 
@@ -74,18 +162,86 @@ class _CommonListViewState<T> extends State<CommonListView<T>> {
     super.dispose();
   }
 
+  Future<void> _loadFirstPage() async {
+    if (_isLoading) return;
+    setState(() {
+      _isLoading = true;
+      _internalItems.clear();
+      _currentPage = 1;
+    });
+
+    try {
+      final response = await widget.onLoadPage!(1);
+      setState(() {
+        _internalItems.addAll(response.items);
+        _currentPage = response.currentPage;
+        _lastPage = response.lastPage;
+      });
+    } catch (e) {
+      debugPrint("CommonListView: Error loading first page: $e");
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+
+  Future<void> _loadNextPage() async {
+    if (_isLoading || _currentPage >= _lastPage) return;
+    setState(() {
+      _isLoading = true;
+    });
+
+    try {
+      final nextPage = _currentPage + 1;
+      final response = await widget.onLoadPage!(nextPage);
+      setState(() {
+        _internalItems.addAll(response.items);
+        _currentPage = response.currentPage;
+        _lastPage = response.lastPage;
+      });
+    } catch (e) {
+      debugPrint("CommonListView: Error loading page $_currentPage: $e");
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+
+  Future<void> _handleRefresh() async {
+    if (widget.onRefresh != null) {
+      await widget.onRefresh!();
+    } else if (_isAutonomousMode) {
+      await _loadFirstPage();
+    }
+  }
+
   void _onScroll() {
-    // Triggers loadMore callback when user scrolls within 200px of the bottom limit
     if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent - 200) {
-      if (!widget.isLoading && widget.hasMore && widget.onLoadMore != null) {
-        widget.onLoadMore!();
+      if (!_isLoadingState && _hasMoreItems) {
+        if (_isAutonomousMode) {
+          _loadNextPage();
+        } else if (widget.onLoadMore != null) {
+          widget.onLoadMore!();
+        }
       }
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    if (widget.items.isEmpty && !widget.isLoading) {
+    final theme = Theme.of(context);
+    final displayList = _displayItems;
+    final loading = _isLoadingState;
+
+    // Initial first-page load or empty state routing
+    if (displayList.isEmpty) {
+      if (loading) {
+        return Center(
+          child: _buildLoadingIndicator(),
+        );
+      }
       return widget.emptyWidget ?? _buildDefaultEmptyState(context);
     }
 
@@ -96,17 +252,17 @@ class _CommonListViewState<T> extends State<CommonListView<T>> {
               (context, index) {
                 final itemIndex = index ~/ 2;
                 if (index.isEven) {
-                  return widget.itemBuilder(context, widget.items[itemIndex], itemIndex);
+                  return widget.itemBuilder(context, displayList[itemIndex], itemIndex);
                 }
                 return widget.separatorWidget!;
               },
-              childCount: widget.items.isEmpty ? 0 : widget.items.length * 2 - 1,
+              childCount: displayList.isEmpty ? 0 : displayList.length * 2 - 1,
             ),
           )
         : SliverList(
             delegate: SliverChildBuilderDelegate(
-              (context, index) => widget.itemBuilder(context, widget.items[index], index),
-              childCount: widget.items.length,
+              (context, index) => widget.itemBuilder(context, displayList[index], index),
+              childCount: displayList.length,
             ),
           );
 
@@ -120,16 +276,16 @@ class _CommonListViewState<T> extends State<CommonListView<T>> {
           padding: widget.padding,
           sliver: sliverList,
         ),
-        if (widget.hasMore)
+        if (loading && _hasMoreItems)
           SliverToBoxAdapter(
             child: _buildLoadingIndicator(),
           ),
       ],
     );
 
-    if (widget.onRefresh != null) {
+    if (widget.onRefresh != null || _isAutonomousMode) {
       return RefreshIndicator(
-        onRefresh: widget.onRefresh!,
+        onRefresh: _handleRefresh,
         child: scrollView,
       );
     }
@@ -138,9 +294,9 @@ class _CommonListViewState<T> extends State<CommonListView<T>> {
   }
 
   Widget _buildLoadingIndicator() {
-    return const Padding(
-      padding: EdgeInsets.symmetric(vertical: 20.0),
-      child: Center(
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 20.h),
+      child: const Center(
         child: SizedBox(
           height: 24,
           width: 24,
@@ -153,12 +309,12 @@ class _CommonListViewState<T> extends State<CommonListView<T>> {
   Widget _buildDefaultEmptyState(BuildContext context) {
     return Center(
       child: Padding(
-        padding: const EdgeInsets.all(24.0),
+        padding: EdgeInsets.all(24.r),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.inbox_outlined, size: 64, color: Colors.grey.shade400),
-            const SizedBox(height: 16),
+            Icon(Icons.inbox_outlined, size: 64.r, color: Colors.grey.shade400),
+            SizedBox(height: 16.h),
             Text(
               'No items found',
               style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Colors.grey.shade600),

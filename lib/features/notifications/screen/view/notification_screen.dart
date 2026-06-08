@@ -9,7 +9,7 @@ class NotificationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const CommonScaffold(
-      appBar: CommonTopBar(title: 'Notifications'),
+      appBar: CommonAppBar(title: 'Notifications'),
       body: EmptyStateWidget(
         title: 'No notifications',
         message:

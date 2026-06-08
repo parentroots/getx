@@ -1,160 +1,328 @@
-﻿import 'package:flutter/material.dart';
+import 'dart:ui';
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:getx_template/component/layout/common_text.dart';
+import 'package:getx_template/core/theme/app_colors.dart';
 
-class CommonButton extends StatelessWidget {
+
+class CommonButton extends StatefulWidget {
   const CommonButton({
+    required this.titleText,
     super.key,
-    required this.onPressed,
-    this.label,
-    this.child,
-    this.icon,
-    this.iconRight,
+    this.onTap,
+    this.titleColor,
+    this.buttonColor,
+    this.titleSize,
+    this.buttonRadius,
+    this.alignment = MainAxisAlignment.center,
+    this.titleWeight,
+    this.buttonHeight,
+    this.borderWidth,
     this.isLoading = false,
-    this.isOutlined = false,
-    this.isTextButton = false,
-    this.width,
-    this.height = 50.0,
-    this.backgroundColor,
-    this.foregroundColor,
-    this.disabledBackgroundColor,
-    this.disabledForegroundColor,
+    this.buttonWidth,
     this.borderColor,
-    this.textStyle,
-    this.padding,
-    this.borderRadius = 12.0,
+    this.prefix,
+    this.suffix,
     this.elevation,
-  }) : assert(label != null || child != null, 'Either label or child must be provided.');
+    this.gradient,
+    this.padding,
+    this.titleGradient,
+    this.titleSpacing = 0.5,
+    this.border = false,
+    this.isEnabled = true,
+  });
 
-  final String? label;
-  final Widget? child;
-  final VoidCallback? onPressed;
-  final Widget? icon;
-  final Widget? iconRight;
-  final bool isLoading;
-  final bool isOutlined;
-  final bool isTextButton;
-  
-  final double? width;
-  final double height;
-  final Color? backgroundColor;
-  final Color? foregroundColor;
-  final Color? disabledBackgroundColor;
-  final Color? disabledForegroundColor;
+  final VoidCallback? onTap;
+  final String titleText;
+  final Color? titleColor;
+  final Color? buttonColor;
   final Color? borderColor;
-  final TextStyle? textStyle;
-  final EdgeInsetsGeometry? padding;
-  final double borderRadius;
+  final double? borderWidth;
+  final double? titleSize;
+  final FontWeight? titleWeight;
+  final double? buttonRadius;
+  final double? buttonHeight;
+  final double? buttonWidth;
+  final bool isLoading;
+  final Widget? prefix;
+  final Widget? suffix;
+  final MainAxisAlignment alignment;
   final double? elevation;
+  final Gradient? gradient;
+  final Gradient? titleGradient;
+  final EdgeInsetsGeometry? padding;
+  final double titleSpacing;
+  final bool border;
+  final bool isEnabled;
+
+  @override
+  State<CommonButton> createState() => _CommonButtonState();
+}
+
+class _CommonButtonState extends State<CommonButton>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _animationController;
+  late final Animation<double> _animation;
+  bool _isPressed = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      duration: const Duration(milliseconds: 1500),
+      vsync: this,
+    );
+    _animation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _animationController, curve: Curves.linear),
+    );
+
+    if (widget.isLoading) {
+      _animationController.repeat();
+    }
+  }
+
+  @override
+  void didUpdateWidget(covariant CommonButton oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.isLoading != oldWidget.isLoading) {
+      if (widget.isLoading) {
+        _animationController.repeat();
+      } else {
+        _animationController.stop();
+        _animationController.reset();
+      }
+    }
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final isEnabled = onPressed != null && !isLoading;
+    final Color resolvedBackgroundColor = widget.buttonColor ?? AppColors.primary;
+    final Color resolvedTitleColor = widget.titleColor ?? Colors.white;
+    final Color resolvedBorderColor = widget.borderColor ??
+        (widget.border ? const Color(0xFF16C3C1) : Colors.transparent);
+    final double resolvedBorderWidth =
+        widget.borderWidth ?? (widget.border ? 1.0 : 0.0);
+    final double resolvedRadius = widget.buttonRadius ?? 8.0;
+    final double resolvedHeight = widget.buttonHeight ?? 50.0;
+    final double resolvedElevation = widget.elevation ?? 2.0;
+    final EdgeInsets resolvedPadding = (widget.padding ??
+        const EdgeInsets.symmetric(horizontal: 14, vertical: 10))
+        .resolve(Directionality.of(context));
+    final bool canTap = widget.isEnabled && !widget.isLoading;
 
-    final defaultBackground = backgroundColor ?? theme.primaryColor;
-    final defaultForeground = foregroundColor ?? Colors.white;
-
-    final responsiveHeight = height.h;
-    final responsiveWidth = width?.w;
-    final responsiveBorderRadius = borderRadius.r;
-
-    final content = isLoading
-        ? SizedBox.square(
-            dimension: 24.r,
-            child: CircularProgressIndicator(
-              strokeWidth: 2.5.r,
-              valueColor: AlwaysStoppedAnimation<Color>(
-                isOutlined || isTextButton ? defaultBackground : defaultForeground,
-              ),
-            ),
-          )
-        : Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              if (icon != null) ...[
-                icon!,
-                SizedBox(width: 8.w),
-              ],
-              if (child != null) 
-                child! 
-              else 
-                Flexible(
-                  child: CommonText(
-                    label!,
-                    variant: TextVariant.title,
-                    weight: textStyle?.fontWeight == FontWeight.bold ? TextWeight.bold : TextWeight.medium,
-                    color: isOutlined || isTextButton ? defaultBackground : defaultForeground,
-                    fontSize: textStyle?.fontSize,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ),
-              if (iconRight != null) ...[
-                SizedBox(width: 8.w),
-                iconRight!,
-              ],
-            ],
-          );
-
-    final shape = RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(responsiveBorderRadius),
-      side: isOutlined
-          ? BorderSide(color: borderColor ?? defaultBackground, width: 1.r)
-          : BorderSide.none,
+    final TextStyle textStyle = TextStyle(
+      fontSize: (widget.titleSize ?? 16).sp,
+      fontWeight: widget.titleWeight ?? FontWeight.w600,
+      letterSpacing: widget.titleSpacing,
+      color: resolvedTitleColor,
     );
 
-    Widget button;
+    return GestureDetector(
+      onTapDown: (_) => setState(() => _isPressed = true),
+      onTapUp: (_) => setState(() => _isPressed = false),
+      onTapCancel: () => setState(() => _isPressed = false),
+      child: AnimatedScale(
+        scale: _isPressed ? 0.95 : 1.0,
+        duration: const Duration(milliseconds: 100),
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            final bool hasBoundedWidth = constraints.maxWidth.isFinite;
+            final double minRequiredWidth = _measureMinWidth(
+              textStyle: textStyle,
+              padding: resolvedPadding,
+            );
+            final double requestedWidth = widget.buttonWidth ?? double.nan;
+            double? calculatedWidth;
 
-    if (isTextButton) {
-      button = TextButton(
-        onPressed: isEnabled ? onPressed : null,
-        style: TextButton.styleFrom(
-          foregroundColor: defaultBackground,
-          disabledForegroundColor: disabledForegroundColor ?? Colors.grey,
-          padding: padding ?? EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
-          shape: shape,
-          minimumSize: Size(responsiveWidth ?? 0, responsiveHeight),
-        ),
-        child: content,
-      );
-    } else if (isOutlined) {
-      button = OutlinedButton(
-        onPressed: isEnabled ? onPressed : null,
-        style: OutlinedButton.styleFrom(
-          foregroundColor: defaultBackground,
-          disabledForegroundColor: disabledForegroundColor ?? Colors.grey,
-          padding: padding ?? EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
-          shape: shape,
-          minimumSize: Size(responsiveWidth ?? 0, responsiveHeight),
-        ),
-        child: content,
-      );
-    } else {
-      button = ElevatedButton(
-        onPressed: isEnabled ? onPressed : null,
-        style: ElevatedButton.styleFrom(
-          backgroundColor: defaultBackground,
-          foregroundColor: defaultForeground,
-          disabledBackgroundColor: disabledBackgroundColor ?? Colors.grey.shade300,
-          disabledForegroundColor: disabledForegroundColor ?? Colors.grey.shade600,
-          padding: padding ?? EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
-          shape: shape,
-          elevation: elevation ?? 0,
-          minimumSize: Size(responsiveWidth ?? 0, responsiveHeight),
-        ),
-        child: content,
-      );
-    }
+            final double safeMin = minRequiredWidth > constraints.maxWidth ? constraints.maxWidth : minRequiredWidth;
 
-    if (width != null) {
-      return SizedBox(
-        width: responsiveWidth,
-        height: responsiveHeight,
-        child: button,
-      );
-    }
+            if (requestedWidth == double.infinity) {
+              calculatedWidth = hasBoundedWidth ? constraints.maxWidth : null;
+            } else if (!requestedWidth.isNaN) {
+              calculatedWidth = hasBoundedWidth
+                  ? requestedWidth.clamp(safeMin, constraints.maxWidth)
+                  : requestedWidth;
+            } else {
+              calculatedWidth = hasBoundedWidth
+                  ? minRequiredWidth.clamp(safeMin, constraints.maxWidth)
+                  : minRequiredWidth;
+            }
 
-    return button;
+            return SizedBox(
+              width: calculatedWidth,
+              height: resolvedHeight,
+              child: Stack(
+                children: [
+                  Positioned.fill(
+                    child: ElevatedButton(
+                      onPressed: canTap ? widget.onTap : null,
+                      style: ElevatedButton.styleFrom(
+                        elevation: widget.isEnabled ? resolvedElevation : 0,
+                        padding: EdgeInsets.zero,
+                        backgroundColor: Colors.transparent,
+                        shadowColor: resolvedBackgroundColor.withValues(alpha: 0.4),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(resolvedRadius),
+                          side: BorderSide(
+                            color: resolvedBorderColor,
+                            width: resolvedBorderWidth,
+                          ),
+                        ),
+                      ).copyWith(
+                        overlayColor: WidgetStateProperty.all(Colors.transparent),
+                        splashFactory: NoSplash.splashFactory,
+                      ),
+                      child: Ink(
+                        decoration: BoxDecoration(
+                          color: widget.gradient == null
+                              ? (widget.isEnabled
+                              ? resolvedBackgroundColor
+                              : resolvedBackgroundColor.withValues(alpha: 0.5))
+                              : null,
+                          gradient: widget.gradient,
+                          borderRadius: BorderRadius.circular(resolvedRadius),
+                          border: Border.all(
+                            color: resolvedBorderColor,
+                            width: resolvedBorderWidth,
+                          ),
+                        ),
+                        child: Container(
+                          alignment: Alignment.center,
+                          padding: resolvedPadding,
+                          child: _buildContent(
+                            textStyle: textStyle,
+                            textColor: widget.isEnabled
+                                ? resolvedTitleColor
+                                : resolvedTitleColor.withValues(alpha: 0.65),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  if (widget.isLoading)
+                    Positioned.fill(
+                      child: IgnorePointer(
+                        child: AnimatedBuilder(
+                          animation: _animation,
+                          builder: (_, __) => CustomPaint(
+                            painter: _BorderLoaderPainter(
+                              _animation.value,
+                              resolvedTitleColor,
+                              resolvedRadius,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                ],
+              ),
+            );
+          },
+        ),
+      ),
+    );
+  }
+
+  Widget _buildContent({required TextStyle textStyle, required Color textColor}) {
+    final Widget title = widget.titleGradient == null
+        ? Text(
+      widget.titleText,
+      maxLines: 1,
+      overflow: TextOverflow.ellipsis,
+      style: textStyle.copyWith(color: textColor),
+    )
+        : ShaderMask(
+      shaderCallback: (Rect bounds) =>
+          widget.titleGradient!.createShader(bounds),
+      child: Text(
+        widget.titleText,
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+        style: textStyle.copyWith(color: Colors.white),
+      ),
+    );
+
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: widget.alignment,
+      children: [
+        if (widget.prefix != null) ...[
+          widget.prefix!,
+          const SizedBox(width: 8),
+        ],
+        Flexible(child: title),
+        if (widget.suffix != null) ...[
+          const SizedBox(width: 8),
+          widget.suffix!,
+        ],
+      ],
+    );
+  }
+
+  double _measureMinWidth({
+    required TextStyle textStyle,
+    required EdgeInsets padding,
+  }) {
+    final TextPainter textPainter = TextPainter(
+      text: TextSpan(text: widget.titleText, style: textStyle),
+      maxLines: 1,
+      textDirection: TextDirection.ltr,
+    )..layout();
+
+    final double prefixWidth = widget.prefix != null ? 24.0 : 0.0;
+    final double suffixWidth = widget.suffix != null ? 24.0 : 0.0;
+
+    return textPainter.width +
+        prefixWidth +
+        suffixWidth +
+        padding.left +
+        padding.right;
   }
 }
+
+class _BorderLoaderPainter extends CustomPainter {
+  _BorderLoaderPainter(this.progress, this.color, this.radius);
+
+  final double progress;
+  final Color color;
+  final double radius;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final Rect rect = Offset.zero & size;
+    final Path path = Path()
+      ..addRRect(RRect.fromRectAndRadius(rect, Radius.circular(radius)));
+
+    final Paint paint = Paint()
+      ..color = color
+      ..strokeWidth = 2
+      ..style = PaintingStyle.stroke;
+
+    const double dashWidth = 50.0;
+    const double dashSpace = 1.0;
+    const double totalLength = (dashWidth + dashSpace);
+    final Iterable<PathMetric> pathMetrics = path.computeMetrics();
+
+    for (final PathMetric metric in pathMetrics) {
+      double distance = progress * metric.length;
+      while (distance < metric.length) {
+        final Path segment = metric.extractPath(distance, distance + dashWidth);
+        canvas.drawPath(segment, paint);
+        distance += totalLength;
+      }
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant _BorderLoaderPainter oldDelegate) {
+    return oldDelegate.progress != progress ||
+        oldDelegate.color != color ||
+        oldDelegate.radius != radius;
+  }
+}
+

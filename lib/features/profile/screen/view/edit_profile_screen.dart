@@ -17,7 +17,7 @@ class EditProfileScreen extends StatelessWidget {
     final controller = Get.find<ProfileController>();
 
     return CommonScaffold(
-      appBar: const CommonTopBar(title: 'Edit profile'),
+      appBar: const CommonAppBar(title: 'Edit profile'),
       body: Form(
         key: controller.formKey,
         child: ListView(
@@ -37,7 +37,7 @@ class EditProfileScreen extends StatelessWidget {
               prefixIcon: Icons.email_outlined,
             ),
             SizedBox(height: AppSpacing.lg.h),
-            CommonButton(label: 'Save changes', onPressed: controller.saveProfile),
+            CommonButton(titleText: "", onTap: controller.saveProfile),
           ],
         ),
       ),

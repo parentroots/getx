@@ -19,7 +19,7 @@ class HomeScreen extends StatelessWidget {
     return CommonScaffold(
       drawer: const CommonDrawer(),
       bottomNavigationBar: const CommonBottomNavBar(),
-      appBar: CommonTopBar(
+      appBar: CommonAppBar(
         title: 'Home',
         showBack: true,
         // Automatically implies leading (hamburger icon) for the drawer

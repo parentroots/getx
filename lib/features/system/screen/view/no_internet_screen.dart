@@ -12,7 +12,7 @@ class NoInternetScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.find<SystemController>();
     return CommonScaffold(
-      appBar: const CommonTopBar(title: 'No internet'),
+      appBar: const CommonAppBar(title: 'No internet'),
       body: NoInternetWidget(onRetry: controller.retryConnection),
     );
   }

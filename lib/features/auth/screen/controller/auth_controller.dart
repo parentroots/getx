@@ -1,23 +1,70 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getx_template/core/routing/app_routes.dart';
+import 'package:getx_template/data/models/paginated_response.dart';
 import 'package:getx_template/shared/controllers/base_controller.dart';
+import 'package:getx_template/component/pickers/common_country_picker.dart';
 
 class AuthController extends BaseController {
+
+
+
+  List<String>tabList=[
+    'All','new','old'
+  ];
+
+
+
+
   final loginFormKey = GlobalKey<FormState>();
   final registerFormKey = GlobalKey<FormState>();
   final forgotPasswordFormKey = GlobalKey<FormState>();
   final otpFormKey = GlobalKey<FormState>();
 
+
+
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final nameController = TextEditingController();
   final otpController = TextEditingController();
+
+  final RxBool isSwitchOn=false.obs;
+
+  final RxInt currentTabIndex = 0.obs;
+
+
+
+
+
+  final phoneController=TextEditingController();
+  final RxDouble appRating = 5.0.obs;
   final RxBool obscurePassword = true.obs;
+  final Rxn<CountryModel> selectedCountry = Rxn<CountryModel>();
+  final Rxn<DateTime> selectedDate = Rxn<DateTime>();
 
-  void togglePasswordVisibility() => obscurePassword.toggle();
 
-  void submitLogin() => _validate(loginFormKey, AppRoutes.home);
+
+  Future<PaginatedResponse<String>> loadPageData(int page) async {
+    // Simulate API fetch delay (network latency)
+    await Future.delayed(const Duration(seconds: 1));
+
+    final items = List.generate(5, (index) => "Item ${(page - 1) * 5 + index + 1}");
+    return PaginatedResponse(
+      items: items,
+      currentPage: page,
+      lastPage: 3, // Simulate 3 total pages
+      total: 15,
+    );
+  }
+
+  void onTabChanged(int index) {
+    currentTabIndex.value = index;
+    debugPrint("${currentTabIndex.value }");
+  }
+
+
+
+
   void submitRegister() => _validate(registerFormKey, AppRoutes.home);
   void submitForgotPassword() =>
       _validate(forgotPasswordFormKey, AppRoutes.otpVerification);
@@ -35,6 +82,7 @@ class AuthController extends BaseController {
     passwordController.dispose();
     nameController.dispose();
     otpController.dispose();
+    phoneController.dispose();
     super.onClose();
   }
 }

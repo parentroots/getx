@@ -33,14 +33,14 @@ class AuthWelcomeScreen extends StatelessWidget {
           ),
           const Spacer(),
           CommonButton(
-            label: 'Log in',
-            onPressed: () => Get.toNamed(AppRoutes.login),
+      titleText: "Login",
+            onTap: () => Get.toNamed(AppRoutes.login),
           ),
           const SizedBox(height: AppSpacing.md),
           CommonButton(
-            label: 'Create account',
-            isOutlined: true,
-            onPressed: () => Get.toNamed(AppRoutes.register),
+            titleText: 'Create account',
+
+            onTap: () => Get.toNamed(AppRoutes.register),
           ),
         ],
       ),

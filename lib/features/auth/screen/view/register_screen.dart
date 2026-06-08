@@ -18,7 +18,7 @@ class RegisterScreen extends StatelessWidget {
     final controller = Get.find<AuthController>();
 
     return CommonScaffold(
-      appBar: const CommonTopBar(title: 'Create account'),
+      appBar: const CommonAppBar(title: 'Create account'),
       body: Form(
         key: controller.registerFormKey,
         child: ListView(
@@ -53,8 +53,8 @@ class RegisterScreen extends StatelessWidget {
             ),
             SizedBox(height: AppSpacing.lg.h),
             CommonButton(
-              label: 'Create account',
-              onPressed: controller.submitRegister,
+              titleText: 'Create account',
+              onTap: controller.submitRegister,
             ),
           ],
         ),

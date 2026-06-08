@@ -18,7 +18,7 @@ class OtpVerificationScreen extends StatelessWidget {
     final controller = Get.find<AuthController>();
 
     return CommonScaffold(
-      appBar: const CommonTopBar(title: 'Verification'),
+      appBar: const CommonAppBar(title: 'Verification'),
       body: Form(
         key: controller.otpFormKey,
         child: Column(
@@ -45,7 +45,7 @@ class OtpVerificationScreen extends StatelessWidget {
               keyboardType: TextInputType.number,
             ),
             SizedBox(height: AppSpacing.lg.h),
-            CommonButton(label: 'Verify', onPressed: controller.verifyOtp),
+            CommonButton(titleText: 'Verify', onTap: controller.verifyOtp),
           ],
         ),
       ),

@@ -17,7 +17,7 @@ class ErrorScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CommonScaffold(
-      appBar: const CommonTopBar(title: 'Error'),
+      appBar: const CommonAppBar(title: 'Error'),
       body: ErrorStateWidget(
         title: title,
         message: message,

@@ -9,7 +9,7 @@ class MaintenanceScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CommonScaffold(
-      appBar: const CommonTopBar(title: 'Maintenance', showBack: false),
+      appBar: const CommonAppBar(title: 'Maintenance', showBack: false),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

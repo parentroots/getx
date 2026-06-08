@@ -19,7 +19,7 @@ class ProfileScreen extends StatelessWidget {
     return CommonScaffold(
       drawer: const CommonDrawer(),
       bottomNavigationBar: const CommonBottomNavBar(),
-      appBar: const CommonTopBar(title: 'Profile', showBack: true),
+      appBar: const CommonAppBar(title: 'Profile', showBack: true),
       body: ListView(
         padding: EdgeInsets.symmetric(vertical: 16.h),
         children: [
@@ -52,9 +52,8 @@ class ProfileScreen extends StatelessWidget {
           ),
           SizedBox(height: AppSpacing.lg.h),
           CommonButton(
-            label: 'Edit profile',
-            icon: Icon(Icons.edit_outlined, size: 20.r),
-            onPressed: () => Get.toNamed(AppRoutes.editProfile),
+            titleText: "",
+            onTap: () => Get.toNamed(AppRoutes.editProfile),
           ),
         ],
       ),

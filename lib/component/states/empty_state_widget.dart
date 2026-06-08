@@ -69,7 +69,7 @@ class _StateShell extends StatelessWidget {
             ),
             if (actionLabel != null && onAction != null) ...[
               SizedBox(height: 24.h),
-              CommonButton(label: actionLabel!, onPressed: onAction),
+              CommonButton( onTap: onAction, titleText: '',),
             ],
           ],
         ),

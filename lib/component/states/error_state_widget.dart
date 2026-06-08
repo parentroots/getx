@@ -45,9 +45,9 @@ class ErrorStateWidget extends StatelessWidget {
             if (onRetry != null) ...[
               SizedBox(height: 24.h),
               CommonButton(
-                label: 'Retry',
-                icon: const Icon(Icons.refresh),
-                onPressed: onRetry,
+
+                onTap: onRetry,
+                titleText: "",
               ),
             ],
           ],

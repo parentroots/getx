@@ -20,7 +20,7 @@ class SettingsScreen extends StatelessWidget {
     return CommonScaffold(
       drawer: const CommonDrawer(),
       bottomNavigationBar: const CommonBottomNavBar(),
-      appBar: const CommonTopBar(title: 'Settings', showBack: true),
+      appBar: const CommonAppBar(title: 'Settings', showBack: true),
       body: ListView(
         padding: EdgeInsets.symmetric(vertical: 16.h),
         children: [

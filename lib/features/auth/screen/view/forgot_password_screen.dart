@@ -18,7 +18,7 @@ class ForgotPasswordScreen extends StatelessWidget {
     final controller = Get.find<AuthController>();
 
     return CommonScaffold(
-      appBar: const CommonTopBar(title: 'Forgot password'),
+      appBar: const CommonAppBar(title: 'Forgot password'),
       body: Form(
         key: controller.forgotPasswordFormKey,
         child: Column(
@@ -45,8 +45,8 @@ class ForgotPasswordScreen extends StatelessWidget {
             ),
             SizedBox(height: AppSpacing.lg.h),
             CommonButton(
-              label: 'Continue',
-              onPressed: controller.submitForgotPassword,
+              titleText: 'Continue',
+              onTap: controller.submitForgotPassword,
             ),
           ],
         ),

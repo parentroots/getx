@@ -19,7 +19,10 @@ class NoInternetWidget extends StatelessWidget {
             Icon(
               Icons.wifi_off_rounded,
               size: 56.r,
-              color: Theme.of(context).colorScheme.primary,
+              color: Theme
+                  .of(context)
+                  .colorScheme
+                  .primary,
             ),
             SizedBox(height: 16.h),
             CommonText(
@@ -38,9 +41,8 @@ class NoInternetWidget extends StatelessWidget {
             if (onRetry != null) ...[
               SizedBox(height: 24.h),
               CommonButton(
-                label: 'Retry',
-                icon: const Icon(Icons.refresh),
-                onPressed: onRetry,
+                titleText:"",
+                onTap: onRetry,
               ),
             ],
           ],

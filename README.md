@@ -508,41 +508,115 @@ CommonSvgIcon(
 ### 📁 Group C: Pickers & Interactive Sheets
 
 #### 18. `CommonCountryPicker`
-💡 **Purpose**: Searchable modal panel returning dial codes, emojis, and ISO country descriptors.
+💡 **Purpose**: A highly refined, package-powered searchable bottom sheet selector for global country codes. Dynamically resolves details (ISO alpha-2, dialed prefix, flags) from the `country_picker` dependency to ensure up-to-date data without hardcoding. Features A-Z alphabetical grouping headers, a horizontal popular shortcut row, selection highlighting with active checkmarks, custom query text highlighting, and a search suffix clear button.
+
 ⚙️ **Key Parameters**:
 | Parameter | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `context` | `BuildContext` | *Required* | Widget context to push bottom sheet. |
-| `title` | `String` | `'Select Country'`| Header label of sheet. |
+| `context` | `BuildContext` | *Required* | Build context to push the modal sheet. |
+| `customCountries` | `List<CountryModel>?` | `null` | Overriding list of custom country models to show. |
+| `selectedCountryCode` | `String?` | `null` | ISO 2-letter uppercase code of currently selected country to highlight. |
+| `title` | `String` | `'Select Country'` | Header title text. |
+| `searchHint` | `String` | `'Search by name, code or dial code...'` | Search textfield placeholder. |
+| `primaryColor` | `Color?` | `theme.primaryColor` | Accent color used for highlighting matches, selections, and chips. |
 
-🚀 **Usage Snippet**:
-```dart
-final country = await CommonCountryPicker.show(context: context);
-if (country != null) {
-  print("Chosen Country: ${country.name} (${country.dialCode})");
-}
-```
+🚀 **Detailed Usage Case (GetX Reactive State)**:
+1.  **Define Reactive variable inside Controller**:
+    ```dart
+    import 'package:get/get.dart';
+    import 'package:getx_template/component/pickers/common_country_picker.dart';
+
+    class AuthController extends GetxController {
+      final Rxn<CountryModel> selectedCountry = Rxn<CountryModel>();
+    }
+    ```
+2.  **Add Trigger Widget inside View Layer**:
+    ```dart
+    Obx(() {
+      final selected = controller.selectedCountry.value;
+      return CommonCard(
+        onTap: () async {
+          final result = await CommonCountryPicker.show(
+            context: context,
+            selectedCountryCode: selected?.code,
+          );
+          if (result != null) {
+            controller.selectedCountry.value = result;
+          }
+        },
+        child: Row(
+          children: [
+            Text(selected?.flagEmoji ?? '🏳️'),
+            SizedBox(width: 12),
+            Expanded(
+              child: Text(selected?.name ?? 'Select your residence country'),
+            ),
+            Icon(Icons.keyboard_arrow_down),
+          ],
+        ),
+      );
+    })
+    ```
 
 ---
 
 #### 19. `CommonDatePicker`
-💡 **Purpose**: Premium iOS Cupertino date selection wheel neatly framed inside a modern rounded material bottom sheet.
+💡 **Purpose**: Premium iOS Cupertino-style date selection wheel presented in a modern, dark-mode compatible bottom sheet container with drag handle triggers. Perfect for DOB or custom date inputs.
+
 ⚙️ **Key Parameters**:
 | Parameter | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
 | `context` | `BuildContext` | *Required* | View context. |
-| `initialDate` | `DateTime?` | `DateTime.now()` | Initially selected wheel timestamp. |
-| `minimumDate` | `DateTime?` | `null` | Minimum bound. |
-| `maximumDate` | `DateTime?` | `null` | Maximum bound. |
+| `initialDate` | `DateTime?` | `DateTime.now()` | Initially active date on the wheels. |
+| `minimumDate` | `DateTime?` | `null` | Earliest pickable date. |
+| `maximumDate` | `DateTime?` | `null` | Latest pickable date. |
+| `title` | `String` | `'Select Date'` | Modal header title. |
+| `confirmText` | `String` | `'Done'` | Confirm button text. |
+| `cancelText` | `String` | `'Cancel'` | Cancel button text. |
+| `confirmColor` | `Color?` | `theme.primaryColor` | Color of the confirm text. |
+| `cancelColor` | `Color?` | `Colors.grey.shade600` | Color of the cancel text. |
 
-🚀 **Usage Snippet**:
-```dart
-final selectedDate = await CommonDatePicker.show(
-  context: context,
-  minimumDate: DateTime(2000),
-  maximumDate: DateTime.now(),
-);
-```
+🚀 **Detailed Usage Case (GetX Reactive State)**:
+1.  **Define Reactive variable inside Controller**:
+    ```dart
+    import 'package:get/get.dart';
+
+    class AuthController extends GetxController {
+      final Rxn<DateTime> selectedDate = Rxn<DateTime>();
+    }
+    ```
+2.  **Add Trigger Widget inside View Layer (Formatted using DateFormatter)**:
+    ```dart
+    Obx(() {
+      final selected = controller.selectedDate.value;
+      return CommonCard(
+        onTap: () async {
+          final result = await CommonDatePicker.show(
+            context: context,
+            initialDate: selected ?? DateTime.now(),
+            maximumDate: DateTime.now(),
+          );
+          if (result != null) {
+            controller.selectedDate.value = result;
+          }
+        },
+        child: Row(
+          children: [
+            Icon(Icons.calendar_today),
+            SizedBox(width: 12),
+            Expanded(
+              child: Text(
+                selected != null
+                    ? DateFormatter.date(selected)
+                    : 'Select Date of Birth',
+              ),
+            ),
+            Icon(Icons.keyboard_arrow_down),
+          ],
+        ),
+      );
+    })
+    ```
 
 ---
 

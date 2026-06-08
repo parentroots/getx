@@ -40,7 +40,7 @@ class OnboardingScreen extends StatelessWidget {
             color: Colors.grey,
           ),
           const Spacer(),
-          CommonButton(label: 'Get started', onPressed: controller.finish),
+          CommonButton(titleText: "", onTap: controller.finish),
           SizedBox(height: AppSpacing.sm.h),
           TextButton(
             onPressed: () => Get.offAllNamed(AppRoutes.authWelcome),
