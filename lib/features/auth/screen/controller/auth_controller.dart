@@ -62,8 +62,9 @@ class AuthController extends BaseController {
     debugPrint("${currentTabIndex.value }");
   }
 
+  void togglePasswordVisibility() => obscurePassword.toggle();
 
-
+  void submitLogin() => _validate(loginFormKey, AppRoutes.home);
 
   void submitRegister() => _validate(registerFormKey, AppRoutes.home);
   void submitForgotPassword() =>

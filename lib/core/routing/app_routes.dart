@@ -15,6 +15,7 @@ import 'package:getx_template/features/system/screen/view/error_screen.dart';
 import 'package:getx_template/features/system/screen/view/maintenance_screen.dart';
 import 'package:getx_template/features/system/screen/view/no_internet_screen.dart';
 import 'package:getx_template/features/system/screen/view/update_required_screen.dart';
+import 'package:getx_template/features/showcase/screen/view/component_showcase_screen.dart';
 
 class AppRoutes {
   AppRoutes._();
@@ -36,6 +37,7 @@ class AppRoutes {
   static const String updateRequired = '/update-required';
   static const String maintenance = '/maintenance';
   static const String error = '/error';
+  static const String showcase = '/showcase';
 
   final List<GetPage<dynamic>> routes = [
     GetPage(name: splash, page: () => const SplashScreen()),
@@ -54,6 +56,7 @@ class AppRoutes {
     GetPage(name: updateRequired, page: () => const UpdateRequiredScreen()),
     GetPage(name: maintenance, page: () => const MaintenanceScreen()),
     GetPage(name: error, page: () => const ErrorScreen()),
+    GetPage(name: showcase, page: () => const ComponentShowcaseScreen()),
   ];
 
   final unknownRoute = GetPage(

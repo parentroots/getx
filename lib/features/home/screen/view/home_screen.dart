@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:getx_template/component/common_app_bar.dart';
@@ -59,6 +59,12 @@ class HomeScreen extends StatelessWidget {
 
                 const Text(
                   'GetX routes, dependency injection, services, themes, utilities, and reusable widgets are wired.',
+                ),
+                const SizedBox(height: AppSpacing.md),
+                CommonButton(
+                  titleText: 'Launch Widget Showcase',
+                  buttonWidth: double.maxFinite,
+                  onTap: () => Get.toNamed(AppRoutes.showcase),
                 ),
               ],
             ),
