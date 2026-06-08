@@ -673,21 +673,29 @@ CommonSnackbar.showError(title: 'Connection Lost', message: 'Please retry your r
 
 ---
 
-#### 23. `ConfirmationDialog`
-💡 **Purpose**: Clean standard choice alert box dialog returning boolean status flags.
-⚙️ **Key Parameters**: Takes `title`, `message`, `confirmText`, `cancelText`.
+#### 23. `CommonDialog`
+💡 **Purpose**: Premium type-based alert and choice dialog supporting success, error, warning, info, and confirmation variants.
+⚙️ **Key Parameters**: Takes `title`, `subtitle`, `type` (DialogType), `primaryButtonText`, `secondaryButtonText`, custom `image`/`icon`, colors, and close options.
 🚀 **Usage Snippet**:
 ```dart
-final confirmed = await showDialog<bool>(
+// Custom confirmation with dual options
+final confirmed = await CommonDialog.showConfirmation(
   context: context,
-  builder: (context) => const ConfirmationDialog(
-    title: 'Delete Item?',
-    message: 'Are you sure you want to permanently remove this transaction?',
-  ),
+  title: 'Delete Item?',
+  subtitle: 'Are you sure you want to permanently remove this transaction?',
+  primaryButtonText: 'Delete',
+  secondaryButtonText: 'Cancel',
 );
-if (confirmed ?? false) {
+if (confirmed == true) {
   controller.deleteItem();
 }
+
+// Styled success modal
+CommonDialog.showSuccess(
+  context: context,
+  title: 'Action Completed',
+  subtitle: 'Your update has been applied successfully.',
+);
 ```
 
 ---

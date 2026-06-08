@@ -18,9 +18,10 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.find<SettingsController>();
     return CommonScaffold(
-      drawer: const CommonDrawer(),
       bottomNavigationBar: const CommonBottomNavBar(),
-      appBar: const CommonAppBar(title: 'Settings', showBack: true),
+      appBar: const CommonAppBar(
+        centerTitle: true,
+          title: 'Settings', showBack: true),
       body: ListView(
         padding: EdgeInsets.symmetric(vertical: 16.h),
         children: [

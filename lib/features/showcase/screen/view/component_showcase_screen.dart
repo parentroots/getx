@@ -10,12 +10,16 @@ import 'package:getx_template/component/common_search_bar.dart';
 import 'package:getx_template/component/common_switch.dart';
 import 'package:getx_template/component/common_tab_bar.dart';
 import 'package:getx_template/component/common_text_field.dart';
+import 'package:getx_template/component/dialogs/common_snackbar.dart';
+import 'package:getx_template/component/dialogs/loading_dialog.dart';
+import 'package:getx_template/component/dialogs/common_dialog.dart';
 import 'package:getx_template/component/layout/common_list_view.dart';
 import 'package:getx_template/component/layout/common_scaffold.dart';
 import 'package:getx_template/component/layout/common_text.dart';
 import 'package:getx_template/component/loading/shimmer_box.dart';
 import 'package:getx_template/component/pickers/common_country_picker.dart';
 import 'package:getx_template/component/pickers/common_date_picker.dart';
+import 'package:getx_template/core/theme/app_colors.dart';
 import 'package:getx_template/core/utils/date_formatter.dart';
 import 'package:getx_template/features/auth/screen/controller/auth_controller.dart';
 
@@ -98,6 +102,9 @@ class ComponentShowcaseScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const CommonTextField(
+                    borderRadius: 8,
+                    enableSuggestions: true,
+                    keyboardType: TextInputType.text,
                     hint: "Enter your full name",
                     label: "Name Field",
                     prefixIcon: Icons.person_outline,
@@ -309,7 +316,111 @@ class ComponentShowcaseScreen extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(height: 32.h),
+            SizedBox(height: 24.h),
+
+            // Section 7: Dialogs & Modals
+            _buildSectionHeader("Common Dialogs & Modals"),
+            CommonCard(
+              child: Column(
+                children: [
+                  CommonButton(
+                    titleText: "Show Success Dialog",
+                    buttonWidth: double.maxFinite,
+                    buttonColor: AppColors.success,
+                    onTap: () {
+                      CommonDialog.showSuccess(
+                        context: context,
+                        title: "Payment Successful",
+                        subtitle: "Your subscription has been updated successfully. A receipt has been sent to your email.",
+                      );
+                    },
+                  ),
+                  SizedBox(height: 12.h),
+                  CommonButton(
+                    titleText: "Show Error Dialog",
+                    buttonWidth: double.maxFinite,
+                    buttonColor: AppColors.error,
+                    onTap: () {
+                      CommonDialog.showError(
+                        context: context,
+                        title: "Connection Failed",
+                        subtitle: "We were unable to connect to the server. Please check your internet connection and try again.",
+                      );
+                    },
+                  ),
+                  SizedBox(height: 12.h),
+                  CommonButton(
+                    titleText: "Show Warning (Confirmation)",
+                    buttonWidth: double.maxFinite,
+                    buttonColor: AppColors.warning,
+                    onTap: () async {
+                      final confirm = await CommonDialog.showWarning(
+                        showCloseButton: false,
+
+                        context: context,
+                        title: "Delete Account?",
+                        subtitle: "Are you sure you want to delete your account? This action is irreversible and all your data will be lost.",
+                        primaryButtonText: "Delete",
+                        secondaryButtonText: "Cancel",
+                      );
+                      if (confirm == true) {
+                        CommonSnackbar.show(
+                          title: "Account Deleted",
+                          message: "Account deletion requested successfully.",
+                          type: SnackbarType.error,
+                        );
+                      }
+                    },
+                  ),
+                  SizedBox(height: 12.h),
+                  CommonButton(
+                    titleText: "Show Confirmation Dialog",
+                    buttonWidth: double.maxFinite,
+                    onTap: () async {
+                      final confirm = await CommonDialog.showConfirmation(
+                        context: context,
+                        title: "Confirm Settings Update",
+                        subtitle: "Apply these changes to your user account profile configurations?",
+                        primaryButtonText: "Apply",
+                        secondaryButtonText: "Cancel",
+                      );
+                      if (confirm != null) {
+                        CommonSnackbar.show(
+                          title: confirm ? "Applied" : "Cancelled",
+                          message: confirm ? "Settings saved successfully." : "Settings update aborted.",
+                          type: confirm ? SnackbarType.success : SnackbarType.info,
+                        );
+                      }
+                    },
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 24.h),
+
+            // Section 8: SnackBar & Toast
+            _buildSectionHeader("Notifications & Snacks"),
+            CommonCard(
+              child: CommonButton(
+                titleText: "Show Success SnackBar",
+                buttonWidth: double.maxFinite,
+                onTap: () {
+                  CommonSnackbar.show(
+                    position: SnackPosition.BOTTOM,
+                    type: SnackbarType.error,
+                    title: "Success Alert",
+                    message: "This is a premium success alert message.",
+                  );
+                },
+              ),
+            ),
+
+
+
+
+
+
+
           ],
         ),
       ),

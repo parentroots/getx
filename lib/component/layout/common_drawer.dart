@@ -1,6 +1,7 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:getx_template/component/dialogs/common_dialog.dart';
 import 'package:getx_template/component/layout/common_text.dart';
 import 'package:getx_template/core/routing/app_routes.dart';
 
@@ -22,49 +23,13 @@ class CommonDrawer extends StatelessWidget {
     final theme = Theme.of(context);
     Get.back(); // Close drawer first
 
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.r)),
-        title: CommonText(
-          'Logout',
-          variant: TextVariant.title,
-          weight: TextWeight.bold,
-        ),
-        content: CommonText(
-          'Are you sure you want to log out of your account?',
-          variant: TextVariant.body,
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: CommonText(
-              'Cancel',
-              variant: TextVariant.body,
-              color: Colors.grey,
-            ),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.pop(context);
-              // Clean navigation stack and head to welcome/login screen
-              Get.offAllNamed(AppRoutes.authWelcome);
-            },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: theme.colorScheme.error,
-              foregroundColor: Colors.white,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.r)),
-            ),
-            child: CommonText(
-              'Logout',
-              variant: TextVariant.body,
-              color: Colors.white,
-              weight: TextWeight.bold,
-            ),
-          ),
-        ],
-      ),
-    );
+    CommonDialog.showWarning(
+      onPrimaryTap: (){
+
+        Get.offAllNamed(AppRoutes.login);
+      },
+      showCloseButton: false,
+        context: context, title: "Log-Out", subtitle: "Are you sure want to logout");
   }
 
   @override

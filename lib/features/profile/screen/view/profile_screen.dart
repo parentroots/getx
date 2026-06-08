@@ -17,9 +17,10 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CommonScaffold(
-      drawer: const CommonDrawer(),
       bottomNavigationBar: const CommonBottomNavBar(),
-      appBar: const CommonAppBar(title: 'Profile', showBack: true),
+      appBar: const CommonAppBar(
+        centerTitle: true,
+          title: 'Profile', showBack: true),
       body: ListView(
         padding: EdgeInsets.symmetric(vertical: 16.h),
         children: [

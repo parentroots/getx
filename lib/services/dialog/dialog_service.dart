@@ -1,6 +1,6 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:getx_template/component/dialogs/confirmation_dialog.dart';
+import 'package:getx_template/component/dialogs/common_dialog.dart';
 import 'package:getx_template/component/dialogs/loading_dialog.dart';
 
 class DialogService extends GetxService {
@@ -23,13 +23,53 @@ class DialogService extends GetxService {
     String confirmText = 'Confirm',
     String cancelText = 'Cancel',
   }) {
-    return Get.dialog<bool>(
-      ConfirmationDialog(
-        title: title,
-        message: message,
-        confirmText: confirmText,
-        cancelText: cancelText,
-      ),
+    return CommonDialog.showConfirmation(
+      context: Get.context ?? Get.overlayContext ?? Get.key.currentContext!,
+      title: title,
+      subtitle: message,
+      primaryButtonText: confirmText,
+      secondaryButtonText: cancelText,
+    );
+  }
+
+  Future<bool?> showSuccess({
+    required String title,
+    required String message,
+    String buttonText = 'OK',
+  }) {
+    return CommonDialog.showSuccess(
+      context: Get.context ?? Get.overlayContext ?? Get.key.currentContext!,
+      title: title,
+      subtitle: message,
+      primaryButtonText: buttonText,
+    );
+  }
+
+  Future<bool?> showInfo({
+    required String title,
+    required String message,
+    String buttonText = 'OK',
+  }) {
+    return CommonDialog.showInfo(
+      context: Get.context ?? Get.overlayContext ?? Get.key.currentContext!,
+      title: title,
+      subtitle: message,
+      primaryButtonText: buttonText,
+    );
+  }
+
+  Future<bool?> showWarning({
+    required String title,
+    required String message,
+    String confirmText = 'Confirm',
+    String cancelText = 'Cancel',
+  }) {
+    return CommonDialog.showWarning(
+      context: Get.context ?? Get.overlayContext ?? Get.key.currentContext!,
+      title: title,
+      subtitle: message,
+      primaryButtonText: confirmText,
+      secondaryButtonText: cancelText,
     );
   }
 
@@ -46,17 +86,11 @@ class DialogService extends GetxService {
   }
 
   void showError({required String message, String title = 'Error'}) {
-    Get.dialog<void>(
-      AlertDialog(
-        title: Text(title),
-        content: Text(message),
-        actions: [
-          TextButton(
-            onPressed: () => Get.back<void>(),
-            child: const Text('OK'),
-          ),
-        ],
-      ),
+    CommonDialog.showError(
+      context: Get.context ?? Get.overlayContext ?? Get.key.currentContext!,
+      title: title,
+      subtitle: message,
+      primaryButtonText: 'OK',
     );
   }
 
@@ -71,3 +105,4 @@ class DialogService extends GetxService {
     );
   }
 }
+
