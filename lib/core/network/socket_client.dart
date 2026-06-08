@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:socket_io_client/socket_io_client.dart' as io;
 
 /// A Singleton Socket Client that handles all WebSockets/Socket.IO connections.
+
 class SocketClient {
   // Private constructor for singleton
   SocketClient._internal();

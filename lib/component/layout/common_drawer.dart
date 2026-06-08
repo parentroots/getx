@@ -152,13 +152,13 @@ class CommonDrawer extends StatelessWidget {
           ),
           SizedBox(height: 16.h),
           CommonText(
-            'Md. Ibrahim Khalil',
+            'MD EBRAHIM NAZMUL',
             variant: TextVariant.title,
             weight: TextWeight.bold,
           ),
           SizedBox(height: 4.h),
           CommonText(
-            'ibrahim@parentroots.com',
+            'ibrahimsparktech@gmail.com',
             variant: TextVariant.caption,
             color: Colors.grey,
           ),
@@ -204,13 +204,14 @@ class CommonDrawer extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.only(bottom: 6.h),
       child: SwitchListTile(
+
         value: isDark,
         onChanged: (bool val) {
           Get.changeThemeMode(val ? ThemeMode.dark : ThemeMode.light);
         },
         secondary: Icon(
           isDark ? Icons.dark_mode_rounded : Icons.light_mode_rounded,
-          color: theme.primaryColor,
+          color: isDark?theme.primaryColor:Colors.red,
           size: 22.r,
         ),
         title: CommonText(
@@ -219,7 +220,8 @@ class CommonDrawer extends StatelessWidget {
           weight: TextWeight.medium,
         ),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
-        activeColor: theme.primaryColor,
+        activeColor:  isDark?theme.primaryColor:Colors.red
+
       ),
     );
   }

@@ -46,7 +46,7 @@ class CommonBottomNavBar extends StatelessWidget {
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.06),
+            color: Colors.black.withValues(alpha: .06),
             blurRadius: 16.r,
             offset: Offset(0, -4.h),
           ),
@@ -65,17 +65,29 @@ class CommonBottomNavBar extends StatelessWidget {
         destinations: [
           NavigationDestination(
             icon: Icon(Icons.home_outlined, size: 24.r),
-            selectedIcon: Icon(Icons.home_rounded, size: 24.r, color: theme.primaryColor),
+            selectedIcon: Icon(
+              Icons.home_rounded,
+              size: 24.r,
+              color: theme.primaryColor,
+            ),
             label: 'Home',
           ),
           NavigationDestination(
             icon: Icon(Icons.person_outline_rounded, size: 24.r),
-            selectedIcon: Icon(Icons.person_rounded, size: 24.r, color: theme.primaryColor),
+            selectedIcon: Icon(
+              Icons.person_rounded,
+              size: 24.r,
+              color: theme.primaryColor,
+            ),
             label: 'Profile',
           ),
           NavigationDestination(
             icon: Icon(Icons.settings_outlined, size: 24.r),
-            selectedIcon: Icon(Icons.settings_rounded, size: 24.r, color: theme.primaryColor),
+            selectedIcon: Icon(
+              Icons.settings_rounded,
+              size: 24.r,
+              color: theme.primaryColor,
+            ),
             label: 'Settings',
           ),
         ],

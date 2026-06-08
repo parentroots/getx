@@ -21,6 +21,7 @@ import 'package:getx_template/component/pickers/common_date_picker.dart';
 import 'package:getx_template/core/theme/app_colors.dart';
 import 'package:getx_template/core/utils/date_formatter.dart';
 import 'package:getx_template/features/auth/screen/controller/auth_controller.dart';
+import 'package:getx_template/services/launcher/url_launcher_helper.dart';
 
 class ComponentShowcaseScreen extends StatelessWidget {
   const ComponentShowcaseScreen({super.key});
@@ -414,6 +415,15 @@ class ComponentShowcaseScreen extends StatelessWidget {
               ),
             ),
 
+
+
+            CommonButton(titleText: "Show Url Launcher",onTap: (){
+
+
+
+
+              UrlLauncherHelper.open("https://pub.dev/");
+            },)
 
 
 
