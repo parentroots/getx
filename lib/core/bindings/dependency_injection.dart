@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:getx_template/core/config/app_lifecycle_observer.dart';
+import 'package:getx_template/data/repositories/auth_repository.dart';
 import 'package:getx_template/features/auth/screen/controller/auth_controller.dart';
 import 'package:getx_template/features/home/screen/controller/home_controller.dart';
 import 'package:getx_template/features/notifications/screen/controller/notifications_controller.dart';
@@ -13,6 +14,11 @@ class DependencyInjection extends Bindings {
   @override
   void dependencies() {
     Get.putAsync(() => AppLifecycleObserver().init());
+    
+    // Repositories
+    Get.lazyPut(() => AuthRepository(), fenix: true);
+
+    // Controllers
     Get.lazyPut(() => SplashController(), fenix: true);
     Get.lazyPut(() => OnboardingController(), fenix: true);
     Get.lazyPut(() => AuthController(), fenix: true);

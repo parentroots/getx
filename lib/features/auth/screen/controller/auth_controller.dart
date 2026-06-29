@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getx_template/core/routing/app_routes.dart';
 import 'package:getx_template/data/models/paginated_response.dart';
+import 'package:getx_template/data/repositories/auth_repository.dart';
 import 'package:getx_template/shared/controllers/base_controller.dart';
 import 'package:getx_template/component/pickers/common_country_picker.dart';
 
 class AuthController extends BaseController {
-
-
+  final AuthRepository _authRepository = Get.find<AuthRepository>();
 
   List<String>tabList=[
     'All','new','old'
@@ -64,11 +64,50 @@ class AuthController extends BaseController {
 
   void togglePasswordVisibility() => obscurePassword.toggle();
 
-  void submitLogin() => _validate(loginFormKey, AppRoutes.home);
+  Future<void> submitLogin() async {
+    if (loginFormKey.currentState?.validate() ?? false) {
+      try {
+        await runBusy(() => _authRepository.login(
+              emailController.text.trim(),
+              passwordController.text,
+            ));
+        Get.offAllNamed(AppRoutes.home);
+      } catch (error) {
+        Get.snackbar(
+          'Error',
+          error.toString(),
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.redAccent,
+          colorText: Colors.white,
+        );
+      }
+    }
+  }
 
-  void submitRegister() => _validate(registerFormKey, AppRoutes.home);
+  Future<void> submitRegister() async {
+    if (registerFormKey.currentState?.validate() ?? false) {
+      try {
+        await runBusy(() => _authRepository.register(
+              name: nameController.text.trim(),
+              email: emailController.text.trim(),
+              password: passwordController.text,
+            ));
+        Get.offAllNamed(AppRoutes.home);
+      } catch (error) {
+        Get.snackbar(
+          'Error',
+          error.toString(),
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.redAccent,
+          colorText: Colors.white,
+        );
+      }
+    }
+  }
+
   void submitForgotPassword() =>
       _validate(forgotPasswordFormKey, AppRoutes.otpVerification);
+
   void verifyOtp() => _validate(otpFormKey, AppRoutes.login);
 
   void _validate(GlobalKey<FormState> key, String nextRoute) {
