@@ -8,20 +8,22 @@ This template is meticulously structured for maximum code readability, rapid dev
 
 ## 🚀 Architectural Overview
 
-We have migrated from a traditional, cluttered folder structure to an organized, domain-driven **Feature-First Architecture**. All custom UI widgets have been unified under a standard **`Common`** design system (replacing standard platform-specific prefixes).
+We follow an organized, domain-driven **Feature-First Architecture**. All custom UI widgets are unified under a standard **`Common`** design system (replacing standard platform-specific prefixes).
 
 ```text
 lib/
 ├── core/                   # App-wide foundations & configurations
 │   ├── bindings/           # Centralized global Dependency Injection
 │   ├── config/             # App lifecycle observers & configurations
-│   ├── constants/          # Static app constants (API, storage keys, etc.)
+│   ├── constants/          # Static app constants (API, storage keys, colors, strings)
 │   ├── errors/             # Global error handling logic & custom exceptions
 │   ├── localization/       # Internationalization & translations
 │   ├── network/            # Singleton HTTP and WebSocket Clients
 │   ├── routing/            # Singleton navigation & routes registration
-│   ├── theme/              # Curated light/dark design tokens & typography
-│   └── utils/              # General helper classes & validators
+│   ├── theme/              # Curated light/dark theme config, radius, & typography
+│   └── utils/              # Helper utilities
+│       ├── extenstion/     # Screen, context, and widget layout extensions
+│       └── helper/         # Logger, date formatters, and validators
 │
 ├── component/              # Globally shared, highly customizable Common UI widgets
 │   ├── dialogs/            # App dialogs & Common Snackbars
@@ -47,15 +49,23 @@ lib/
 ### 1. Centralized Global Dependency Injection
 All GetX controllers are managed in a single, robust centralized file: `lib/core/bindings/dependency_injection.dart`.
 Using `Get.lazyPut(..., fenix: true)` ensures that controllers are memory-efficiently instantiated **only when needed** and automatically recreated when accessed again, eliminating memory leaks.
+Global services (like `ConnectivityService` or `SharedPreferencesService`) are registered as permanent dependencies.
 
 ```dart
 class DependencyInjection extends Bindings {
   @override
   void dependencies() {
+    Get.putAsync(() => AppLifecycleObserver().init());
+    
+    // Services
+    Get.lazyPut(() => SharedPreferencesService.instance, fenix: true);
+    Get.put(ConnectivityService(), permanent: true);
+    Get.put(DialogService(), permanent: true);
+    
+    // Controllers
     Get.lazyPut(() => SplashController(), fenix: true);
+    Get.lazyPut(() => OnboardingController(), fenix: true);
     Get.lazyPut(() => AuthController(), fenix: true);
-    Get.lazyPut(() => HomeController(), fenix: true);
-    // Add new controllers here!
   }
 }
 ```
@@ -64,7 +74,6 @@ class DependencyInjection extends Bindings {
 All route constants and screen mappings are neatly encapsulated within a single Singleton class in `lib/core/routing/app_routes.dart`. This removes clutter and makes route declaration clean and human-readable.
 
 ```dart
-// Access routing list directly
 GetMaterialApp(
   initialRoute: AppRoutes.splash,
   getPages: AppRoutes.instance.routes,
@@ -72,19 +81,14 @@ GetMaterialApp(
 );
 ```
 
-### 3. High-Performance Singleton Network Clients
-The network folder (`lib/core/network/`) features dual connection managers:
-
+### 3. High-Performance Network & Connectivity Clients
 *   **`ApiClient` (Dio Singleton)**: 
     *   Exposes clean HTTP methods: `.get()`, `.post()`, `.put()`, `.patch()`, `.delete()`.
-    *   **Multipart Uploads**: Built-in support for uploading forms/files via `multipartUpload` with real-time progress callbacks.
-    *   **Downloads**: Integrated secure `download` helper.
+    *   **Multipart Uploads**: Built-in support for uploading forms/files via `multipartUpload` with progress callbacks.
     *   **Resiliency**: Automatic global API interception, authorization token injection, network logs, and standard `NetworkException` conversion.
-
-*   **`SocketClient` (WebSocket/Socket.IO Singleton)**:
-    *   Optimized transport connection (`websocket` transport by default).
-    *   Built-in reactive status streaming via `connectionStatus` stream.
-    *   Streamlined event listening/emission API: `on()`, `off()`, `emit()`, `emitWithAck()`.
+*   **`ConnectivityService` (Connection Observer)**:
+    *   Listens to dynamic internet status changes.
+    *   Exposes reactive boolean status updates using GetX `RxBool` (`isConnected.value`).
 
 ---
 
@@ -106,10 +110,10 @@ Adding a new module (e.g., `chat`) is extremely simple:
     ```dart
     static const String chat = '/chat';
     
-    // Add inside final List<GetPage> routes list:
+    // Add inside List<GetPage> routes list:
     GetPage(name: chat, page: () => const ChatScreen()),
     ```
-3.  **Register the Controller**: Add your new controller inside the centralized file `lib/core/bindings/dependency_injection.dart`:
+3.  **Register the Controller**: Add your controller inside the centralized file `lib/core/bindings/dependency_injection.dart`:
     ```dart
     Get.lazyPut(() => ChatController(), fenix: true);
     ```
@@ -133,141 +137,124 @@ Adding a new module (e.g., `chat`) is extremely simple:
 
 ## 🎨 Common Custom Widgets Encyclopedia
 
-All widgets in this boilerplate are prefix-unified under the **`Common`** namespace. They are meticulously designed to enforce standard-setting premium aesthetics (responsive widths, dark/light modes, premium micro-animations, and robust memory handling).
+All widgets are prefix-unified under the **`Common`** namespace. They are designed to enforce responsive layouts, dark/light compatibility, and micro-animations.
 
 ---
 
-### 📁 Group A: Core Form Fields & Inputs
+### 📁 Category 1: Form Fields, Inputs & Toggles
 
 #### 1. `CommonButton`
-💡 **Purpose**: A deeply customisable button supporting three visual styles (Filled, Outlined, Text), custom icons (leading/trailing), and a built-in loading spinner to handle async operations.
+💡 **Purpose**: Custom button supporting Filled, Outlined, and Text styles, leading/trailing icons, and a built-in loading spinner to handle async operations.
 ⚙️ **Key Parameters**:
 | Parameter | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `onPressed` | `VoidCallback?` | *Required* | Tap callback. If null or `isLoading` is true, button is disabled. |
-| `label` | `String?` | `null` | Label text. Either `label` or `child` must be provided. |
-| `isLoading` | `bool` | `false` | When true, renders a centered progress spinner. |
-| `isOutlined` | `bool` | `false` | Renders with an elegant thin border matching the accent color. |
-| `isTextButton` | `bool` | `false` | Renders a borderless text-only button. |
-| `backgroundColor` | `Color?` | Primary theme | Background fill color when filled. |
-| `borderRadius` | `double` | `12.0` | Custom rounding radius. |
+| `titleText` | `String` | *Required* | Text to display on the button. |
+| `onTap` | `VoidCallback?` | `null` | Tap callback. If null, the button is disabled. |
+| `isLoading` | `bool` | `false` | Renders a loading spinner and disables taps. |
+| `buttonColor` | `Color?` | `AppColors.primary` | Background color. |
+| `titleColor` | `Color?` | `Colors.white` | Text color. |
+| `buttonRadius` | `double?` | `12.0` | Rounded corners. |
+| `buttonWidth` | `double?` | `double.infinity` | Set custom width bounds. |
 
-🚀 **Usage Snippet**:
+🚀 **Usage**:
 ```dart
 CommonButton(
-  label: 'Proceed to Checkout',
+  titleText: 'Proceed to Checkout',
   isLoading: controller.isSubmitting.value,
-  iconRight: const Icon(Icons.arrow_forward, color: Colors.white),
-  onPressed: () => controller.checkout(),
+  onTap: () => controller.checkout(),
 )
 ```
 
----
-
 #### 2. `CommonTextField`
-💡 **Purpose**: The main text entry component offering custom round borders, automated focus indicators, error style maps, and helper toggles (e.g. password fields).
+💡 **Purpose**: Highly customizable input text field component featuring automated password visibility toggles, autofocus, and error border styling.
 ⚙️ **Key Parameters**:
 | Parameter | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `controller` | `TextEditingController?` | `null` | Field text controller. |
-| `label` | `String?` | `null` | Floating label text. |
-| `hint` | `String?` | `null` | Placeholder background hint. |
-| `obscureText` | `bool` | `false` | Hides input text (for passwords). |
-| `prefixIcon` | `IconData?` | `null` | Leading icon shown inside the frame. |
-| `suffixIcon` | `IconData?` | `null` | Trailing icon shown inside the frame. |
+| `controller` | `TextEditingController?` | `null` | Text controller. |
+| `label` | `String?` | `null` | Label text shown above. |
+| `hint` | `String?` | `null` | Placeholder hint. |
+| `obscureText` | `bool` | `false` | Hides input text. |
+| `prefixIcon` | `IconData?` | `null` | Leading icon. |
 | `validator` | `String? Function(String?)?` | `null` | Validation logic callback. |
 
-🚀 **Usage Snippet**:
+🚀 **Usage**:
 ```dart
 CommonTextField(
   label: 'Password',
-  hint: 'Enter your account password',
-  obscureText: controller.isPasswordHidden.value,
+  hint: 'Enter your password',
+  obscureText: controller.obscurePassword.value,
   prefixIcon: Icons.lock_outline,
-  suffixWidget: IconButton(
-    icon: Icon(controller.isPasswordHidden.value ? Icons.visibility : Icons.visibility_off),
-    onPressed: () => controller.togglePasswordVisibility(),
-  ),
   validator: (val) => val!.length < 6 ? 'Password is too short' : null,
 )
 ```
 
----
+#### 3. `Pinput` (OTP Input Field)
+💡 **Purpose**: Animated pin entry for OTP/verification screens. Integrates the `pinput` package with custom theme overrides matching the app's visual system.
+🚀 **Usage**:
+```dart
+Pinput(
+  length: 6,
+  controller: controller.otpController,
+  defaultPinTheme: defaultPinTheme,
+  focusedPinTheme: focusedPinTheme,
+  showCursor: true,
+  hapticFeedbackType: HapticFeedbackType.lightImpact,
+  keyboardType: TextInputType.number,
+)
+```
 
-#### 3. `CommonPhoneTextField`
-💡 **Purpose**: Premium input designed specifically for international mobile numbers. It includes a built-in searchable country dialing-prefix selector bottom sheet and active regex validations based on the chosen country prefix.
+#### 4. `CommonPhoneTextField`
+💡 **Purpose**: Input designed specifically for international mobile numbers. It includes a built-in searchable country dialing-prefix selector bottom sheet.
 ⚙️ **Key Parameters**:
 | Parameter | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
 | `controller` | `TextEditingController` | *Required* | Phone input controller. |
 | `label` | `String` | `'Phone Number'` | Outer label descriptor. |
-| `initialCountryCode` | `String` | `'BD'` | ISO 2-letter code to pre-select. |
-| `onCountryChanged` | `ValueChanged<CountryPhoneCode>?` | `null` | Triggers when the chosen country prefix changes. |
+| `initialCountryCode` | `String` | `'BD'` | Preselected ISO country code. |
 
-🚀 **Usage Snippet**:
+🚀 **Usage**:
 ```dart
 CommonPhoneTextField(
   controller: controller.phoneController,
   initialCountryCode: 'BD',
-  onChanged: (phone) => print("Current Input: $phone"),
-  onCountryChanged: (country) => print("Dial Code: ${country.dialCode}"),
 )
 ```
 
----
-
-#### 4. `CommonSearchBar`
-💡 **Purpose**: Stateful, sleek search panel that manages its own inner controller (or accepts a parent controller) and includes a one-click trailing "Clear" button.
+#### 5. `CommonSearchBar`
+💡 **Purpose**: Sleek search panel that manages its own inner controller and includes a one-click trailing "Clear" button.
 ⚙️ **Key Parameters**:
 | Parameter | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `controller` | `TextEditingController?` | `null` | Parent controller to listen to query. |
-| `onChanged` | `ValueChanged<String>?` | `null` | Callback triggered on character changes. |
+| `onChanged` | `ValueChanged<String>?` | `null` | Triggered on character changes. |
 | `hintText` | `String` | `'Search'` | Input placeholder text. |
 
-🚀 **Usage Snippet**:
+🚀 **Usage**:
 ```dart
 CommonSearchBar(
-  hintText: 'Search products...',
-  onChanged: (query) => controller.filterProducts(query),
+  hintText: 'Search items...',
+  onChanged: (query) => controller.search(query),
 )
 ```
 
----
-
-#### 5. `CommonRatingBar`
-💡 **Purpose**: Displays ratings with pixel-perfect accuracy. Supports both interactive star-based selection (with click/tap detection) and static, fractional read-only star previews.
+#### 6. `CommonRatingBar`
+💡 **Purpose**: Displays ratings. Supports interactive star-based selection and static, read-only star previews.
 ⚙️ **Key Parameters**:
 | Parameter | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `rating` | `double` | *Required* | Value to preview (e.g. `4.5` rating). |
-| `onRatingChanged` | `ValueChanged<double>?` | `null` | Active selection handler. If null, becomes READ-ONLY. |
-| `itemCount` | `int` | `5` | Total stars to display. |
-| `allowHalf` | `bool` | `true` | Allows partial or half-star selection. |
+| `rating` | `double` | *Required* | Rating score to display. |
+| `onRatingChanged` | `ValueChanged<double>?` | `null` | Interactive selector callback. If null, becomes read-only. |
 
-🚀 **Usage Snippet**:
+🚀 **Usage**:
 ```dart
 CommonRatingBar(
-  rating: controller.productRating.value,
+  rating: controller.rating.value,
   onRatingChanged: (newRating) => controller.submitRating(newRating),
-  allowHalf: true,
-  size: 28,
 )
 ```
 
----
-
-#### 6. `CommonSwitch`
-💡 **Purpose**: Premium custom toggle switch featuring smooth spring animation. Circumvents inconsistent native iOS/Android styling by offering customizable track/thumb sizes and colors.
-⚙️ **Key Parameters**:
-| Parameter | Type | Default | Description |
-| :--- | :--- | :--- | :--- |
-| `value` | `bool` | *Required* | Current state of the switch (ON/OFF). |
-| `onChanged` | `ValueChanged<bool>` | *Required* | Toggle callback. |
-| `activeColor` | `Color?` | Primary theme | Track color when active. |
-| `inactiveColor` | `Color?` | Muted grey | Track color when inactive. |
-
-🚀 **Usage Snippet**:
+#### 7. `CommonSwitch`
+💡 **Purpose**: Premium custom toggle switch featuring smooth spring animation and customizable track/thumb sizes.
+🚀 **Usage**:
 ```dart
 CommonSwitch(
   value: controller.isDarkTheme.value,
@@ -275,19 +262,9 @@ CommonSwitch(
 )
 ```
 
----
-
-#### 7. `CommonTabBar`
+#### 8. `CommonTabBar`
 💡 **Purpose**: Animated category sliding selector. Built with custom physics, featuring a beautiful sliding background block indicator.
-⚙️ **Key Parameters**:
-| Parameter | Type | Default | Description |
-| :--- | :--- | :--- | :--- |
-| `tabs` | `List<String>` | *Required* | Tab labels list. |
-| `selectedIndex` | `int` | *Required* | Active selected index. |
-| `onTabChanged` | `ValueChanged<int>` | *Required* | Callback on tab select. |
-| `borderRadius` | `double` | `12.0` | Rounded corner framing. |
-
-🚀 **Usage Snippet**:
+🚀 **Usage**:
 ```dart
 CommonTabBar(
   tabs: const ['Ongoing', 'Completed', 'Canceled'],
@@ -296,334 +273,165 @@ CommonTabBar(
 )
 ```
 
----
-
-### 📁 Group B: Layout, Typography & App Structure
-
-#### 8. `CommonScaffold`
-💡 **Purpose**: Multi-device viewport standardizer. Auto-constrains content width to desktop/web margins and wraps the main page frame in an optimized layout hierarchy.
-⚙️ **Key Parameters**:
-| Parameter | Type | Default | Description |
-| :--- | :--- | :--- | :--- |
-| `body` | `Widget` | *Required* | Content layout of the page. |
-| `appBar` | `PreferredSizeWidget?` | `null` | Header top bar wrapper. |
-| `bottomNavigationBar` | `Widget?` | `null` | Bottom navigation bar placement. |
-| `safeArea` | `bool` | `true` | When true, wraps the body in a safe-area view. |
-
-🚀 **Usage Snippet**:
+#### 9. `CommonDropdown<T>`
+💡 **Purpose**: Highly styled, customizable dropdown selector wrapper with custom layout themes.
+🚀 **Usage**:
 ```dart
-CommonScaffold(
-  appBar: const CommonTopBar(title: 'Settings'),
-  body: Column(
-    children: [
-      const CommonText('Configuration settings', variant: TextVariant.title),
-    ],
-  ),
+CommonDropdown<String>(
+  hint: "Select Option",
+  items: ["Option 1", "Option 2", "Option 3"],
+  value: controller.selectedOption.value,
+  onChanged: (val) => controller.selectedOption.value = val,
+)
+```
+
+#### 10. `CommonRadio<T>`
+💡 **Purpose**: Clean custom radio buttons that enforce visual consistency across Android/iOS platforms.
+🚀 **Usage**:
+```dart
+CommonRadio<int>(
+  value: 1,
+  groupValue: controller.selectedRadio.value,
+  onChanged: (val) => controller.selectedRadio.value = val,
+  label: "Male",
 )
 ```
 
 ---
 
-#### 9. `CommonTopBar`
-💡 **Purpose**: Clean standard App Bar which auto-detects routing history to show a back button, complete with custom action support and bold typography.
-⚙️ **Key Parameters**:
-| Parameter | Type | Default | Description |
-| :--- | :--- | :--- | :--- |
-| `title` | `String` | *Required* | Top header text. |
-| `showBack` | `bool` | `true` | Toggles automatic back-arrow button display. |
-| `actions` | `List<Widget>?` | `null` | List of trailing icons or widgets. |
+### 📁 Category 2: View Layouts, Scaffold & Typography
 
-🚀 **Usage Snippet**:
+#### 11. `CommonScaffold`
+💡 **Purpose**: Multi-device viewport standardizer. Auto-constrains content width for desktop screens and configures safe-areas and uniform edge padding.
+🚀 **Usage**:
 ```dart
-CommonTopBar(
+CommonScaffold(
+  appBar: const CommonAppBar(title: 'Settings'),
+  body: Column(...),
+)
+```
+
+#### 12. `CommonAppBar`
+💡 **Purpose**: Unified Top App Bar that automatically shows back-nav arrow buttons based on navigation history.
+🚀 **Usage**:
+```dart
+CommonAppBar(
   title: 'Edit Profile',
-  actions: [
-    IconButton(icon: const Icon(Icons.check), onPressed: () => controller.save()),
-  ],
+  showBack: true,
 )
 ```
 
----
-
-#### 10. `CommonDrawer`
-💡 **Purpose**: Navigation sidebar providing profile headers, responsive navigation links, and animated active state wrappers.
-⚙️ **Key Parameters**: See implementation file: [common_drawer.dart](file:///d:/Codex/getx_template/lib/component/layout/common_drawer.dart) for deep detail. Includes headers, lists of titles, and action callbacks.
-
-🚀 **Usage Snippet**:
+#### 13. `CommonBottomNavBar`
+💡 **Purpose**: Premium custom floating bottom navigation bar built with backdrop glassmorphism blurs and animated width-expanding page tab indicators.
+🚀 **Usage**:
 ```dart
 CommonScaffold(
-  drawer: const CommonDrawer(),
-  appBar: const CommonTopBar(title: 'Dashboard'),
-  body: const Center(child: CommonText('Welcome back!')),
-)
-```
-
----
-
-#### 11. `CommonBottomNavBar`
-💡 **Purpose**: Premium custom bottom bar supporting smooth page indexing transitions.
-⚙️ **Key Parameters**: Takes selected active index, icon mappings, and transition callback functions. Refer to [common_bottom_nav_bar.dart](file:///d:/Codex/getx_template/lib/component/layout/common_bottom_nav_bar.dart).
-
-🚀 **Usage Snippet**:
-```dart
-CommonScaffold(
-  bottomNavigationBar: CommonBottomNavBar(
-    selectedIndex: controller.currentIndex.value,
-    onTap: (index) => controller.changePage(index),
-  ),
+  bottomNavigationBar: const CommonBottomNavBar(),
   body: Obx(() => controller.currentPage),
 )
 ```
 
----
-
-#### 12. `CommonListView`
-💡 **Purpose**: Ultra-high performance scroll list. Renders elements lazily (ensuring $O(1)$ memory consumption), featuring a built-in pull-to-refresh container, infinite scroll pagination limits, and empty-state fallbacks.
-⚙️ **Key Parameters**:
-| Parameter | Type | Default | Description |
-| :--- | :--- | :--- | :--- |
-| `items` | `List<T>` | *Required* | List of model items to loop. |
-| `itemBuilder` | `Widget Function(..., T, int)` | *Required* | Custom item drawer. |
-| `onRefresh` | `Future<void> Function()?`| `null` | Pull-to-refresh trigger. |
-| `onLoadMore` | `Future<void> Function()?`| `null` | Infinite scroll bottom callback. |
-| `hasMore` | `bool` | `false` | Shows dynamic paginate loaders at list bottom. |
-| `emptyWidget` | `Widget?` | `null` | Fallback shown when `items` is empty. |
-
-🚀 **Usage Snippet**:
+#### 14. `CommonDrawer`
+💡 **Purpose**: Modern navigation drawer supporting profile headers, animated item selected indicators, and link redirections.
+🚀 **Usage**:
 ```dart
-CommonListView<ProductModel>(
-  items: controller.productsList,
-  onRefresh: () => controller.fetchLatest(),
-  onLoadMore: () => controller.fetchNextPage(),
-  hasMore: controller.hasNextPage.value,
-  itemBuilder: (context, product, index) => ProductCard(product: product),
+CommonScaffold(
+  drawer: const CommonDrawer(),
+  body: MainContentWidget(),
 )
 ```
-
----
-
-#### 13. `CommonGridView`
-💡 **Purpose**: Lazy-loaded paginated grids built with an integrated pull-to-refresh structure. Similar signature to `CommonListView`, perfect for dashboard indexes.
-⚙️ **Key Parameters**: Refer to [common_grid_view.dart](file:///d:/Codex/getx_template/lib/component/layout/common_grid_view.dart).
-
-🚀 **Usage Snippet**:
-```dart
-CommonGridView<ProductModel>(
-  items: controller.productList,
-  crossAxisCount: 2,
-  onRefresh: () => controller.refreshCatalog(),
-  itemBuilder: (context, product, index) => ProductGridTile(product: product),
-)
-```
-
----
-
-#### 14. `CommonCard`
-💡 **Purpose**: Simple structured wrapper offering standard elevation, borders, padding, and uniform card layout formats.
-⚙️ **Key Parameters**:
-| Parameter | Type | Default | Description |
-| :--- | :--- | :--- | :--- |
-| `child` | `Widget` | *Required* | Layout inside the card. |
-| `padding` | `EdgeInsetsGeometry` | `EdgeInsets.all(16.0)`| Padding within outer walls. |
-
-🚀 **Usage Snippet**:
-```dart
-CommonCard(
-  child: Column(
-    children: [
-      const CommonText('Account Details', variant: TextVariant.title),
-      const CommonText('Active Subscription', variant: TextVariant.caption),
-    ],
-  ),
-)
-```
-
----
 
 #### 15. `CommonText`
-💡 **Purpose**: Typography standardization widget. Groups text properties into six standard semantic tokens, enforcing uniform font resizing, leading limits, and color templates.
-⚙️ **Key Parameters**:
-| Parameter | Type | Default | Description |
-| :--- | :--- | :--- | :--- |
-| `text` | `String` | *Required* | Content text. |
-| `variant` | `TextVariant` | `TextVariant.body` | Font variant (`display`, `header`, `title`, `body`, `caption`, `overline`). |
-| `weight` | `TextWeight` | `TextWeight.regular` | Weight variants (`light`, `regular`, `medium`, `bold`). |
-| `color` | `Color?` | Theme body | Font color override. |
-| `fontSize` | `double?` | Variant base | Point size override (auto-responsive). |
-
-🚀 **Usage Snippet**:
+💡 **Purpose**: Typography standardization widget. Enforces font sizing, text weights, variants, and light/dark theme color scaling.
+🚀 **Usage**:
 ```dart
 CommonText(
   'User Account Staged',
   variant: TextVariant.header,
   weight: TextWeight.bold,
-  color: context.colorScheme.primary,
 )
 ```
 
----
+#### 16. `CommonCard`
+💡 **Purpose**: Simple structured wrapper offering standard elevation, borders, padding, and uniform card layout formats.
+🚀 **Usage**:
+```dart
+CommonCard(
+  child: Text('Card Content'),
+)
+```
 
-#### 16. `CommonImage`
-💡 **Purpose**: Dynamic multi-source image canvas. Detects resource origins to load network addresses (integrating automated local caching with custom fallback shimmers), vector SVGs (asset/network), or traditional project assets.
-⚙️ **Key Parameters**:
-| Parameter | Type | Default | Description |
-| :--- | :--- | :--- | :--- |
-| `src` | `String` | *Required* | Resource pointer (e.g. `http://...` or `assets/images/...`). |
-| `width` | `double?` | `null` | Display layout width. |
-| `height` | `double?` | `null` | Display layout height. |
-| `borderRadius` | `BorderRadius` | `BorderRadius.zero`| Frame rounding settings. |
-
-🚀 **Usage Snippet**:
+#### 17. `CommonImage`
+💡 **Purpose**: Dynamic multi-source image loader that supports asset images, vector SVGs, and network URLs with automatic caching and shimmers.
+🚀 **Usage**:
 ```dart
 CommonImage(
-  src: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb',
+  src: 'https://images.unsplash.com/...',
   height: 200,
   borderRadius: BorderRadius.circular(16),
-  fit: BoxFit.cover,
 )
 ```
 
----
-
-#### 17. `CommonSvgIcon`
-💡 **Purpose**: Custom vector layout layer. Renders asset-based SVG images cleanly, injecting custom colors via single-filter color blending.
-⚙️ **Key Parameters**:
-| Parameter | Type | Default | Description |
-| :--- | :--- | :--- | :--- |
-| `asset` | `String` | *Required* | Path to local asset SVG (e.g. `assets/icons/home.svg`). |
-| `size` | `double` | `24` | Box size dimension (width/height). |
-| `color` | `Color?` | `null` | Color filter to apply. |
-
-🚀 **Usage Snippet**:
+#### 18. `CommonSvgIcon`
+💡 **Purpose**: Renders asset-based SVG images cleanly, injecting custom colors via single-filter color blending.
+🚀 **Usage**:
 ```dart
 CommonSvgIcon(
   asset: 'assets/icons/verified.svg',
   color: Colors.blue,
-  size: 32,
+)
+```
+
+#### 19. `CommonListView<T>`
+💡 **Purpose**: Scroll list with built-in pull-to-refresh, empty states, and infinite pagination loading indicators.
+🚀 **Usage**:
+```dart
+CommonListView<String>(
+  items: controller.itemsList,
+  onRefresh: () => controller.refresh(),
+  onLoadMore: () => controller.loadNextPage(),
+  itemBuilder: (context, item, index) => ListTile(title: Text(item)),
+)
+```
+
+#### 20. `CommonGridView<T>`
+💡 **Purpose**: Lazy-loaded paginated grid built with integrated pull-to-refresh and separation properties.
+🚀 **Usage**:
+```dart
+CommonGridView<String>(
+  items: controller.itemsList,
+  crossAxisCount: 2,
+  itemBuilder: (context, item, index) => GridItem(item),
 )
 ```
 
 ---
 
-### 📁 Group C: Pickers & Interactive Sheets
+### 📁 Category 3: Interactive Pickers & Bottom Sheets
 
-#### 18. `CommonCountryPicker`
-💡 **Purpose**: A highly refined, package-powered searchable bottom sheet selector for global country codes. Dynamically resolves details (ISO alpha-2, dialed prefix, flags) from the `country_picker` dependency to ensure up-to-date data without hardcoding. Features A-Z alphabetical grouping headers, a horizontal popular shortcut row, selection highlighting with active checkmarks, custom query text highlighting, and a search suffix clear button.
+#### 21. `CommonCountryPicker`
+💡 **Purpose**: Searchable modal bottom sheet selector for global countries, highlighting queries and matching check indicators.
+🚀 **Usage**:
+```dart
+final result = await CommonCountryPicker.show(
+  context: context,
+  selectedCountryCode: selected?.code,
+);
+```
 
-⚙️ **Key Parameters**:
-| Parameter | Type | Default | Description |
-| :--- | :--- | :--- | :--- |
-| `context` | `BuildContext` | *Required* | Build context to push the modal sheet. |
-| `customCountries` | `List<CountryModel>?` | `null` | Overriding list of custom country models to show. |
-| `selectedCountryCode` | `String?` | `null` | ISO 2-letter uppercase code of currently selected country to highlight. |
-| `title` | `String` | `'Select Country'` | Header title text. |
-| `searchHint` | `String` | `'Search by name, code or dial code...'` | Search textfield placeholder. |
-| `primaryColor` | `Color?` | `theme.primaryColor` | Accent color used for highlighting matches, selections, and chips. |
+#### 22. `CommonDatePicker`
+💡 **Purpose**: Premium iOS-style Cupertino date selection wheel in a modern, dark-mode compatible bottom sheet drawer.
+🚀 **Usage**:
+```dart
+final result = await CommonDatePicker.show(
+  context: context,
+  initialDate: DateTime.now(),
+);
+```
 
-🚀 **Detailed Usage Case (GetX Reactive State)**:
-1.  **Define Reactive variable inside Controller**:
-    ```dart
-    import 'package:get/get.dart';
-    import 'package:getx_template/component/pickers/common_country_picker.dart';
-
-    class AuthController extends GetxController {
-      final Rxn<CountryModel> selectedCountry = Rxn<CountryModel>();
-    }
-    ```
-2.  **Add Trigger Widget inside View Layer**:
-    ```dart
-    Obx(() {
-      final selected = controller.selectedCountry.value;
-      return CommonCard(
-        onTap: () async {
-          final result = await CommonCountryPicker.show(
-            context: context,
-            selectedCountryCode: selected?.code,
-          );
-          if (result != null) {
-            controller.selectedCountry.value = result;
-          }
-        },
-        child: Row(
-          children: [
-            Text(selected?.flagEmoji ?? '🏳️'),
-            SizedBox(width: 12),
-            Expanded(
-              child: Text(selected?.name ?? 'Select your residence country'),
-            ),
-            Icon(Icons.keyboard_arrow_down),
-          ],
-        ),
-      );
-    })
-    ```
-
----
-
-#### 19. `CommonDatePicker`
-💡 **Purpose**: Premium iOS Cupertino-style date selection wheel presented in a modern, dark-mode compatible bottom sheet container with drag handle triggers. Perfect for DOB or custom date inputs.
-
-⚙️ **Key Parameters**:
-| Parameter | Type | Default | Description |
-| :--- | :--- | :--- | :--- |
-| `context` | `BuildContext` | *Required* | View context. |
-| `initialDate` | `DateTime?` | `DateTime.now()` | Initially active date on the wheels. |
-| `minimumDate` | `DateTime?` | `null` | Earliest pickable date. |
-| `maximumDate` | `DateTime?` | `null` | Latest pickable date. |
-| `title` | `String` | `'Select Date'` | Modal header title. |
-| `confirmText` | `String` | `'Done'` | Confirm button text. |
-| `cancelText` | `String` | `'Cancel'` | Cancel button text. |
-| `confirmColor` | `Color?` | `theme.primaryColor` | Color of the confirm text. |
-| `cancelColor` | `Color?` | `Colors.grey.shade600` | Color of the cancel text. |
-
-🚀 **Detailed Usage Case (GetX Reactive State)**:
-1.  **Define Reactive variable inside Controller**:
-    ```dart
-    import 'package:get/get.dart';
-
-    class AuthController extends GetxController {
-      final Rxn<DateTime> selectedDate = Rxn<DateTime>();
-    }
-    ```
-2.  **Add Trigger Widget inside View Layer (Formatted using DateFormatter)**:
-    ```dart
-    Obx(() {
-      final selected = controller.selectedDate.value;
-      return CommonCard(
-        onTap: () async {
-          final result = await CommonDatePicker.show(
-            context: context,
-            initialDate: selected ?? DateTime.now(),
-            maximumDate: DateTime.now(),
-          );
-          if (result != null) {
-            controller.selectedDate.value = result;
-          }
-        },
-        child: Row(
-          children: [
-            Icon(Icons.calendar_today),
-            SizedBox(width: 12),
-            Expanded(
-              child: Text(
-                selected != null
-                    ? DateFormatter.date(selected)
-                    : 'Select Date of Birth',
-              ),
-            ),
-            Icon(Icons.keyboard_arrow_down),
-          ],
-        ),
-      );
-    })
-    ```
-
----
-
-#### 20. `CommonTimePicker`
-💡 **Purpose**: Premium Cupertino hour/minute time wheel inside a modern dark-mode compatible bottom sheet.
-⚙️ **Key Parameters**: Similar to date picker. Returns a standard `TimeOfDay` value.
-🚀 **Usage Snippet**:
+#### 23. `CommonTimePicker`
+💡 **Purpose**: Cupertino hour/minute time wheel inside a modern dark-mode compatible bottom sheet, returning a standard `TimeOfDay`.
+🚀 **Usage**:
 ```dart
 final selectedTime = await CommonTimePicker.show(
   context: context,
@@ -631,19 +439,9 @@ final selectedTime = await CommonTimePicker.show(
 );
 ```
 
----
-
-#### 21. `CommonMultiImagePicker`
-💡 **Purpose**: A compressed multi-file image selector. Displays thumbnails with custom delete hooks. Features **built-in image quality compression and dimensions limit overrides** to prevent RAM out-of-memory crashes on resource-constrained devices.
-⚙️ **Key Parameters**:
-| Parameter | Type | Default | Description |
-| :--- | :--- | :--- | :--- |
-| `onImagesChanged` | `Function(List<File>)` | *Required* | Callback triggered whenever items are modified. |
-| `maxImages` | `int` | `10` | Maximum images allowed. |
-| `imageQuality` | `int` | `70` | JPEG compression ratio (saves memory!). |
-| `maxWidth` | `double` | `1080` | Automatic width boundary resizing. |
-
-🚀 **Usage Snippet**:
+#### 24. `CommonMultiImagePicker`
+💡 **Purpose**: Compressed multi-file image selector with thumbnail grids, delete hooks, and memory-safe resolution downscaling.
+🚀 **Usage**:
 ```dart
 CommonMultiImagePicker(
   maxImages: 5,
@@ -653,198 +451,135 @@ CommonMultiImagePicker(
 
 ---
 
-### 📁 Group D: Dialogs & Toast Alerts
+### 📁 Category 4: Dialogs & Notifications
 
-#### 22. `CommonSnackbar`
-💡 **Purpose**: Floating notification alerts built on top of `Get.snackbar` featuring custom box shadows, responsive edge margins, and color indicators.
-⚙️ **Key Parameters**:
-| Parameter | Type | Default | Description |
-| :--- | :--- | :--- | :--- |
-| `title` | `String` | *Required* | Headline text. |
-| `message` | `String` | *Required* | Message description. |
-| `type` | `SnackbarType` | `SnackbarType.info` | Action variants (`success`, `error`, `warning`, `info`). |
-
-🚀 **Usage Snippet**:
+#### 25. `CommonDialog`
+💡 **Purpose**: Premium alert and choice dialog supporting success, error, warning, info, and confirmation variants.
+🚀 **Usage**:
 ```dart
-// Direct static access:
-CommonSnackbar.showSuccess(title: 'Profile Saved', message: 'Your changes were updated.');
-CommonSnackbar.showError(title: 'Connection Lost', message: 'Please retry your request.');
-```
-
----
-
-#### 23. `CommonDialog`
-💡 **Purpose**: Premium type-based alert and choice dialog supporting success, error, warning, info, and confirmation variants.
-⚙️ **Key Parameters**: Takes `title`, `subtitle`, `type` (DialogType), `primaryButtonText`, `secondaryButtonText`, custom `image`/`icon`, colors, and close options.
-🚀 **Usage Snippet**:
-```dart
-// Custom confirmation with dual options
 final confirmed = await CommonDialog.showConfirmation(
   context: context,
   title: 'Delete Item?',
-  subtitle: 'Are you sure you want to permanently remove this transaction?',
-  primaryButtonText: 'Delete',
-  secondaryButtonText: 'Cancel',
-);
-if (confirmed == true) {
-  controller.deleteItem();
-}
-
-// Styled success modal
-CommonDialog.showSuccess(
-  context: context,
-  title: 'Action Completed',
-  subtitle: 'Your update has been applied successfully.',
+  subtitle: 'Confirm permanent deletion.',
 );
 ```
 
----
-
-#### 24. `LoadingDialog`
-💡 **Purpose**: Synchronous dialog sheet that blocks clicks during asynchronous loading actions.
-⚙️ **Key Parameters**: Takes `message`.
-🚀 **Usage Snippet**:
+#### 26. `CommonSnackbar`
+💡 **Purpose**: Custom floating alert notification panel built on top of `Get.snackbar` featuring colored feedback bars.
+🚀 **Usage**:
 ```dart
-// Open loader dialog
+CommonSnackbar.showSuccess(title: 'Success', message: 'Action completed.');
+```
+
+#### 27. `LoadingDialog`
+💡 **Purpose**: Modal overlay layout that blocks touch gestures during heavy asynchronous processing events.
+🚀 **Usage**:
+```dart
 showDialog(
   context: context,
   barrierDismissible: false,
-  builder: (context) => const LoadingDialog(message: 'Processing payment...'),
+  builder: (context) => const LoadingDialog(message: 'Processing...'),
 );
-
-// Close once done
-Get.back();
 ```
 
 ---
 
-### 📁 Group E: Loading Indicators & Shimmers
+### 📁 Category 5: Loading Indicators, Shimmers & Skeletons
 
-#### 25. `ShimmerBox`
-💡 **Purpose**: Core rectangular skeleton block used to create loading placeholders.
-🚀 **Usage Snippet**:
+#### 28. `ShimmerBox`
+💡 **Purpose**: Core rectangular skeleton block used to create loading placeholder cards.
+🚀 **Usage**:
 ```dart
-ShimmerBox(width: 120, height: 16, borderRadius: BorderRadius.circular(4))
+ShimmerBox(width: 120, height: 16)
 ```
 
----
-
-#### 26. `CommonShimmerCard` & `CommonShimmerList`
-💡 **Purpose**: Pre-formatted card and list layouts matching standard UI structures to preview skeleton frames.
-🚀 **Usage Snippet**:
+#### 29. `CommonShimmerCard`
+💡 **Purpose**: Pre-formatted card placeholders that match list items layout definitions.
+🚀 **Usage**:
 ```dart
-// Previews an animated skeleton list when waiting for data
-if (controller.isLoading.value) {
-  return const CommonShimmerList();
-}
+const CommonShimmerCard()
 ```
 
----
-
-#### 27. `LoadingOverlay`
-💡 **Purpose**: Semi-transparent state overlay box featuring central indicators.
-🚀 **Usage Snippet**:
+#### 30. `LoadingOverlay`
+💡 **Purpose**: Translucent full-screen overlay panel showing custom spinner messages.
+🚀 **Usage**:
 ```dart
-Stack(
-  children: [
-    MainBodyScreen(),
-    if (controller.isUploading.value)
-      const LoadingOverlay(message: 'Uploading document...'),
-  ],
-)
+LoadingOverlay(message: 'Uploading...')
 ```
 
----
-
-#### 28. `PaginationLoader`
-💡 **Purpose**: Subtle loading indicator rendered at the footer of list/grid boundaries during pagination actions.
-🚀 **Usage Snippet**:
+#### 31. `PaginationLoader`
+💡 **Purpose**: Subtle foot loader shown at list margins during page pagination.
+🚀 **Usage**:
 ```dart
-// Rendered automatically inside CommonListView at scroll margins
 PaginationLoader()
 ```
 
 ---
 
-### 📁 Group F: Fallback & State Widgets
+### 📁 Category 6: Empty, Offline & Error Fallback Views
 
-#### 29. `EmptyStateWidget`
-💡 **Purpose**: Clean fallback view with optional custom actions, shown when list items or queries return empty results.
-⚙️ **Key Parameters**: Takes `title`, `description`, `icon`, `actionLabel`, `onAction`.
-🚀 **Usage Snippet**:
+#### 32. `EmptyStateWidget`
+💡 **Purpose**: Fallback illustration displayed when collection elements return empty lists.
+🚀 **Usage**:
 ```dart
 EmptyStateWidget(
-  title: 'No Active Orders',
-  description: 'You haven\'t placed any orders yet.',
-  actionLabel: 'Shop Now',
-  onAction: () => Get.toNamed(AppRoutes.catalog),
+  title: 'No Data',
+  description: 'Try adding elements.',
 )
 ```
 
----
-
-#### 30. `ErrorStateWidget`
-💡 **Purpose**: Custom layout shown when an operation fails, displaying details and an action button to retry.
-🚀 **Usage Snippet**:
+#### 33. `ErrorStateWidget`
+💡 **Purpose**: Retry illustration display presented when data fetching fails.
+🚀 **Usage**:
 ```dart
 ErrorStateWidget(
-  errorMessage: 'Could not resolve server connection.',
-  onRetry: () => controller.reloadItems(),
+  errorMessage: 'Something went wrong.',
+  onRetry: () => controller.reload(),
 )
 ```
 
----
-
-#### 31. `NoInternetWidget`
-💡 **Purpose**: Dedicated screen shown when the device is offline.
-🚀 **Usage Snippet**:
+#### 34. `NoInternetWidget`
+💡 **Purpose**: View shown automatically when device internet connectivity is offline.
+🚀 **Usage**:
 ```dart
-NoInternetWidget(
-  onRetry: () => controller.checkConnection(),
-)
+NoInternetWidget(onRetry: () => controller.retry())
 ```
 
----
-
-#### 32. `RetryWidget`
-💡 **Purpose**: Minimal inline button structure to easily hook error refetching.
-🚀 **Usage Snippet**:
+#### 35. `RetryWidget`
+💡 **Purpose**: Simple inline action trigger to re-perform failed processes.
+🚀 **Usage**:
 ```dart
-RetryWidget(
-  onRetry: () => controller.reloadData(),
-)
+RetryWidget(onRetry: () => controller.retry())
 ```
 
 ---
 
 ## 📱 Premium High-Readability Extensions
 
-We have added unified Dart extensions to make your code extremely clean, concise, flat, and readable.
+Unified extension methods reduce widget layout tree nesting:
 
-### 1. Spacing Extensions (`lib/core/utils/screen_extensions.dart`)
-Instead of nesting `SizedBox` widgets, append `.height` or `.width` directly to any number:
-- `16.height` — Returns a responsive `SizedBox(height: 16.h)`
-- `24.width` — Returns a responsive `SizedBox(width: 24.w)`
+### 1. Spacing Extensions (`lib/core/utils/extenstion/screen_extensions.dart`)
+Append `.height` or `.width` to integers or doubles for responsive layout spacing:
+- `16.height` — Responsive `SizedBox(height: 16.h)`
+- `24.width` — Responsive `SizedBox(width: 24.w)`
 
-### 2. Context Extensions (`lib/core/utils/context_extensions.dart`)
-Quickly access your Material Design theme, color palettes, and device constraints directly from `context`:
+### 2. Context Extensions (`lib/core/utils/extenstion/context_extensions.dart`)
+Directly access themes, color schemes, and screen dimension constraints from the current context:
 - `context.theme` — Quick access to `Theme.of(context)`
-- `context.colorScheme` — Quick access to `Theme.of(context).colorScheme`
-- `context.textTheme` — Quick access to `Theme.of(context).textTheme`
-- `context.screenWidth` — Device width
-- `context.screenHeight` — Device height
+- `context.colorScheme` — Quick access to the color scheme tokens
+- `context.screenWidth` — Current display width
 
-### 3. Widget Padding & Layout Extensions (`lib/core/utils/widget_extensions.dart`)
-Instantly add responsive paddings or conditional visibility directly inline, avoiding deep layout tree nesting:
-- `widget.paddingAll(16.h)` — Wraps with `EdgeInsets.all(16.h)`
-- `widget.paddingSymmetric(horizontal: 20.w, vertical: 10.h)` — Wraps with `EdgeInsets.symmetric`
-- `widget.visible(isPremiumUser)` — Shows widget only if condition is met
+### 3. Widget Layout Extensions (`lib/core/utils/extenstion/widget_extensions.dart`)
+Add responsiveness, paddings, and alignment inline without wrapping widgets manually:
+- `widget.paddingAll(16.h)`
+- `widget.paddingSymmetric(horizontal: 20.w)`
+- `widget.visible(condition)`
 
 #### Example usage:
 ```dart
-import 'package:getx_template/core/utils/screen_extensions.dart';
-import 'package:getx_template/core/utils/context_extensions.dart';
-import 'package:getx_template/core/utils/widget_extensions.dart';
+import 'package:getx_template/core/utils/extenstion/screen_extensions.dart';
+import 'package:getx_template/core/utils/extenstion/context_extensions.dart';
+import 'package:getx_template/core/utils/extenstion/widget_extensions.dart';
 
 @override
 Widget build(BuildContext context) {
@@ -853,11 +588,11 @@ Widget build(BuildContext context) {
       CommonText(
         'Workspace Settings',
         variant: TextVariant.header,
-        color: context.colorScheme.primary, // context.colorScheme!
+        color: context.colorScheme.primary,
       ),
-      12.height, // 12.height spacer!
+      12.height,
       const CommonText('Subheading', variant: TextVariant.body)
-          .paddingSymmetric(horizontal: 16.w), // inline padding!
+          .paddingSymmetric(horizontal: 16.w),
     ],
   );
 }
@@ -865,21 +600,48 @@ Widget build(BuildContext context) {
 
 ---
 
+## 🔐 System Services & Helpers
+
+### 1. System Permissions Utility (`PermissionHelper`)
+Managed under `lib/services/permissions/permission_helper.dart`, this helper allows silent checking of permission states before request triggers:
+```dart
+// Check if access is already granted
+final bool isAlreadyGranted = await PermissionHelper.check(Permission.camera);
+
+if (!isAlreadyGranted) {
+  // Triggers native system prompt dialog
+  final bool status = await PermissionHelper.camera();
+  if (!status) {
+    // If permanently denied, prompt user to redirect to App System Settings
+    await openAppSettings();
+  }
+}
+```
+
+### 2. URL & Intent Launcher Helper (`UrlLauncherHelper`)
+Easily trigger email intents, website URLs, and external applications securely:
+```dart
+UrlLauncherHelper.email("support@example.com");
+UrlLauncherHelper.open("https://pub.dev");
+```
+
+---
+
 ## 🔧 Useful Commands
 
 ```bash
-# Get all package dependencies
+# Fetch package dependencies
 flutter pub get
 
-# Format your code layout
+# Format your codebase
 dart format lib/
 
-# Check your code for compilation issues or warnings
+# Run static analysis check
 flutter analyze
 
-# Run your project on a chosen emulator or device
+# Launch application on emulator / device
 flutter run
 ```
 
 ---
-*Happy coding! This premium template is designed to give you standard-setting performance and UI on day one.*
+*Happy coding! This template is designed to give you standard-setting performance and premium user experience from day one.*
