@@ -99,7 +99,7 @@ void appLog(
     final label = level.label;
     final color = level.ansiColor;
     const reset = '\x1B[0m';
-    const divider = '═══════════════════════════════════════════════════════════════════';
+    const divider = '══════════════════════════❖❖❖❖❖❖❖❖══════════════════════════';
 
     // Format message (pretty JSON if Map/List/JSON string)
     String formattedMessage;

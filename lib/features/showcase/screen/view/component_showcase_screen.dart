@@ -694,6 +694,16 @@ class ComponentShowcaseScreen extends StatelessWidget {
                               "User navigated to Showcase Screen.");
                         },
                       ),
+
+                      CommonButton(
+                        titleText: "Info",
+                        onTap: () {
+                          AppLog.apiResponse(
+                            source: "User API","");
+
+
+                        },
+                      ),
                     ],
                   ),
                 ],
