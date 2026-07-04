@@ -291,6 +291,20 @@ class ComponentShowcaseScreen extends StatelessWidget {
                   SizedBox(height: 12.h),
                   Obx(
                     () => CommonTabBar(
+                      enableHaptic: true,
+                      tabStyle: CommonTabStyle.pill,
+                      tabs: controller.tabList,
+                      selectedIndex:
+                          controller.currentTabIndex.value,
+                      onTabChanged: controller.onTabChanged,
+                    ),
+                  ),
+                  20.height,
+
+                  Obx(
+                    () => CommonTabBar(
+                      enableHaptic: true,
+                      tabStyle: CommonTabStyle.underline,
                       tabs: controller.tabList,
                       selectedIndex:
                           controller.currentTabIndex.value,
@@ -522,35 +536,44 @@ class ComponentShowcaseScreen extends StatelessWidget {
             CommonButton(
               titleText: "Show Url Launcher",
               onTap: () {
-                UrlLauncherHelper.email("ibrahimsparktech@gmail.com");
-              },
-            ),
-
-
-            20.height,
-
-
-            CommonButton(
-              titleText: "Check Connectivity",
-              onTap: () {
-                final isConnected = Get.find<ConnectivityService>().isConnected.value;
-                CommonSnackbar.show(
-                  title: "Connectivity Status",
-                  message: isConnected ? "You are online" : "You are offline",
-                  type: isConnected ? SnackbarType.success : SnackbarType.error,
+                UrlLauncherHelper.email(
+                  "ibrahimsparktech@gmail.com",
                 );
               },
             ),
 
+            20.height,
 
+            CommonButton(
+              titleText: "Check Connectivity",
+              onTap: () {
+                final isConnected =
+                    Get.find<ConnectivityService>()
+                        .isConnected
+                        .value;
+                CommonSnackbar.show(
+                  title: "Connectivity Status",
+                  message: isConnected
+                      ? "You are online"
+                      : "You are offline",
+                  type: isConnected
+                      ? SnackbarType.success
+                      : SnackbarType.error,
+                );
+              },
+            ),
 
             CommonButton(
               titleText: "Permission",
               onTap: () async {
-                final bool isAlreadyGranted = await PermissionHelper.check(Permission.camera);
+                final bool isAlreadyGranted =
+                    await PermissionHelper.check(
+                      Permission.camera,
+                    );
 
                 if (!isAlreadyGranted) {
-                  final bool status = await PermissionHelper.camera();
+                  final bool status =
+                      await PermissionHelper.camera();
                   if (status) {
                     CommonSnackbar.show(
                       title: "Camera Permission",
@@ -558,15 +581,20 @@ class ComponentShowcaseScreen extends StatelessWidget {
                       type: SnackbarType.success,
                     );
                   } else {
-                    final isPermanentlyDenied = await Permission.camera.isPermanentlyDenied;
+                    final isPermanentlyDenied =
+                        await Permission
+                            .camera
+                            .isPermanentlyDenied;
                     if (isPermanentlyDenied) {
-                      final open = await CommonDialog.showConfirmation(
-                        context: context,
-                        title: "Camera Permission",
-                        subtitle: "Camera permission is permanently denied. Open settings to enable it?",
-                        primaryButtonText: "Settings",
-                        secondaryButtonText: "Cancel",
-                      );
+                      final open =
+                          await CommonDialog.showConfirmation(
+                            context: context,
+                            title: "Camera Permission",
+                            subtitle:
+                                "Camera permission is permanently denied. Open settings to enable it?",
+                            primaryButtonText: "Settings",
+                            secondaryButtonText: "Cancel",
+                          );
                       if (open == true) {
                         await openAppSettings();
                       }
@@ -586,9 +614,7 @@ class ComponentShowcaseScreen extends StatelessWidget {
                   );
                 }
               },
-            )
-
-
+            ),
           ],
         ),
       ),

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:getx_template/component/dialogs/common_snackbar.dart';
 import 'package:getx_template/core/routing/app_routes.dart';
 import 'package:getx_template/data/models/paginated_response.dart';
 import 'package:getx_template/data/repositories/auth_repository.dart';
