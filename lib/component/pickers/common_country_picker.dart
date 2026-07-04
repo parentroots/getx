@@ -46,7 +46,7 @@ class CommonCountryPicker {
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
-      barrierColor: Colors.black.withOpacity(0.55),
+      barrierColor: Colors.black.withValues(alpha: 0.55),
       builder: (BuildContext builderContext) {
         return _CountryPickerBottomSheet(
           countries: countries,
@@ -210,7 +210,7 @@ class _CountryPickerBottomSheetState extends State<_CountryPickerBottomSheet> {
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.15),
+            color: Colors.black.withValues(alpha: 0.15),
             blurRadius: 20.r,
             offset: const Offset(0, -5),
           ),
@@ -307,7 +307,7 @@ class _CountryPickerBottomSheetState extends State<_CountryPickerBottomSheet> {
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(16.r),
                   borderSide: BorderSide(
-                    color: widget.primaryColor.withOpacity(0.5),
+                    color: widget.primaryColor.withValues(alpha: 0.5),
                     width: 1.5.r,
                   ),
                 ),
@@ -351,7 +351,7 @@ class _CountryPickerBottomSheetState extends State<_CountryPickerBottomSheet> {
                         padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
                         decoration: BoxDecoration(
                           color: isSelected
-                              ? widget.primaryColor.withOpacity(0.15)
+                              ? widget.primaryColor.withValues(alpha: 0.15)
                               : (widget.isDark ? const Color(0xFF1F2937) : Colors.grey.shade100),
                           borderRadius: BorderRadius.circular(12.r),
                           border: Border.all(
@@ -426,7 +426,7 @@ class _CountryPickerBottomSheetState extends State<_CountryPickerBottomSheet> {
                         return Container(
                           padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 6.h),
                           color: widget.isDark
-                              ? const Color(0xFF1F2937).withOpacity(0.4)
+                              ? const Color(0xFF1F2937).withValues(alpha: 0.4)
                               : Colors.grey.shade50,
                           child: CommonText(
                             item,
@@ -450,7 +450,7 @@ class _CountryPickerBottomSheetState extends State<_CountryPickerBottomSheet> {
                           padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 12.h),
                           decoration: BoxDecoration(
                             color: isSelected
-                                ? widget.primaryColor.withOpacity(0.06)
+                                ? widget.primaryColor.withValues(alpha: 0.06)
                                 : Colors.transparent,
                           ),
                           child: Row(

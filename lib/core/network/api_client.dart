@@ -4,7 +4,8 @@ import 'package:getx_template/core/constants/api_constants.dart';
 import 'package:getx_template/core/errors/app_exception.dart';
 import 'package:getx_template/core/network/api_interceptor.dart';
 import 'package:getx_template/core/network/token_manager.dart';
-import 'package:getx_template/core/utils/helper/logger_helper.dart';
+import 'package:getx_template/core/utils/helper/app_log.dart';
+import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 /// Singleton API Client — wraps Dio with typed error handling.
 class ApiClient {
@@ -30,9 +31,18 @@ class ApiClient {
     );
 
     _dio.interceptors.add(ApiInterceptor(tokenManager));
+    _dio.interceptors.add(ApiLoggingInterceptor());
     if (config.enableNetworkLogs) {
       _dio.interceptors.add(
-        LogInterceptor(requestBody: true, responseBody: true, requestHeader: true),
+        PrettyDioLogger(
+          requestHeader: true,
+          requestBody: true,
+          responseBody: true,
+          responseHeader: false,
+          error: true,
+          compact: true,
+          maxWidth: 90,
+        ),
       );
     }
   }
@@ -162,7 +172,7 @@ class ApiClient {
     } on AppException {
       rethrow;
     } catch (e, stack) {
-      LoggerHelper.error('Unexpected network error', error: e, stackTrace: stack);
+      AppLog.error('Unexpected network error', error: e, stackTrace: stack);
       throw NetworkException('An unexpected error occurred.', details: e);
     }
   }
@@ -262,5 +272,29 @@ class ApiClient {
     }
 
     return null;
+  }
+}
+
+class ApiLoggingInterceptor extends Interceptor {
+  @override
+  void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
+    AppLog.apiRequest("Sending Request: ${options.method} ${options.path}");
+    handler.next(options);
+  }
+
+  @override
+  void onResponse(Response response, ResponseInterceptorHandler handler) {
+    AppLog.apiResponse(
+        "Received Response: ${response.requestOptions.method} ${response.requestOptions.path} [${response.statusCode}]");
+    handler.next(response);
+  }
+
+  @override
+  void onError(DioException err, ErrorInterceptorHandler handler) {
+    AppLog.error(
+      "API Error: ${err.requestOptions.method} ${err.requestOptions.path} [${err.response?.statusCode ?? 'No Code'}]",
+      error: err.message,
+    );
+    handler.next(err);
   }
 }

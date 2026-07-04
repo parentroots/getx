@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -18,6 +19,7 @@ import 'package:getx_template/component/layout/common_text.dart';
 import 'package:getx_template/component/loading/shimmer_box.dart';
 import 'package:getx_template/component/pickers/common_country_picker.dart';
 import 'package:getx_template/component/pickers/common_date_picker.dart';
+import 'package:getx_template/component/pickers/common_multi_image_picker.dart';
 import 'package:getx_template/core/constants/app_colors.dart';
 import 'package:getx_template/core/utils/extenstion/screen_extensions.dart';
 import 'package:getx_template/core/utils/helper/date_formatter.dart';
@@ -26,6 +28,7 @@ import 'package:getx_template/services/connectivity/connectivity_service.dart';
 import 'package:getx_template/services/launcher/url_launcher_helper.dart';
 import 'package:getx_template/services/permissions/permission_helper.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:getx_template/core/utils/helper/app_log.dart';
 
 class ComponentShowcaseScreen extends StatelessWidget {
   const ComponentShowcaseScreen({super.key});
@@ -614,6 +617,87 @@ class ComponentShowcaseScreen extends StatelessWidget {
                   );
                 }
               },
+            ),
+
+            SizedBox(height: 24.h),
+
+            // Section 9: Image Pickers
+            _buildSectionHeader("Multi-Image Picker"),
+            CommonMultiImagePicker(
+              initialImages: controller.selectedImages,
+              maxImages: 5,
+              onImagesChanged: (images) {
+                controller.selectedImages.assignAll(images);
+              },
+            ),
+
+            SizedBox(height: 24.h),
+
+            // Section 10: App Logger Console Test
+            _buildSectionHeader("App Logger & Console"),
+            CommonCard(
+              child: Column(
+                crossAxisAlignment:
+                    CrossAxisAlignment.start,
+                children: [
+                  const CommonText(
+                    "Test in-app logger and view runtime console output.",
+                    variant: TextVariant.body,
+                    weight: TextWeight.medium,
+                  ),
+                  SizedBox(height: 16.h),
+                  const CommonText(
+                    "Generate Dummy Logs:",
+                    variant: TextVariant.caption,
+                    weight: TextWeight.bold,
+                  ),
+                  SizedBox(height: 8.h),
+                  Wrap(
+                    spacing: 8.w,
+                    runSpacing: 8.h,
+                    children: [
+                      CommonButton(
+                        titleText: "Success",
+                        onTap: () {
+                          AppLog.success(
+
+                              source: "Profile Update",
+                              "Operation completed successfully!");
+                        },
+                      ),
+                      CommonButton(
+                        titleText: "Error",
+                        onTap: () {
+                          AppLog.error("An unexpected error occurred.");
+                        },
+                      ),
+                      CommonButton(
+                        titleText: "Api",
+                        onTap: () {
+                          AppLog.api(
+                            source: "Profile Screen",
+                            "GET /api/v1/user - 200 OK",
+                          );
+                          },
+                      ),
+                      CommonButton(
+                        titleText: "Warning",
+                        onTap: () {
+                          AppLog.warning("Disk space is running low.");
+                        },
+                      ),
+                      CommonButton(
+                        titleText: "Info",
+                        onTap: () {
+                          AppLog.info(
+
+                              "User navigated to Showcase Screen.");
+                        },
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ],
         ),

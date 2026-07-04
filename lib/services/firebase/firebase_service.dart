@@ -1,6 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
-import 'package:getx_template/core/utils/helper/logger_helper.dart';
+import 'package:getx_template/core/utils/helper/app_log.dart';
 
 class FirebaseService {
   static Future<void> init() async {
@@ -8,8 +8,8 @@ class FirebaseService {
       await Firebase.initializeApp();
     } catch (error, stackTrace) {
       if (kDebugMode) {
-        LoggerHelper.warning('Firebase not configured yet: $error');
-        LoggerHelper.error(
+        AppLog.warning('Firebase not configured yet: $error');
+        AppLog.error(
           'Firebase init skipped',
           error: error,
           stackTrace: stackTrace,

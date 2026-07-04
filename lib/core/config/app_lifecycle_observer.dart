@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:getx_template/core/utils/helper/logger_helper.dart';
+import 'package:getx_template/core/utils/helper/app_log.dart';
 
 class AppLifecycleObserver extends GetxService with WidgetsBindingObserver {
   Future<AppLifecycleObserver> init() async {
@@ -10,7 +10,7 @@ class AppLifecycleObserver extends GetxService with WidgetsBindingObserver {
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    LoggerHelper.debug('App lifecycle changed: $state');
+    AppLog.debug('App lifecycle changed: $state');
     super.didChangeAppLifecycleState(state);
   }
 

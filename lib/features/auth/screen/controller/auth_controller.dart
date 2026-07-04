@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getx_template/core/routing/app_routes.dart';
@@ -32,6 +33,7 @@ class AuthController extends BaseController {
   final Rxn<CountryModel> selectedCountry =
       Rxn<CountryModel>();
   final Rxn<DateTime> selectedDate = Rxn<DateTime>();
+  final RxList<File> selectedImages = <File>[].obs;
 
   Future<PaginatedResponse<String>> loadPageData(
     int page,

@@ -28,6 +28,7 @@ dependencies:
   intl_phone_field: ^3.1.8
   country_picker: ^2.0.26
   logger: ^2.6.1
+  pretty_dio_logger: ^1.4.0
   permission_handler: ^12.0.1
   shared_preferences: ^2.5.3
   socket_io_client: ^2.0.3

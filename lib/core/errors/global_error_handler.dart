@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getx_template/core/errors/app_exception.dart';
-import 'package:getx_template/core/utils/helper/logger_helper.dart';
+import 'package:getx_template/core/utils/helper/app_log.dart';
 import 'package:getx_template/services/dialog/dialog_service.dart';
 
 class GlobalErrorHandler extends GetxService {
@@ -17,7 +17,7 @@ class GlobalErrorHandler extends GetxService {
   }
 
   static void record(Object error, StackTrace? stackTrace) {
-    LoggerHelper.error(error.toString(), error: error, stackTrace: stackTrace);
+    AppLog.error(error.toString(), error: error, stackTrace: stackTrace);
   }
 
   void showError(Object error) {
