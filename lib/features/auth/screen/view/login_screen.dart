@@ -7,8 +7,9 @@ import 'package:getx_template/component/common_switch.dart';
 import 'package:getx_template/component/common_text_field.dart';
 import 'package:getx_template/component/layout/common_scaffold.dart';
 import 'package:getx_template/component/layout/common_text.dart';
+import 'package:getx_template/core/constants/app_string.dart';
 import 'package:getx_template/core/routing/app_routes.dart';
-import 'package:getx_template/core/utils/validators.dart';
+import 'package:getx_template/core/utils/helper/validators.dart';
 import 'package:getx_template/features/auth/screen/controller/auth_controller.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -74,7 +75,7 @@ class LoginScreen extends StatelessWidget {
 
                   // Email Field
                   CommonTextField(
-                    label: "Email Address",
+                    label: AppString.emailAddress,
                     hint: "name@example.com",
                     controller: controller.emailController,
                     prefixIcon: Icons.email_outlined,
@@ -84,7 +85,7 @@ class LoginScreen extends StatelessWidget {
 
                   // Password Field
                   CommonTextField(
-                    label: "Password",
+                    label: AppString.password,
                     hint: "••••••••",
                     controller: controller.passwordController,
                     obscureText: true,

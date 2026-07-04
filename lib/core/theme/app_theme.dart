@@ -1,7 +1,8 @@
-﻿import 'package:flutter/material.dart';
-import 'package:getx_template/core/theme/app_colors.dart';
+import 'package:flutter/material.dart';
+
 import 'package:getx_template/core/theme/app_radius.dart';
 import 'package:getx_template/core/theme/app_typography.dart';
+import 'package:getx_template/core/constants/app_colors.dart';
 
 abstract final class AppTheme {
   static ThemeData get light => _build(

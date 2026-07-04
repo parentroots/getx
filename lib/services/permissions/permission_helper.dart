@@ -11,6 +11,13 @@ abstract final class PermissionHelper {
     return status.isGranted || status.isLimited;
   }
 
+  /// Check status of any [Permission] without prompting the user.
+  /// Returns `true` if the permission is currently granted or limited.
+  static Future<bool> check(Permission permission) async {
+    final status = await permission.status;
+    return status.isGranted || status.isLimited;
+  }
+
   /// Request access to the system Camera.
   static Future<bool> camera() => request(Permission.camera);
 

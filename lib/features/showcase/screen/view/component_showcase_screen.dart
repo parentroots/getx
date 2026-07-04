@@ -18,10 +18,14 @@ import 'package:getx_template/component/layout/common_text.dart';
 import 'package:getx_template/component/loading/shimmer_box.dart';
 import 'package:getx_template/component/pickers/common_country_picker.dart';
 import 'package:getx_template/component/pickers/common_date_picker.dart';
-import 'package:getx_template/core/theme/app_colors.dart';
-import 'package:getx_template/core/utils/date_formatter.dart';
+import 'package:getx_template/core/constants/app_colors.dart';
+import 'package:getx_template/core/utils/extenstion/screen_extensions.dart';
+import 'package:getx_template/core/utils/helper/date_formatter.dart';
 import 'package:getx_template/features/auth/screen/controller/auth_controller.dart';
+import 'package:getx_template/services/connectivity/connectivity_service.dart';
 import 'package:getx_template/services/launcher/url_launcher_helper.dart';
+import 'package:getx_template/services/permissions/permission_helper.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class ComponentShowcaseScreen extends StatelessWidget {
   const ComponentShowcaseScreen({super.key});
@@ -38,7 +42,10 @@ class ComponentShowcaseScreen extends StatelessWidget {
         showBack: true,
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+        padding: EdgeInsets.symmetric(
+          horizontal: 16.w,
+          vertical: 16.h,
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -51,7 +58,9 @@ class ComponentShowcaseScreen extends StatelessWidget {
             CommonText(
               "Explore standard and animated widgets in GetX boilerplate.",
               variant: TextVariant.body,
-              color: isDark ? Colors.grey.shade400 : Colors.grey.shade600,
+              color: isDark
+                  ? Colors.grey.shade400
+                  : Colors.grey.shade600,
             ),
             SizedBox(height: 24.h),
 
@@ -99,7 +108,8 @@ class ComponentShowcaseScreen extends StatelessWidget {
             _buildSectionHeader("Form Fields & Inputs"),
             CommonCard(
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment:
+                    CrossAxisAlignment.start,
                 children: [
                   const CommonTextField(
                     borderRadius: 8,
@@ -125,13 +135,19 @@ class ComponentShowcaseScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 16.h),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment:
+                        MainAxisAlignment.spaceBetween,
                     children: [
-                      const CommonText("IOS-Style Elastomeric Switch:"),
+                      const CommonText(
+                        "IOS-Style Elastomeric Switch:",
+                      ),
                       Obx(
                         () => CommonSwitch(
-                          value: controller.isSwitchOn.value,
-                          onChanged: (val) => controller.isSwitchOn.value = val,
+                          value:
+                              controller.isSwitchOn.value,
+                          onChanged: (val) =>
+                              controller.isSwitchOn.value =
+                                  val,
                         ),
                       ),
                     ],
@@ -148,7 +164,8 @@ class ComponentShowcaseScreen extends StatelessWidget {
                 children: [
                   // Country Picker
                   Obx(() {
-                    final selected = controller.selectedCountry.value;
+                    final selected =
+                        controller.selectedCountry.value;
                     return ListTile(
                       contentPadding: EdgeInsets.zero,
                       leading: Text(
@@ -157,22 +174,33 @@ class ComponentShowcaseScreen extends StatelessWidget {
                       ),
                       title: CommonText(
                         selected?.name ?? "Country Picker",
-                        weight: selected != null ? TextWeight.bold : TextWeight.regular,
+                        weight: selected != null
+                            ? TextWeight.bold
+                            : TextWeight.regular,
                       ),
                       subtitle: selected != null
                           ? CommonText(
                               "Code: ${selected.code} | Prefix: ${selected.dialCode}",
                               variant: TextVariant.caption,
                             )
-                          : const CommonText("Tap to pick a country", variant: TextVariant.caption),
-                      trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+                          : const CommonText(
+                              "Tap to pick a country",
+                              variant: TextVariant.caption,
+                            ),
+                      trailing: const Icon(
+                        Icons.arrow_forward_ios,
+                        size: 16,
+                      ),
                       onTap: () async {
-                        final result = await CommonCountryPicker.show(
-                          context: context,
-                          selectedCountryCode: selected?.code,
-                        );
+                        final result =
+                            await CommonCountryPicker.show(
+                              context: context,
+                              selectedCountryCode:
+                                  selected?.code,
+                            );
                         if (result != null) {
-                          controller.selectedCountry.value = result;
+                          controller.selectedCountry.value =
+                              result;
                         }
                       },
                     );
@@ -180,28 +208,51 @@ class ComponentShowcaseScreen extends StatelessWidget {
                   const Divider(),
                   // Date Picker
                   Obx(() {
-                    final selected = controller.selectedDate.value;
+                    final selected =
+                        controller.selectedDate.value;
                     return ListTile(
                       contentPadding: EdgeInsets.zero,
-                      leading: const Icon(Icons.calendar_today_rounded),
+                      leading: const Icon(
+                        Icons.calendar_today_rounded,
+                      ),
                       title: CommonText(
                         selected != null
                             ? DateFormatter.date(selected)
                             : "Date Picker",
-                        weight: selected != null ? TextWeight.bold : TextWeight.regular,
+                        weight: selected != null
+                            ? TextWeight.bold
+                            : TextWeight.regular,
                       ),
                       subtitle: selected != null
-                          ? CommonText("API format: ${DateFormatter.apiDate(selected)}", variant: TextVariant.caption)
-                          : const CommonText("Tap to pick a date", variant: TextVariant.caption),
-                      trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+                          ? CommonText(
+                              "API format: ${DateFormatter.apiDate(selected)}",
+                              variant: TextVariant.caption,
+                            )
+                          : const CommonText(
+                              "Tap to pick a date",
+                              variant: TextVariant.caption,
+                            ),
+                      trailing: const Icon(
+                        Icons.arrow_forward_ios,
+                        size: 16,
+                      ),
                       onTap: () async {
-                        final result = await CommonDatePicker.show(
-                          context: context,
-                          initialDate: selected ?? DateTime.now(),
-                          maximumDate: DateTime.now().add(const Duration(days: 365)),
-                        );
+                        final result =
+                            await CommonDatePicker.show(
+                              context: context,
+                              initialDate:
+                                  selected ??
+                                  DateTime.now(),
+                              maximumDate: DateTime.now()
+                                  .add(
+                                    const Duration(
+                                      days: 365,
+                                    ),
+                                  ),
+                            );
                         if (result != null) {
-                          controller.selectedDate.value = result;
+                          controller.selectedDate.value =
+                              result;
                         }
                       },
                     );
@@ -234,12 +285,15 @@ class ComponentShowcaseScreen extends StatelessWidget {
                     ),
                   ),
                   const Divider(height: 24),
-                  const CommonText("Dynamic TabBar Control:"),
+                  const CommonText(
+                    "Dynamic TabBar Control:",
+                  ),
                   SizedBox(height: 12.h),
                   Obx(
                     () => CommonTabBar(
                       tabs: controller.tabList,
-                      selectedIndex: controller.currentTabIndex.value,
+                      selectedIndex:
+                          controller.currentTabIndex.value,
                       onTabChanged: controller.onTabChanged,
                     ),
                   ),
@@ -249,7 +303,9 @@ class ComponentShowcaseScreen extends StatelessWidget {
             SizedBox(height: 24.h),
 
             // Section 5: Lists & Search
-            _buildSectionHeader("Paginating Lists & Search"),
+            _buildSectionHeader(
+              "Paginating Lists & Search",
+            ),
             CommonCard(
               padding: EdgeInsets.zero,
               child: Column(
@@ -257,16 +313,23 @@ class ComponentShowcaseScreen extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.all(12.r),
                     child: CommonSearchBar(
-                      backgroundColor: isDark ? const Color(0xFF1F2937) : Colors.grey.shade100,
-                      hintText: "Search items (debounced)...",
-                      onChanged: (q) => debugPrint("Query: $q"),
+                      backgroundColor: isDark
+                          ? const Color(0xFF1F2937)
+                          : Colors.grey.shade100,
+                      hintText:
+                          "Search items (debounced)...",
+                      onChanged: (q) =>
+                          debugPrint("Query: $q"),
                     ),
                   ),
                   SizedBox(
                     height: 180.h,
                     child: CommonListView<String>(
                       onLoadPage: controller.loadPageData,
-                      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 16.w,
+                        vertical: 8.h,
+                      ),
                       separatorWidget: const Divider(),
                       itemBuilder: (context, item, index) {
                         return ListTile(
@@ -274,9 +337,17 @@ class ComponentShowcaseScreen extends StatelessWidget {
                           dense: true,
                           leading: CircleAvatar(
                             radius: 12.r,
-                            child: Text((index + 1).toString(), style: TextStyle(fontSize: 11.sp)),
+                            child: Text(
+                              (index + 1).toString(),
+                              style: TextStyle(
+                                fontSize: 11.sp,
+                              ),
+                            ),
                           ),
-                          title: CommonText(item, variant: TextVariant.body),
+                          title: CommonText(
+                            item,
+                            variant: TextVariant.body,
+                          ),
                         );
                       },
                     ),
@@ -287,7 +358,9 @@ class ComponentShowcaseScreen extends StatelessWidget {
             SizedBox(height: 24.h),
 
             // Section 6: Loading Skeletal Indicators
-            _buildSectionHeader("Shimmer & Overlay Skeletons"),
+            _buildSectionHeader(
+              "Shimmer & Overlay Skeletons",
+            ),
             CommonCard(
               child: Column(
                 children: [
@@ -296,18 +369,33 @@ class ComponentShowcaseScreen extends StatelessWidget {
                   Row(
                     children: [
                       ShimmerBox(
-
-                          width: 80.w, height: 80.h, borderRadius: 12.r),
+                        width: 80.w,
+                        height: 80.h,
+                        borderRadius: 12.r,
+                      ),
                       SizedBox(width: 16.w),
                       Expanded(
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                          crossAxisAlignment:
+                              CrossAxisAlignment.start,
                           children: [
-                            ShimmerBox(width: 120.w, height: 16.h, borderRadius: 4.r),
+                            ShimmerBox(
+                              width: 120.w,
+                              height: 16.h,
+                              borderRadius: 4.r,
+                            ),
                             SizedBox(height: 10.h),
-                            ShimmerBox(width: 180.w, height: 12.h, borderRadius: 4.r),
+                            ShimmerBox(
+                              width: 180.w,
+                              height: 12.h,
+                              borderRadius: 4.r,
+                            ),
                             SizedBox(height: 10.h),
-                            ShimmerBox(width: 90.w, height: 12.h, borderRadius: 4.r),
+                            ShimmerBox(
+                              width: 90.w,
+                              height: 12.h,
+                              borderRadius: 4.r,
+                            ),
                           ],
                         ),
                       ),
@@ -331,7 +419,8 @@ class ComponentShowcaseScreen extends StatelessWidget {
                       CommonDialog.showSuccess(
                         context: context,
                         title: "Payment Successful",
-                        subtitle: "Your subscription has been updated successfully. A receipt has been sent to your email.",
+                        subtitle:
+                            "Your subscription has been updated successfully. A receipt has been sent to your email.",
                       );
                     },
                   ),
@@ -344,29 +433,34 @@ class ComponentShowcaseScreen extends StatelessWidget {
                       CommonDialog.showError(
                         context: context,
                         title: "Connection Failed",
-                        subtitle: "We were unable to connect to the server. Please check your internet connection and try again.",
+                        subtitle:
+                            "We were unable to connect to the server. Please check your internet connection and try again.",
                       );
                     },
                   ),
                   SizedBox(height: 12.h),
                   CommonButton(
-                    titleText: "Show Warning (Confirmation)",
+                    titleText:
+                        "Show Warning (Confirmation)",
                     buttonWidth: double.maxFinite,
                     buttonColor: AppColors.warning,
                     onTap: () async {
-                      final confirm = await CommonDialog.showWarning(
-                        showCloseButton: false,
+                      final confirm =
+                          await CommonDialog.showWarning(
+                            showCloseButton: false,
 
-                        context: context,
-                        title: "Delete Account?",
-                        subtitle: "Are you sure you want to delete your account? This action is irreversible and all your data will be lost.",
-                        primaryButtonText: "Delete",
-                        secondaryButtonText: "Cancel",
-                      );
+                            context: context,
+                            title: "Delete Account?",
+                            subtitle:
+                                "Are you sure you want to delete your account? This action is irreversible and all your data will be lost.",
+                            primaryButtonText: "Delete",
+                            secondaryButtonText: "Cancel",
+                          );
                       if (confirm == true) {
                         CommonSnackbar.show(
                           title: "Account Deleted",
-                          message: "Account deletion requested successfully.",
+                          message:
+                              "Account deletion requested successfully.",
                           type: SnackbarType.error,
                         );
                       }
@@ -377,18 +471,27 @@ class ComponentShowcaseScreen extends StatelessWidget {
                     titleText: "Show Confirmation Dialog",
                     buttonWidth: double.maxFinite,
                     onTap: () async {
-                      final confirm = await CommonDialog.showConfirmation(
-                        context: context,
-                        title: "Confirm Settings Update",
-                        subtitle: "Apply these changes to your user account profile configurations?",
-                        primaryButtonText: "Apply",
-                        secondaryButtonText: "Cancel",
-                      );
+                      final confirm =
+                          await CommonDialog.showConfirmation(
+                            context: context,
+                            title:
+                                "Confirm Settings Update",
+                            subtitle:
+                                "Apply these changes to your user account profile configurations?",
+                            primaryButtonText: "Apply",
+                            secondaryButtonText: "Cancel",
+                          );
                       if (confirm != null) {
                         CommonSnackbar.show(
-                          title: confirm ? "Applied" : "Cancelled",
-                          message: confirm ? "Settings saved successfully." : "Settings update aborted.",
-                          type: confirm ? SnackbarType.success : SnackbarType.info,
+                          title: confirm
+                              ? "Applied"
+                              : "Cancelled",
+                          message: confirm
+                              ? "Settings saved successfully."
+                              : "Settings update aborted.",
+                          type: confirm
+                              ? SnackbarType.success
+                              : SnackbarType.info,
                         );
                       }
                     },
@@ -409,25 +512,81 @@ class ComponentShowcaseScreen extends StatelessWidget {
                     position: SnackPosition.BOTTOM,
                     type: SnackbarType.error,
                     title: "Success Alert",
-                    message: "This is a premium success alert message.",
+                    message:
+                        "This is a premium success alert message.",
                   );
                 },
               ),
             ),
 
+            CommonButton(
+              titleText: "Show Url Launcher",
+              onTap: () {
+                UrlLauncherHelper.email("ibrahimsparktech@gmail.com");
+              },
+            ),
 
 
-            CommonButton(titleText: "Show Url Launcher",onTap: (){
+            20.height,
+
+
+            CommonButton(
+              titleText: "Check Connectivity",
+              onTap: () {
+                final isConnected = Get.find<ConnectivityService>().isConnected.value;
+                CommonSnackbar.show(
+                  title: "Connectivity Status",
+                  message: isConnected ? "You are online" : "You are offline",
+                  type: isConnected ? SnackbarType.success : SnackbarType.error,
+                );
+              },
+            ),
 
 
 
+            CommonButton(
+              titleText: "Permission",
+              onTap: () async {
+                final bool isAlreadyGranted = await PermissionHelper.check(Permission.camera);
 
-              UrlLauncherHelper.open("https://pub.dev/");
-            },)
-
-
-
-
+                if (!isAlreadyGranted) {
+                  final bool status = await PermissionHelper.camera();
+                  if (status) {
+                    CommonSnackbar.show(
+                      title: "Camera Permission",
+                      message: "Permission granted",
+                      type: SnackbarType.success,
+                    );
+                  } else {
+                    final isPermanentlyDenied = await Permission.camera.isPermanentlyDenied;
+                    if (isPermanentlyDenied) {
+                      final open = await CommonDialog.showConfirmation(
+                        context: context,
+                        title: "Camera Permission",
+                        subtitle: "Camera permission is permanently denied. Open settings to enable it?",
+                        primaryButtonText: "Settings",
+                        secondaryButtonText: "Cancel",
+                      );
+                      if (open == true) {
+                        await openAppSettings();
+                      }
+                    } else {
+                      CommonSnackbar.show(
+                        title: "Camera Permission",
+                        message: "Permission denied",
+                        type: SnackbarType.error,
+                      );
+                    }
+                  }
+                } else {
+                  CommonSnackbar.show(
+                    title: "Camera Permission",
+                    message: "Permission already granted",
+                    type: SnackbarType.info,
+                  );
+                }
+              },
+            )
 
 
           ],

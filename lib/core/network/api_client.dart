@@ -4,7 +4,7 @@ import 'package:getx_template/core/constants/api_constants.dart';
 import 'package:getx_template/core/errors/app_exception.dart';
 import 'package:getx_template/core/network/api_interceptor.dart';
 import 'package:getx_template/core/network/token_manager.dart';
-import 'package:getx_template/core/utils/logger_helper.dart';
+import 'package:getx_template/core/utils/helper/logger_helper.dart';
 
 /// Singleton API Client — wraps Dio with typed error handling.
 class ApiClient {
@@ -174,6 +174,7 @@ class ApiClient {
       case DioExceptionType.connectionTimeout:
       case DioExceptionType.sendTimeout:
       case DioExceptionType.receiveTimeout:
+      case DioExceptionType.transformTimeout:
         return const TimeoutException();
 
       // User cancelled request

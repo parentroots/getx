@@ -1,6 +1,6 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get.dart';
-import 'package:getx_template/core/utils/logger_helper.dart';
+import 'package:getx_template/core/utils/helper/logger_helper.dart';
 
 class NotificationService extends GetxService {
   Future<NotificationService> init() async {

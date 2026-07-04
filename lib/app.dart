@@ -15,7 +15,7 @@ class StarterApp extends StatelessWidget {
   Widget build(BuildContext context) {
     Get.put<AppConfig>(config, permanent: true);
     return ScreenUtilInit(
-      designSize: const Size(375, 812), // Premium baseline layout design size
+      designSize: const Size(375, 812),
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, child) {

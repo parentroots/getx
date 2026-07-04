@@ -9,11 +9,23 @@ import 'package:getx_template/features/profile/screen/controller/profile_control
 import 'package:getx_template/features/settings/screen/controller/settings_controller.dart';
 import 'package:getx_template/features/splash/screen/controller/splash_controller.dart';
 import 'package:getx_template/features/system/screen/controller/system_controller.dart';
+import 'package:getx_template/services/storage/shared_preferences_service.dart';
+import 'package:getx_template/services/connectivity/connectivity_service.dart';
+import 'package:getx_template/services/dialog/dialog_service.dart';
+import 'package:getx_template/services/notification/notification_service.dart';
+import 'package:getx_template/core/errors/global_error_handler.dart';
 
 class DependencyInjection extends Bindings {
   @override
   void dependencies() {
     Get.putAsync(() => AppLifecycleObserver().init());
+    
+    // Services
+    Get.lazyPut(() => SharedPreferencesService.instance, fenix: true);
+    Get.put(ConnectivityService(), permanent: true);
+    Get.put(DialogService(), permanent: true);
+    Get.putAsync(() => NotificationService().init());
+    Get.put(GlobalErrorHandler(), permanent: true);
     
     // Repositories
     Get.lazyPut(() => AuthRepository(), fenix: true);

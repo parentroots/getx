@@ -1,7 +1,7 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-enum TextVariant { display, header, title, body, caption, overline }
+enum TextVariant { display, header, title, body, caption, overline, }
 
 enum TextWeight { light, regular, medium, bold }
 

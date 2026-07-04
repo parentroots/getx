@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:getx_template/core/utils/debouncer.dart';
+import 'package:getx_template/core/utils/helper/debouncer.dart';
 
 /// A premium, highly customizable Search Bar widget.
 /// Integrates a built-in debouncer to optimize typing changes,

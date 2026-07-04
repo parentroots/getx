@@ -24,7 +24,10 @@ class DialogService extends GetxService {
     String cancelText = 'Cancel',
   }) {
     return CommonDialog.showConfirmation(
-      context: Get.context ?? Get.overlayContext ?? Get.key.currentContext!,
+      context:
+          Get.context ??
+          Get.overlayContext ??
+          Get.key.currentContext!,
       title: title,
       subtitle: message,
       primaryButtonText: confirmText,
@@ -38,7 +41,10 @@ class DialogService extends GetxService {
     String buttonText = 'OK',
   }) {
     return CommonDialog.showSuccess(
-      context: Get.context ?? Get.overlayContext ?? Get.key.currentContext!,
+      context:
+          Get.context ??
+          Get.overlayContext ??
+          Get.key.currentContext!,
       title: title,
       subtitle: message,
       primaryButtonText: buttonText,
@@ -51,7 +57,10 @@ class DialogService extends GetxService {
     String buttonText = 'OK',
   }) {
     return CommonDialog.showInfo(
-      context: Get.context ?? Get.overlayContext ?? Get.key.currentContext!,
+      context:
+          Get.context ??
+          Get.overlayContext ??
+          Get.key.currentContext!,
       title: title,
       subtitle: message,
       primaryButtonText: buttonText,
@@ -65,7 +74,10 @@ class DialogService extends GetxService {
     String cancelText = 'Cancel',
   }) {
     return CommonDialog.showWarning(
-      context: Get.context ?? Get.overlayContext ?? Get.key.currentContext!,
+      context:
+          Get.context ??
+          Get.overlayContext ??
+          Get.key.currentContext!,
       title: title,
       subtitle: message,
       primaryButtonText: confirmText,
@@ -85,9 +97,15 @@ class DialogService extends GetxService {
     if (Get.isDialogOpen == true) Get.back<void>();
   }
 
-  void showError({required String message, String title = 'Error'}) {
+  void showError({
+    required String message,
+    String title = 'Error',
+  }) {
     CommonDialog.showError(
-      context: Get.context ?? Get.overlayContext ?? Get.key.currentContext!,
+      context:
+          Get.context ??
+          Get.overlayContext ??
+          Get.key.currentContext!,
       title: title,
       subtitle: message,
       primaryButtonText: 'OK',
@@ -100,9 +118,10 @@ class DialogService extends GetxService {
       isScrollControlled: true,
       backgroundColor: Get.theme.colorScheme.surface,
       shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(20),
+        ),
       ),
     );
   }
 }
-

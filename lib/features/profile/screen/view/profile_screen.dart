@@ -7,6 +7,7 @@ import 'package:getx_template/component/common_card.dart';
 import 'package:getx_template/component/layout/common_bottom_nav_bar.dart';
 import 'package:getx_template/component/layout/common_text.dart';
 import 'package:getx_template/component/layout/common_scaffold.dart';
+import 'package:getx_template/core/constants/app_colors.dart';
 import 'package:getx_template/core/routing/app_routes.dart';
 import 'package:getx_template/core/theme/app_spacing.dart';
 
@@ -17,9 +18,12 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return CommonScaffold(
       bottomNavigationBar: const CommonBottomNavBar(),
-      appBar: const CommonAppBar(
+      appBar:  CommonAppBar(
+        backgroundColor: Colors.blue,
         centerTitle: true,
-          title: 'Profile', showBack: true),
+        title: 'Profile',
+        showBack: true,
+      ),
       body: ListView(
         padding: EdgeInsets.symmetric(vertical: 16.h),
         children: [
@@ -52,7 +56,7 @@ class ProfileScreen extends StatelessWidget {
           ),
           SizedBox(height: AppSpacing.lg.h),
           CommonButton(
-            titleText: "",
+            titleText: "Edit Profile",
             onTap: () => Get.toNamed(AppRoutes.editProfile),
           ),
         ],

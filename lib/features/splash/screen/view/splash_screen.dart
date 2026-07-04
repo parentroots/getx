@@ -21,7 +21,7 @@ class _SplashScreenState extends State<SplashScreen> {
     // TODO: implement initState
     super.initState();
     Future.delayed(const Duration(seconds: 3), () {
-      Get.offAllNamed(AppRoutes.login);
+      Get.offAllNamed(AppRoutes.onboarding);
     });
   }
   @override
@@ -44,7 +44,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 child: Icon(
                   Icons.layers_rounded,
                   size: 42.r,
-                  color: Theme.of(context).colorScheme.primary,
+                  color: Colors.blue,
                 ),
               ),
               SizedBox(height: AppSpacing.lg.h),

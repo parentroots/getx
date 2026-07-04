@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:getx_template/core/constants/app_colors.dart';
 
 /// A premium, highly customizable, and animated toggle switch widget.
 /// Featuring elastic iOS-style thumb stretching, custom inner icons,
@@ -39,10 +40,10 @@ class CommonSwitch extends StatefulWidget {
   /// Custom color for the thumb when active.
   final Color? activeThumbColor;
 
-  /// Custom width of the toggle track (defaults to 52.w).
+  /// Custom width of the toggle track (defaults to 42.w).
   final double? width;
 
-  /// Custom height of the toggle track (defaults to 28.h).
+  /// Custom height of the toggle track (defaults to 22.h).
   final double? height;
 
   /// Trigger haptic feedback on toggle change.
@@ -112,12 +113,12 @@ class _CommonSwitchState extends State<CommonSwitch>
     final isDark = theme.brightness == Brightness.dark;
     final isEnabled = widget.onChanged != null;
 
-    final double resolvedWidth = widget.width ?? 52.w;
-    final double resolvedHeight = widget.height ?? 28.h;
-    final double resolvedThumbSize = resolvedHeight - 6.r;
+    final double resolvedWidth = widget.width ?? 42.w;
+    final double resolvedHeight = widget.height ?? 22.h;
+    final double resolvedThumbSize = resolvedHeight - 4.r;
     final double maxMove = resolvedWidth - resolvedThumbSize - 6.r;
 
-    final Color resolvedActiveColor = widget.activeColor ?? theme.primaryColor;
+    final Color resolvedActiveColor = widget.activeColor ?? AppColors.primaryColor;
     final Color resolvedInactiveColor = widget.inactiveColor ??
         (isDark ? Colors.grey.shade800 : Colors.grey.shade300);
 

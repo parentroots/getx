@@ -22,60 +22,41 @@ class HomeScreen extends StatelessWidget {
       appBar: CommonAppBar(
         title: 'Home',
         showBack: true,
-        // Automatically implies leading (hamburger icon) for the drawer
         actions: [
           IconButton(
             tooltip: 'Notifications',
             onPressed: () => Get.toNamed(AppRoutes.notifications),
             icon: const Icon(Icons.notifications_outlined),
           ),
-          IconButton(
-            tooltip: 'Settings',
-            onPressed: () => Get.toNamed(AppRoutes.settings),
-            icon: const Icon(Icons.settings_outlined),
-          ),
+
         ],
       ),
       body: ListView(
+        padding: EdgeInsets.all(AppSpacing.md.r),
         children: [
           Text(
-            'Starter workspace',
-            style: Theme.of(context).textTheme.headlineMedium,
+            'Welcome back!',
+            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
           ),
-          const SizedBox(height: AppSpacing.md),
-          const Text(
-            'Replace these neutral surfaces with your app modules while keeping the infrastructure intact.',
-          ),
-          const SizedBox(height: AppSpacing.lg),
+          SizedBox(height: AppSpacing.md.h),
           CommonCard(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Infrastructure ready',
+                  'Quick Actions',
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
-                const SizedBox(height: AppSpacing.sm),
-
-                const Text(
-                  'GetX routes, dependency injection, services, themes, utilities, and reusable widgets are wired.',
-                ),
-                const SizedBox(height: AppSpacing.md),
+                SizedBox(height: AppSpacing.sm.h),
                 CommonButton(
-                  titleText: 'Launch Widget Showcase',
+                  titleText: 'Explore Features',
                   buttonWidth: double.maxFinite,
                   onTap: () => Get.toNamed(AppRoutes.showcase),
                 ),
               ],
             ),
-          ),
-          const SizedBox(height: AppSpacing.xl),
-          EmptyStateWidget(
-            title: 'Build your first module',
-            message:
-                'Add feature data, domain, and presentation folders under lib/modules when your app requirements are known.',
-            actionLabel: 'View profile',
-            onAction: () => Get.toNamed(AppRoutes.profile),
           ),
         ],
       ),

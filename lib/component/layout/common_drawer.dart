@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:getx_template/component/dialogs/common_dialog.dart';
 import 'package:getx_template/component/layout/common_text.dart';
+import 'package:getx_template/core/constants/app_colors.dart';
 import 'package:getx_template/core/routing/app_routes.dart';
 
 class CommonDrawer extends StatelessWidget {
@@ -59,25 +60,7 @@ class CommonDrawer extends StatelessWidget {
                   label: 'Home',
                   route: AppRoutes.home,
                 ),
-                _buildMenuItem(
-                  context: context,
-                  icon: Icons.person_rounded,
-                  label: 'My Profile',
-                  route: AppRoutes.profile,
-                ),
-                _buildMenuItem(
-                  context: context,
-                  icon: Icons.settings_rounded,
-                  label: 'Settings',
-                  route: AppRoutes.settings,
-                ),
-                _buildMenuItem(
-                  context: context,
-                  icon: Icons.notifications_rounded,
-                  label: 'Notifications',
-                  route: AppRoutes.notifications,
-                ),
-                Divider(height: 32.h, thickness: 1.r, color: theme.dividerColor),
+                Divider(height: 32.h, thickness: 0.5.r, color: theme.dividerColor),
                 
                 // Theme Toggle Tile
                 _buildThemeToggle(context, isDark),
@@ -134,30 +117,16 @@ class CommonDrawer extends StatelessWidget {
                 backgroundColor: theme.primaryColor.withValues(alpha: 0.15),
                 child: Icon(Icons.person_rounded, size: 28.r, color: theme.primaryColor),
               ),
-              const Spacer(),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
-                decoration: BoxDecoration(
-                  color: theme.primaryColor.withValues(alpha: 0.12),
-                  borderRadius: BorderRadius.circular(12.r),
-                ),
-                child: CommonText(
-                  'Starter PRO',
-                  variant: TextVariant.caption,
-                  weight: TextWeight.bold,
-                  color: theme.primaryColor,
-                ),
-              ),
             ],
           ),
           SizedBox(height: 16.h),
-          CommonText(
+          const CommonText(
             'MD EBRAHIM NAZMUL',
             variant: TextVariant.title,
             weight: TextWeight.bold,
           ),
           SizedBox(height: 4.h),
-          CommonText(
+          const CommonText(
             'ibrahimsparktech@gmail.com',
             variant: TextVariant.caption,
             color: Colors.grey,
@@ -182,7 +151,7 @@ class CommonDrawer extends StatelessWidget {
         onTap: () => _navigateTo(route),
         leading: Icon(
           icon,
-          color: isSelected ? theme.primaryColor : Colors.grey.shade600,
+          color: isSelected ? AppColors.primaryColor : Colors.grey.shade600,
           size: 22.r,
         ),
         title: CommonText(

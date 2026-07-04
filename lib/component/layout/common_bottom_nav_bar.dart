@@ -1,96 +1,145 @@
-﻿import 'package:flutter/material.dart';
+import 'dart:ui';
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:getx_template/core/constants/app_colors.dart';
 import 'package:getx_template/core/routing/app_routes.dart';
+
+class _BottomNavItem {
+  final IconData icon;
+  final IconData activeIcon;
+  final String label;
+  final String route;
+
+  const _BottomNavItem({
+    required this.icon,
+    required this.activeIcon,
+    required this.label,
+    required this.route,
+  });
+}
 
 class CommonBottomNavBar extends StatelessWidget {
   const CommonBottomNavBar({super.key});
 
+  static const List<_BottomNavItem> _navItems = [
+    _BottomNavItem(
+      icon: Icons.home_outlined,
+      activeIcon: Icons.home_rounded,
+      label: 'Home',
+      route: AppRoutes.home,
+    ),
+    _BottomNavItem(
+      icon: Icons.person_outline_rounded,
+      activeIcon: Icons.person_rounded,
+      label: 'Profile',
+      route: AppRoutes.profile,
+    ),
+    _BottomNavItem(
+      icon: Icons.settings_outlined,
+      activeIcon: Icons.settings_rounded,
+      label: 'Settings',
+      route: AppRoutes.settings,
+    ),
+  ];
+
   int _getCurrentIndex() {
     final route = Get.currentRoute;
-    if (route == AppRoutes.profile || route == AppRoutes.editProfile) {
-      return 1;
-    } else if (route == AppRoutes.settings) {
-      return 2;
-    }
-    return 0; // Default to Home
+    if (route == AppRoutes.editProfile) return 1;
+    final index = _navItems.indexWhere((item) => item.route == route);
+    return index != -1 ? index : 0; // Default to Home
   }
 
   void _onTabSelected(int index) {
     if (index == _getCurrentIndex()) return;
-
-    String targetRoute;
-    switch (index) {
-      case 1:
-        targetRoute = AppRoutes.profile;
-        break;
-      case 2:
-        targetRoute = AppRoutes.settings;
-        break;
-      case 0:
-      default:
-        targetRoute = AppRoutes.home;
-        break;
-    }
-
-    // Modern route transitions, clearing previous navigation logs
-    Get.offAllNamed(targetRoute);
+    Get.offAllNamed(_navItems[index].route);
   }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
     final selectedIndex = _getCurrentIndex();
 
-    return Container(
-      decoration: BoxDecoration(
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: .06),
-            blurRadius: 16.r,
-            offset: Offset(0, -4.h),
+    return SafeArea(
+      bottom: true,
+      child: Container(
+        height: 64.h,
+        margin: EdgeInsets.fromLTRB(20.w, 0, 20.w, 12.h),
+        padding: EdgeInsets.symmetric(horizontal: 12.w),
+        decoration: BoxDecoration(
+          color: isDark ? AppColors.darkSurface.withValues(alpha: 0.9) : Colors.white.withValues(alpha: 0.9),
+          borderRadius: BorderRadius.circular(24.r),
+          border: Border.all(
+            color: isDark ? Colors.white.withValues(alpha: 0.08) : AppColors.border.withValues(alpha: 0.5),
+            width: 1,
           ),
-        ],
-      ),
-      child: NavigationBar(
-        selectedIndex: selectedIndex,
-        onDestinationSelected: _onTabSelected,
-        elevation: 0,
-        backgroundColor: theme.brightness == Brightness.dark
-            ? theme.colorScheme.surface
-            : Colors.white,
-        indicatorColor: theme.primaryColor.withOpacity(0.12),
-        height: 68.h,
-        labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
-        destinations: [
-          NavigationDestination(
-            icon: Icon(Icons.home_outlined, size: 24.r),
-            selectedIcon: Icon(
-              Icons.home_rounded,
-              size: 24.r,
-              color: theme.primaryColor,
+          boxShadow: [
+            BoxShadow(
+              color: isDark ? Colors.black.withValues(alpha: 0.3) : AppColors.primary.withValues(alpha: 0.06),
+              blurRadius: 20.r,
+              offset: const Offset(0, 8),
             ),
-            label: 'Home',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.person_outline_rounded, size: 24.r),
-            selectedIcon: Icon(
-              Icons.person_rounded,
-              size: 24.r,
-              color: theme.primaryColor,
+          ],
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(24.r),
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: List.generate(_navItems.length, (index) {
+                final item = _navItems[index];
+                final isSelected = index == selectedIndex;
+                
+                return GestureDetector(
+                  onTap: () => _onTabSelected(index),
+                  behavior: HitTestBehavior.opaque,
+                  child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 250),
+                    curve: Curves.easeInOut,
+                    padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
+                    decoration: BoxDecoration(
+                      color: isSelected 
+                          ? (isDark ? AppColors.primary.withOpacity(0.15) : AppColors.primary.withOpacity(0.08))
+                          : Colors.transparent,
+                      borderRadius: BorderRadius.circular(16.r),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          isSelected ? item.activeIcon : item.icon,
+                          color: isSelected 
+                              ? AppColors.primary 
+                              : (isDark ? Colors.grey.shade500 : Colors.grey.shade600),
+                          size: 22.r,
+                        ),
+                        AnimatedSize(
+                          duration: const Duration(milliseconds: 200),
+                          curve: Curves.easeInOut,
+                          child: isSelected
+                              ? Padding(
+                                  padding: EdgeInsets.only(left: 8.w),
+                                  child: Text(
+                                    item.label,
+                                    style: TextStyle(
+                                      color: AppColors.primary,
+                                      fontSize: 13.sp,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                )
+                              : const SizedBox.shrink(),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              }),
             ),
-            label: 'Profile',
           ),
-          NavigationDestination(
-            icon: Icon(Icons.settings_outlined, size: 24.r),
-            selectedIcon: Icon(
-              Icons.settings_rounded,
-              size: 24.r,
-              color: theme.primaryColor,
-            ),
-            label: 'Settings',
-          ),
-        ],
+        ),
       ),
     );
   }
