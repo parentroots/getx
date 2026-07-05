@@ -5,6 +5,7 @@ import 'package:getx_template/core/bindings/dependency_injection.dart';
 import 'package:getx_template/core/config/app_config.dart';
 import 'package:getx_template/core/routing/app_routes.dart';
 import 'package:getx_template/core/theme/app_theme.dart';
+import 'package:getx_template/utils/app_log/logger.dart';
 
 class StarterApp extends StatelessWidget {
   final AppConfig config;
@@ -29,6 +30,19 @@ class StarterApp extends StatelessWidget {
           theme: AppTheme.light,
           darkTheme: AppTheme.dark,
           themeMode: ThemeMode.system,
+          routingCallback: (routing) {
+            if (routing != null && routing.current.isNotEmpty) {
+              if (routing.isDialog == true ||
+                  routing.isBottomSheet == true) {
+                return;
+              }
+              if (routing.isBack == true) {
+                NavigationLogger.logPop(routing.current, routing.previous);
+              } else {
+                NavigationLogger.logPush(routing.current, routing.previous);
+              }
+            }
+          },
         );
       },
     );

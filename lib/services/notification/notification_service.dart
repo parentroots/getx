@@ -1,9 +1,15 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get.dart';
-import 'package:getx_template/core/utils/helper/app_log.dart';
+import 'package:getx_template/services/firebase/firebase_service.dart';
+import 'package:getx_template/utils/app_log/app_log.dart';
 
 class NotificationService extends GetxService {
   Future<NotificationService> init() async {
+    if (!FirebaseService.isInitialized) {
+      AppLog.warning('Notifications not configured yet (Firebase is not initialized)');
+      return this;
+    }
+
     try {
       final messaging = FirebaseMessaging.instance;
       await messaging.requestPermission();

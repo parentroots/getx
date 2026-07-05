@@ -1,4 +1,4 @@
-import 'package:getx_template/core/constants/storage_keys.dart';
+import 'package:getx_template/utils/constants/storage_keys.dart';
 import 'package:getx_template/services/storage/secure_storage_service.dart';
 
 class TokenManager {

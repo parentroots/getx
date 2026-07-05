@@ -1,6 +1,6 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:getx_template/core/constants/storage_keys.dart';
+import 'package:getx_template/utils/constants/storage_keys.dart';
 import 'package:getx_template/core/routing/app_routes.dart';
 import 'package:getx_template/services/storage/shared_preferences_service.dart';
 import 'package:getx_template/shared/controllers/base_controller.dart';

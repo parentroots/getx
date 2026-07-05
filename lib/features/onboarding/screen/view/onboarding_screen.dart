@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:getx_template/component/common_button.dart';
 import 'package:getx_template/component/layout/common_text.dart';
 import 'package:getx_template/component/layout/common_scaffold.dart';
-import 'package:getx_template/core/constants/app_colors.dart';
+import 'package:getx_template/utils/constants/app_colors.dart';
 import 'package:getx_template/features/onboarding/screen/controller/onboarding_controller.dart';
 
 class OnboardingScreen extends StatelessWidget {

@@ -13,7 +13,7 @@ import 'package:getx_template/services/storage/shared_preferences_service.dart';
 import 'package:getx_template/services/connectivity/connectivity_service.dart';
 import 'package:getx_template/services/dialog/dialog_service.dart';
 import 'package:getx_template/services/notification/notification_service.dart';
-import 'package:getx_template/core/errors/global_error_handler.dart';
+import 'package:getx_template/utils/errors/global_error_handler.dart';
 
 class DependencyInjection extends Bindings {
   @override

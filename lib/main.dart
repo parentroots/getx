@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getx_template/app.dart';
 import 'package:getx_template/core/config/app_config.dart';
-import 'package:getx_template/core/errors/global_error_handler.dart';
+import 'package:getx_template/utils/errors/global_error_handler.dart';
 import 'package:getx_template/core/network/api_client.dart';
 import 'package:getx_template/core/network/socket_client.dart';
 import 'package:getx_template/core/network/token_manager.dart';

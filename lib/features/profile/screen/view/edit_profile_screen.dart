@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:getx_template/component/common_app_bar.dart';
@@ -6,7 +6,7 @@ import 'package:getx_template/component/common_button.dart';
 import 'package:getx_template/component/common_text_field.dart';
 import 'package:getx_template/component/layout/common_scaffold.dart';
 import 'package:getx_template/core/theme/app_spacing.dart';
-import 'package:getx_template/core/utils/helper/validators.dart';
+import 'package:getx_template/utils/helper/validators.dart';
 import 'package:getx_template/features/profile/screen/controller/profile_controller.dart';
 
 class EditProfileScreen extends StatelessWidget {

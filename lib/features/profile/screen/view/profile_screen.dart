@@ -7,7 +7,7 @@ import 'package:getx_template/component/common_card.dart';
 import 'package:getx_template/component/layout/common_bottom_nav_bar.dart';
 import 'package:getx_template/component/layout/common_text.dart';
 import 'package:getx_template/component/layout/common_scaffold.dart';
-import 'package:getx_template/core/constants/app_colors.dart';
+import 'package:getx_template/utils/constants/app_colors.dart';
 import 'package:getx_template/core/routing/app_routes.dart';
 import 'package:getx_template/core/theme/app_spacing.dart';
 

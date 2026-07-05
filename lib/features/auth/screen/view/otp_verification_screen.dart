@@ -5,9 +5,9 @@ import 'package:getx_template/component/common_app_bar.dart';
 import 'package:getx_template/component/common_button.dart';
 import 'package:getx_template/component/layout/common_text.dart';
 import 'package:getx_template/component/layout/common_scaffold.dart';
-import 'package:getx_template/core/constants/app_colors.dart';
+import 'package:getx_template/utils/constants/app_colors.dart';
 import 'package:getx_template/core/theme/app_spacing.dart';
-import 'package:getx_template/core/utils/helper/validators.dart';
+import 'package:getx_template/utils/helper/validators.dart';
 import 'package:getx_template/features/auth/screen/controller/auth_controller.dart';
 import 'package:pinput/pinput.dart';
 

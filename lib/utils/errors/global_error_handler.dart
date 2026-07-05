@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:getx_template/core/errors/app_exception.dart';
-import 'package:getx_template/core/utils/helper/app_log.dart';
+import 'package:getx_template/utils/errors/app_exception.dart';
+import 'package:getx_template/utils/app_log/app_log.dart';
 import 'package:getx_template/services/dialog/dialog_service.dart';
 
 class GlobalErrorHandler extends GetxService {

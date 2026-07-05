@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:getx_template/core/constants/app_colors.dart';
+import 'package:getx_template/utils/constants/app_colors.dart';
 
 /// A premium, highly customizable, and animated toggle switch widget.
 /// Featuring elastic iOS-style thumb stretching, custom inner icons,

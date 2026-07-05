@@ -1,10 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:getx_template/core/config/app_config.dart';
-import 'package:getx_template/core/constants/api_constants.dart';
-import 'package:getx_template/core/errors/app_exception.dart';
+import 'package:getx_template/utils/constants/api_constants.dart';
+import 'package:getx_template/utils/errors/app_exception.dart';
 import 'package:getx_template/core/network/api_interceptor.dart';
 import 'package:getx_template/core/network/token_manager.dart';
-import 'package:getx_template/core/utils/helper/app_log.dart';
+import 'package:getx_template/utils/app_log/app_log.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 /// Singleton API Client — wraps Dio with typed error handling.

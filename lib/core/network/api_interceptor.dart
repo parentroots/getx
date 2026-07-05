@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:getx_template/core/constants/api_constants.dart';
+import 'package:getx_template/utils/constants/api_constants.dart';
 import 'package:getx_template/core/network/token_manager.dart';
 
 class ApiInterceptor extends Interceptor {

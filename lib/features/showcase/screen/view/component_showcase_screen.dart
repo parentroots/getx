@@ -20,15 +20,15 @@ import 'package:getx_template/component/loading/shimmer_box.dart';
 import 'package:getx_template/component/pickers/common_country_picker.dart';
 import 'package:getx_template/component/pickers/common_date_picker.dart';
 import 'package:getx_template/component/pickers/common_multi_image_picker.dart';
-import 'package:getx_template/core/constants/app_colors.dart';
-import 'package:getx_template/core/utils/extenstion/screen_extensions.dart';
-import 'package:getx_template/core/utils/helper/date_formatter.dart';
+import 'package:getx_template/utils/constants/app_colors.dart';
+import 'package:getx_template/utils/extensions/screen_extensions.dart';
+import 'package:getx_template/utils/helper/date_formatter.dart';
 import 'package:getx_template/features/auth/screen/controller/auth_controller.dart';
 import 'package:getx_template/services/connectivity/connectivity_service.dart';
 import 'package:getx_template/services/launcher/url_launcher_helper.dart';
 import 'package:getx_template/services/permissions/permission_helper.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:getx_template/core/utils/helper/app_log.dart';
+import 'package:getx_template/utils/app_log/app_log.dart';
 
 class ComponentShowcaseScreen extends StatelessWidget {
   const ComponentShowcaseScreen({super.key});
@@ -660,15 +660,17 @@ class ComponentShowcaseScreen extends StatelessWidget {
                         titleText: "Success",
                         onTap: () {
                           AppLog.success(
-
-                              source: "Profile Update",
-                              "Operation completed successfully!");
+                            source: "Profile Update",
+                            "Operation completed successfully!",
+                          );
                         },
                       ),
                       CommonButton(
                         titleText: "Error",
                         onTap: () {
-                          AppLog.error("An unexpected error occurred.");
+                          AppLog.error(
+                            "An unexpected error occurred.",
+                          );
                         },
                       ),
                       CommonButton(
@@ -678,30 +680,35 @@ class ComponentShowcaseScreen extends StatelessWidget {
                             source: "Profile Screen",
                             "GET /api/v1/user - 200 OK",
                           );
-                          },
+                        },
                       ),
                       CommonButton(
                         titleText: "Warning",
                         onTap: () {
-                          AppLog.warning("Disk space is running low.");
+                          AppLog.warning(
+                            "Disk space is running low.",
+                          );
                         },
                       ),
                       CommonButton(
                         titleText: "Info",
                         onTap: () {
                           AppLog.info(
-
-                              "User navigated to Showcase Screen.");
+                            "User navigated to Showcase Screen.",
+                          );
                         },
                       ),
 
                       CommonButton(
-                        titleText: "Info",
+                        titleText: "Response",
                         onTap: () {
                           AppLog.apiResponse(
-                            source: "User API","");
-
-
+                            source: "User API",
+                            "[{'id': 1, 'name': 'John Doe', 'status': 'active'},"
+                            "{'id': 1, 'name': 'John Doe', 'status': 'active'},"
+                            "{'id': 1, 'name': 'John Doe', 'status': 'active'}"
+                            "]",
+                          );
                         },
                       ),
                     ],
