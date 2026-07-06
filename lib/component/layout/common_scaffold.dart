@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:getx_template/core/theme/app_dimensions.dart';
 import 'package:getx_template/core/theme/app_spacing.dart';
 
@@ -12,6 +12,7 @@ class CommonScaffold extends StatelessWidget {
     this.drawer,
     this.safeArea = true,
     this.padding = const EdgeInsets.all(AppSpacing.md),
+    this.scaffoldKey,
   });
 
   final Widget body;
@@ -21,6 +22,7 @@ class CommonScaffold extends StatelessWidget {
   final Widget? drawer;
   final bool safeArea;
   final EdgeInsetsGeometry padding;
+  final GlobalKey<ScaffoldState>? scaffoldKey;
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +36,7 @@ class CommonScaffold extends StatelessWidget {
     );
 
     return Scaffold(
+      key: scaffoldKey,
       appBar: appBar,
       drawer: drawer,
       bottomNavigationBar: bottomNavigationBar,

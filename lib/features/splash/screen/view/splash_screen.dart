@@ -1,31 +1,19 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:getx_template/component/layout/common_text.dart';
 import 'package:getx_template/core/config/app_config.dart';
-import 'package:getx_template/core/routing/app_routes.dart';
 import 'package:getx_template/core/theme/app_spacing.dart';
+import 'package:getx_template/features/splash/screen/controller/splash_controller.dart';
 
-class SplashScreen extends StatefulWidget {
+class SplashScreen extends GetView<SplashController> {
   const SplashScreen({super.key});
 
   @override
-  State<SplashScreen> createState() => _SplashScreenState();
-}
-
-
-class _SplashScreenState extends State<SplashScreen> {
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    Future.delayed(const Duration(seconds: 3), () {
-      Get.offAllNamed(AppRoutes.onboarding);
-    });
-  }
-  @override
   Widget build(BuildContext context) {
+    // Accessing the controller here triggers its lazy instantiation,
+    // which automatically runs onReady() -> _bootstrap() routing.
+    final _ = controller;
     final appName = Get.find<AppConfig>().appName;
 
     return Scaffold(

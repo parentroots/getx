@@ -17,6 +17,8 @@ import 'package:getx_template/features/system/screen/view/no_internet_screen.dar
 import 'package:getx_template/features/system/screen/view/update_required_screen.dart';
 import 'package:getx_template/features/showcase/screen/view/component_showcase_screen.dart';
 
+import 'package:getx_template/component/main_bottom_nav/main_bottom_nav_screen.dart';
+
 class AppRoutes {
   AppRoutes._();
   static final AppRoutes instance = AppRoutes._();
@@ -31,7 +33,6 @@ class AppRoutes {
   static const String home = '/home';
   static const String notifications = '/notifications';
   static const String settings = '/settings';
-  static const String profile = '/profile';
   static const String editProfile = '/profile/edit';
   static const String noInternet = '/no-internet';
   static const String updateRequired = '/update-required';
@@ -47,10 +48,9 @@ class AppRoutes {
     GetPage(name: register, page: () => const RegisterScreen()),
     GetPage(name: forgotPassword, page: () => const ForgotPasswordScreen()),
     GetPage(name: otpVerification, page: () => const OtpVerificationScreen()),
-    GetPage(name: home, page: () => const HomeScreen()),
+    GetPage(name: home, page: () => const MainBottomNavScreen()),
     GetPage(name: notifications, page: () => const NotificationScreen()),
     GetPage(name: settings, page: () => const SettingsScreen()),
-    GetPage(name: profile, page: () => const ProfileScreen()),
     GetPage(name: editProfile, page: () => const EditProfileScreen()),
     GetPage(name: noInternet, page: () => const NoInternetScreen()),
     GetPage(name: updateRequired, page: () => const UpdateRequiredScreen()),

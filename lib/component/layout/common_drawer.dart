@@ -3,11 +3,25 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:getx_template/component/dialogs/common_dialog.dart';
 import 'package:getx_template/component/layout/common_text.dart';
+import 'package:getx_template/services/storage/shared_preferences_service.dart';
 import 'package:getx_template/utils/constants/app_colors.dart';
 import 'package:getx_template/core/routing/app_routes.dart';
 
-class CommonDrawer extends StatelessWidget {
+class CommonDrawer extends StatefulWidget {
   const CommonDrawer({super.key});
+
+  @override
+  State<CommonDrawer> createState() => _CommonDrawerState();
+}
+
+class _CommonDrawerState extends State<CommonDrawer> {
+  final storage = Get.find<SharedPreferencesService>();
+
+  Future<void> logOut() async {
+    await storage.clearUser();
+    // storage.setBool(StorageKeys.onboardingSeen, false);
+    Get.offAllNamed(AppRoutes.login);
+  }
 
   void _navigateTo(String route) {
     // If we're already on that route, just close the drawer
@@ -22,15 +36,17 @@ class CommonDrawer extends StatelessWidget {
 
   void _showLogoutDialog(BuildContext context) {
     final theme = Theme.of(context);
-    Get.back(); // Close drawer first
+    Get.back();
 
     CommonDialog.showWarning(
-      onPrimaryTap: (){
-
-        Get.offAllNamed(AppRoutes.login);
+      onPrimaryTap: () async {
+        await logOut();
       },
       showCloseButton: false,
-        context: context, title: "Log-Out", subtitle: "Are you sure want to logout");
+      context: context,
+      title: "Log-Out",
+      subtitle: "Are you sure want to logout",
+    );
   }
 
   @override
@@ -52,16 +68,23 @@ class CommonDrawer extends StatelessWidget {
           // Drawer Body - Scrolling Menu List
           Expanded(
             child: ListView(
-              padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 16.h),
+              padding: EdgeInsets.symmetric(
+                horizontal: 12.w,
+                vertical: 16.h,
+              ),
               children: [
                 _buildMenuItem(
                   context: context,
-                  icon: Icons.home_rounded,
-                  label: 'Home',
+                  icon: Icons.help_outline_sharp,
+                  label: 'Help & support',
                   route: AppRoutes.home,
                 ),
-                Divider(height: 32.h, thickness: 0.5.r, color: theme.dividerColor),
-                
+                Divider(
+                  height: 32.h,
+                  thickness: 0.5.r,
+                  color: theme.dividerColor,
+                ),
+
                 // Theme Toggle Tile
                 _buildThemeToggle(context, isDark),
               ],
@@ -72,7 +95,10 @@ class CommonDrawer extends StatelessWidget {
           SafeArea(
             top: false,
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+              padding: EdgeInsets.symmetric(
+                horizontal: 16.w,
+                vertical: 16.h,
+              ),
               child: ListTile(
                 onTap: () => _showLogoutDialog(context),
                 leading: Icon(
@@ -86,8 +112,11 @@ class CommonDrawer extends StatelessWidget {
                   weight: TextWeight.medium,
                   color: theme.colorScheme.error,
                 ),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
-                tileColor: theme.colorScheme.error.withValues(alpha: 0.08),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12.r),
+                ),
+                tileColor: theme.colorScheme.error
+                    .withValues(alpha: 0.08),
               ),
             ),
           ),
@@ -96,15 +125,23 @@ class CommonDrawer extends StatelessWidget {
     );
   }
 
-  Widget _buildProfileHeader(BuildContext context, bool isDark) {
+  Widget _buildProfileHeader(
+    BuildContext context,
+    bool isDark,
+  ) {
     final theme = Theme.of(context);
     return Container(
       width: double.infinity,
       padding: EdgeInsets.fromLTRB(20.w, 60.h, 20.w, 24.h),
       decoration: BoxDecoration(
-        color: isDark ? Colors.grey.shade900 : theme.primaryColor.withValues(alpha: 0.04),
+        color: isDark
+            ? Colors.grey.shade900
+            : theme.primaryColor.withValues(alpha: 0.04),
         border: Border(
-          bottom: BorderSide(color: theme.dividerColor, width: 1.r),
+          bottom: BorderSide(
+            color: theme.dividerColor,
+            width: 1.r,
+          ),
         ),
       ),
       child: Column(
@@ -114,8 +151,13 @@ class CommonDrawer extends StatelessWidget {
             children: [
               CircleAvatar(
                 radius: 28.r,
-                backgroundColor: theme.primaryColor.withValues(alpha: 0.15),
-                child: Icon(Icons.person_rounded, size: 28.r, color: theme.primaryColor),
+                backgroundColor: theme.primaryColor
+                    .withValues(alpha: 0.15),
+                child: Icon(
+                  Icons.person_rounded,
+                  size: 28.r,
+                  color: theme.primaryColor,
+                ),
               ),
             ],
           ),
@@ -151,36 +193,52 @@ class CommonDrawer extends StatelessWidget {
         onTap: () => _navigateTo(route),
         leading: Icon(
           icon,
-          color: isSelected ? AppColors.primaryColor : Colors.grey.shade600,
+          color: isSelected
+              ? AppColors.primaryColor
+              : Colors.grey.shade600,
           size: 22.r,
         ),
         title: CommonText(
           label,
           variant: TextVariant.body,
-          weight: isSelected ? TextWeight.bold : TextWeight.medium,
+          weight: isSelected
+              ? TextWeight.bold
+              : TextWeight.medium,
           color: isSelected ? theme.primaryColor : null,
         ),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12.r),
+        ),
         selected: isSelected,
-        selectedTileColor: theme.primaryColor.withValues(alpha: 0.08),
-        splashColor: theme.primaryColor.withValues(alpha: 0.05),
+        selectedTileColor: theme.primaryColor.withValues(
+          alpha: 0.08,
+        ),
+        splashColor: theme.primaryColor.withValues(
+          alpha: 0.05,
+        ),
       ),
     );
   }
 
-  Widget _buildThemeToggle(BuildContext context, bool isDark) {
+  Widget _buildThemeToggle(
+    BuildContext context,
+    bool isDark,
+  ) {
     final theme = Theme.of(context);
     return Padding(
       padding: EdgeInsets.only(bottom: 6.h),
       child: SwitchListTile(
-
         value: isDark,
         onChanged: (bool val) {
-          Get.changeThemeMode(val ? ThemeMode.dark : ThemeMode.light);
+          Get.changeThemeMode(
+            val ? ThemeMode.dark : ThemeMode.light,
+          );
         },
         secondary: Icon(
-          isDark ? Icons.dark_mode_rounded : Icons.light_mode_rounded,
-          color: isDark?theme.primaryColor:Colors.red,
+          isDark
+              ? Icons.dark_mode_rounded
+              : Icons.light_mode_rounded,
+          color: isDark ? theme.primaryColor : Colors.red,
           size: 22.r,
         ),
         title: CommonText(
@@ -188,9 +246,12 @@ class CommonDrawer extends StatelessWidget {
           variant: TextVariant.body,
           weight: TextWeight.medium,
         ),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
-        activeColor:  isDark?theme.primaryColor:Colors.red
-
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12.r),
+        ),
+        activeColor: isDark
+            ? AppColors.primary
+            : Colors.red,
       ),
     );
   }

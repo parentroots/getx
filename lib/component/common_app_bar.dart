@@ -20,6 +20,7 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.leading,
     this.leadingWidth,
     this.showBack = true,
+    this.backButtonWidget,
 
     // ─── Actions ───────────────────────────────
     this.actions,
@@ -87,6 +88,9 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
   /// If true and no leading is provided, shows back button when there's history.
   final bool showBack;
 
+  /// Custom back button widget to override the default iOS chevron.
+  final Widget? backButtonWidget;
+
   // ─── Actions ───────────────────────────────
   /// Trailing action widgets.
   final List<Widget>? actions;
@@ -138,6 +142,27 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
               )
             : null);
 
+    // Build the leading/back button widget
+    Widget? resolvedLeading = leading;
+    if (resolvedLeading == null && showBack) {
+      resolvedLeading = Builder(
+        builder: (context) {
+          final ModalRoute<dynamic>? parentRoute = ModalRoute.of(context);
+          final bool canPop = parentRoute?.canPop ?? false;
+          if (!canPop) return const SizedBox.shrink();
+
+          return backButtonWidget ?? IconButton(
+            icon: const Icon(
+              Icons.arrow_back_ios_new_rounded,
+              size: 20,
+            ),
+            tooltip: 'Back',
+            onPressed: () => Navigator.maybePop(context),
+          );
+        },
+      );
+    }
+
     Widget appBar = AppBar(
       // Title
       title: resolvedTitle,
@@ -146,9 +171,9 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
       titleTextStyle: titleTextStyle,
 
       // Leading
-      leading: leading,
+      leading: resolvedLeading,
       leadingWidth: leadingWidth,
-      automaticallyImplyLeading: showBack,
+      automaticallyImplyLeading: false,
 
       // Actions
       actions: actions,

@@ -14,6 +14,7 @@ import 'package:getx_template/services/connectivity/connectivity_service.dart';
 import 'package:getx_template/services/dialog/dialog_service.dart';
 import 'package:getx_template/services/notification/notification_service.dart';
 import 'package:getx_template/utils/errors/global_error_handler.dart';
+import 'package:getx_template/component/main_bottom_nav/main_bottom_nav_controller.dart';
 
 class DependencyInjection extends Bindings {
   @override
@@ -31,6 +32,7 @@ class DependencyInjection extends Bindings {
     Get.lazyPut(() => AuthRepository(), fenix: true);
 
     // Controllers
+    Get.lazyPut(() => MainBottomNavController(), fenix: true);
     Get.lazyPut(() => SplashController(), fenix: true);
     Get.lazyPut(() => OnboardingController(), fenix: true);
     Get.lazyPut(() => AuthController(), fenix: true);

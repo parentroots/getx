@@ -4,12 +4,12 @@ import 'package:get/get.dart';
 import 'package:getx_template/component/common_app_bar.dart';
 import 'package:getx_template/component/common_button.dart';
 import 'package:getx_template/component/common_card.dart';
-import 'package:getx_template/component/layout/common_bottom_nav_bar.dart';
 import 'package:getx_template/component/layout/common_drawer.dart';
 import 'package:getx_template/component/layout/common_scaffold.dart';
-import 'package:getx_template/component/states/empty_state_widget.dart';
 import 'package:getx_template/core/routing/app_routes.dart';
 import 'package:getx_template/core/theme/app_spacing.dart';
+
+import 'package:getx_template/component/main_bottom_nav/main_bottom_nav_controller.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -17,18 +17,21 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CommonScaffold(
-      drawer: const CommonDrawer(),
-      bottomNavigationBar: const CommonBottomNavBar(),
       appBar: CommonAppBar(
         title: 'Home',
-        showBack: true,
+        showBack: false,
+        leading: IconButton(
+          icon: const Icon(Icons.menu),
+          onPressed: () {
+            Get.find<MainBottomNavController>().openDrawer();
+          },
+        ),
         actions: [
           IconButton(
             tooltip: 'Notifications',
             onPressed: () => Get.toNamed(AppRoutes.notifications),
             icon: const Icon(Icons.notifications_outlined),
           ),
-
         ],
       ),
       body: ListView(

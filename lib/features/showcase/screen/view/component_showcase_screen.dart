@@ -14,6 +14,7 @@ import 'package:getx_template/component/common_text_field.dart';
 import 'package:getx_template/component/dialogs/common_snackbar.dart';
 import 'package:getx_template/component/dialogs/common_dialog.dart';
 import 'package:getx_template/component/layout/common_list_view.dart';
+import 'package:getx_template/component/layout/common_radio.dart';
 import 'package:getx_template/component/layout/common_scaffold.dart';
 import 'package:getx_template/component/layout/common_text.dart';
 import 'package:getx_template/component/loading/shimmer_box.dart';
@@ -30,8 +31,17 @@ import 'package:getx_template/services/permissions/permission_helper.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:getx_template/utils/app_log/app_log.dart';
 
-class ComponentShowcaseScreen extends StatelessWidget {
+class ComponentShowcaseScreen extends StatefulWidget {
   const ComponentShowcaseScreen({super.key});
+
+  @override
+  State<ComponentShowcaseScreen> createState() =>
+      _ComponentShowcaseScreenState();
+}
+
+class _ComponentShowcaseScreenState
+    extends State<ComponentShowcaseScreen> {
+  bool radioValue = false;
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +56,7 @@ class ComponentShowcaseScreen extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.symmetric(
-          horizontal: 16.w,
+          horizontal: 5.w,
           vertical: 16.h,
         ),
         child: Column(
@@ -713,6 +723,52 @@ class ComponentShowcaseScreen extends StatelessWidget {
                       ),
                     ],
                   ),
+
+                  SizedBox(height: 16.h),
+                  const CommonText(
+                    "Radio Button Selection:",
+                    variant: TextVariant.caption,
+                    weight: TextWeight.bold,
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: CommonRadio(
+                          value: true,
+                          groupValue: radioValue,
+                          onChanged: (val) {
+                            if (val != null) {
+                              setState(() {
+                                radioValue = val;
+                              });
+                            }
+                          },
+                          title: "Male",
+                        ),
+                      ),
+                      SizedBox(width: 16.w),
+                      Expanded(
+                        child: CommonRadio(
+                          value: false,
+                          groupValue: radioValue,
+                          onChanged: (val) {
+                            if (val != null) {
+                              setState(() {
+                                radioValue = val;
+                              });
+                            }
+                          },
+                          title: "Female",
+                        ),
+                      ),
+                    ],
+                  ),
+
+
+
+
+
+
                 ],
               ),
             ),

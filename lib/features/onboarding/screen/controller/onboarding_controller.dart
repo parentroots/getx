@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getx_template/utils/constants/storage_keys.dart';
 import 'package:getx_template/core/routing/app_routes.dart';
@@ -28,7 +28,7 @@ class OnboardingController extends BaseController {
     await Get.find<SharedPreferencesService>().setBool(
       StorageKeys.onboardingSeen,
       true,
-    );
+    );  
     Get.offAllNamed(AppRoutes.authWelcome);
   }
 

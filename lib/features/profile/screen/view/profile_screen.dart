@@ -1,31 +1,28 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:getx_template/component/common_app_bar.dart';
 import 'package:getx_template/component/common_button.dart';
 import 'package:getx_template/component/common_card.dart';
-import 'package:getx_template/component/layout/common_bottom_nav_bar.dart';
 import 'package:getx_template/component/layout/common_text.dart';
 import 'package:getx_template/component/layout/common_scaffold.dart';
 import 'package:getx_template/utils/constants/app_colors.dart';
 import 'package:getx_template/core/routing/app_routes.dart';
 import 'package:getx_template/core/theme/app_spacing.dart';
+import 'package:getx_template/features/profile/screen/controller/profile_controller.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.find<ProfileController>();
+    // Ensure we have fresh user data whenever profile screen is displayed
+    controller.loadUserData();
+
     return CommonScaffold(
-      bottomNavigationBar: const CommonBottomNavBar(),
-      appBar:  CommonAppBar(
-        backgroundColor: Colors.blue,
-        centerTitle: true,
-        title: 'Profile',
-        showBack: true,
-      ),
       body: ListView(
-        padding: EdgeInsets.symmetric(vertical: 16.h),
+        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
         children: [
           CircleAvatar(
             radius: 44.r,
@@ -37,28 +34,33 @@ class ProfileScreen extends StatelessWidget {
             ),
           ),
           SizedBox(height: AppSpacing.lg.h),
-          CommonCard(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                CommonText(
-                  'Generic profile surface',
-                  variant: TextVariant.title,
-                  weight: TextWeight.bold,
-                ),
-                SizedBox(height: AppSpacing.sm.h),
-                const CommonText(
-                  'Connect this screen to your authenticated user model when your app has one.',
-                  variant: TextVariant.body,
-                ),
-              ],
-            ),
-          ),
+          Obx(() {
+            final user = controller.rxUser.value;
+            return CommonCard(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  CommonText(
+                    user?.name ?? 'Guest User',
+                    variant: TextVariant.title,
+                    weight: TextWeight.bold,
+                  ),
+                  SizedBox(height: AppSpacing.sm.h),
+                  CommonText(
+                    user?.email ?? 'No email associated',
+                    variant: TextVariant.body,
+                  ),
+                ],
+              ),
+            );
+          }),
           SizedBox(height: AppSpacing.lg.h),
           CommonButton(
             titleText: "Edit Profile",
             onTap: () => Get.toNamed(AppRoutes.editProfile),
           ),
+
+
         ],
       ),
     );

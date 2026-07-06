@@ -3,13 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getx_template/core/routing/app_routes.dart';
 import 'package:getx_template/data/models/paginated_response.dart';
+import 'package:getx_template/data/models/user_model.dart';
 import 'package:getx_template/data/repositories/auth_repository.dart';
+import 'package:getx_template/services/storage/shared_preferences_service.dart';
 import 'package:getx_template/shared/controllers/base_controller.dart';
 import 'package:getx_template/component/pickers/common_country_picker.dart';
 
 class AuthController extends BaseController {
   final AuthRepository _authRepository =
       Get.find<AuthRepository>();
+  final SharedPreferencesService _storage =
+      Get.find<SharedPreferencesService>();
 
   List<String> tabList = ['All', 'new', 'old'];
 
@@ -62,12 +66,27 @@ class AuthController extends BaseController {
       obscurePassword.toggle();
 
   Future<void> submitLogin() async {
-    if (loginFormKey.currentState?.validate() ?? false) {
+    debugPrint("--> [Login] submitLogin button clicked");
+    final isValid = loginFormKey.currentState?.validate() ?? false;
+    debugPrint("--> [Login] Form validation status: $isValid");
+    if (isValid) {
       try {
         /* await runBusy(() => _authRepository.login(
           emailController.text.trim(),
           passwordController.text,
         )); */
+
+        // Save mock user details locally
+        final user = UserModel(
+          id: '123',
+          name: emailController.text.trim().split('@').first.capitalizeFirst,
+          email: emailController.text.trim(),
+          token: 'dummy_jwt_token',
+        );
+        debugPrint("--> [Login] Saving User to Storage: ${user.toJson()}");
+        await _storage.saveUser(user);
+        debugPrint("--> [Login] Read back user from Storage: ${_storage.getUser()?.toJson()}");
+
         Get.offAllNamed(AppRoutes.home);
       } catch (error) {
         Get.snackbar(
@@ -82,15 +101,30 @@ class AuthController extends BaseController {
   }
 
   Future<void> submitRegister() async {
-    if (registerFormKey.currentState?.validate() ?? false) {
+    debugPrint("--> [Register] submitRegister button clicked");
+    final isValid = registerFormKey.currentState?.validate() ?? false;
+    debugPrint("--> [Register] Form validation status: $isValid");
+    if (isValid) {
       try {
-        await runBusy(
+        /* await runBusy(
           () => _authRepository.register(
             name: nameController.text.trim(),
             email: emailController.text.trim(),
             password: passwordController.text,
           ),
+        ); */
+
+        // Save registered user details locally
+        final user = UserModel(
+          id: '124',
+          name: nameController.text.trim(),
+          email: emailController.text.trim(),
+          token: 'dummy_jwt_token_register',
         );
+        debugPrint("--> [Register] Saving User to Storage: ${user.toJson()}");
+        await _storage.saveUser(user);
+        debugPrint("--> [Register] Read back user from Storage: ${_storage.getUser()?.toJson()}");
+
         Get.offAllNamed(AppRoutes.home);
       } catch (error) {
         Get.snackbar(

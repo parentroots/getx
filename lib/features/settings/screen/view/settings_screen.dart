@@ -1,13 +1,10 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:getx_template/component/common_app_bar.dart';
 import 'package:getx_template/component/common_card.dart';
-import 'package:getx_template/component/layout/common_bottom_nav_bar.dart';
-import 'package:getx_template/component/layout/common_drawer.dart';
 import 'package:getx_template/component/layout/common_text.dart';
 import 'package:getx_template/component/layout/common_scaffold.dart';
-import 'package:getx_template/core/routing/app_routes.dart';
 import 'package:getx_template/core/theme/app_spacing.dart';
 import 'package:getx_template/features/settings/screen/controller/settings_controller.dart';
 
@@ -18,10 +15,11 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.find<SettingsController>();
     return CommonScaffold(
-      bottomNavigationBar: const CommonBottomNavBar(),
       appBar: const CommonAppBar(
         centerTitle: true,
-          title: 'Settings', showBack: true),
+        title: 'Settings',
+        showBack: true,
+      ),
       body: ListView(
         padding: EdgeInsets.symmetric(vertical: 16.h),
         children: [
@@ -32,12 +30,12 @@ class SettingsScreen extends StatelessWidget {
                   contentPadding: EdgeInsets.zero,
                   leading: Icon(Icons.person_outline, size: 24.r),
                   title: const CommonText(
-                    'Profile',
+                    'Profile Details',
                     variant: TextVariant.body,
                     weight: TextWeight.medium,
                   ),
                   trailing: Icon(Icons.chevron_right, size: 24.r),
-                  onTap: () => Get.toNamed(AppRoutes.profile),
+                  onTap: () => Get.back(),
                 ),
                 const Divider(),
                 SizedBox(height: 12.h),
