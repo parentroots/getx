@@ -77,7 +77,7 @@ class _CommonDrawerState extends State<CommonDrawer> {
                   context: context,
                   icon: Icons.help_outline_sharp,
                   label: 'Help & support',
-                  route: AppRoutes.home,
+                  route: AppRoutes.mainBottomNavScreen,
                 ),
                 Divider(
                   height: 32.h,

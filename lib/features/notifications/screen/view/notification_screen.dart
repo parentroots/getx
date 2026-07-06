@@ -1,5 +1,5 @@
 ﻿import 'package:flutter/material.dart';
-import 'package:getx_template/component/common_app_bar.dart';
+import 'package:getx_template/component/app_bar/common_app_bar.dart';
 import 'package:getx_template/component/layout/common_scaffold.dart';
 import 'package:getx_template/component/states/empty_state_widget.dart';
 

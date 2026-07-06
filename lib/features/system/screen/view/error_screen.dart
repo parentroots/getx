@@ -1,6 +1,6 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:getx_template/component/common_app_bar.dart';
+import 'package:getx_template/component/app_bar/common_app_bar.dart';
 import 'package:getx_template/component/layout/common_scaffold.dart';
 import 'package:getx_template/component/states/error_state_widget.dart';
 

@@ -30,7 +30,7 @@ class AppRoutes {
   static const String register = '/auth/register';
   static const String forgotPassword = '/auth/forgot-password';
   static const String otpVerification = '/auth/otp-verification';
-  static const String home = '/home';
+  static const String mainBottomNavScreen = '/main-bottom-nav-screen';
   static const String notifications = '/notifications';
   static const String settings = '/settings';
   static const String editProfile = '/profile/edit';
@@ -48,7 +48,7 @@ class AppRoutes {
     GetPage(name: register, page: () => const RegisterScreen()),
     GetPage(name: forgotPassword, page: () => const ForgotPasswordScreen()),
     GetPage(name: otpVerification, page: () => const OtpVerificationScreen()),
-    GetPage(name: home, page: () => const MainBottomNavScreen()),
+    GetPage(name: mainBottomNavScreen, page: () => const MainBottomNavScreen()),
     GetPage(name: notifications, page: () => const NotificationScreen()),
     GetPage(name: settings, page: () => const SettingsScreen()),
     GetPage(name: editProfile, page: () => const EditProfileScreen()),

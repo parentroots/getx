@@ -33,7 +33,7 @@ class SplashController extends BaseController {
         "Navigating to Home",
         source: "Splash Screen",
       );
-      Get.offAllNamed(AppRoutes.home);
+      Get.offAllNamed(AppRoutes.mainBottomNavScreen);
     } else if (!seenOnboarding) {
       Get.offAllNamed(AppRoutes.onboarding);
     } else {

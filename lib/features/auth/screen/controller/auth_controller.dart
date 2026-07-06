@@ -87,7 +87,7 @@ class AuthController extends BaseController {
         await _storage.saveUser(user);
         debugPrint("--> [Login] Read back user from Storage: ${_storage.getUser()?.toJson()}");
 
-        Get.offAllNamed(AppRoutes.home);
+        Get.offAllNamed(AppRoutes.mainBottomNavScreen);
       } catch (error) {
         Get.snackbar(
           'Error',
@@ -125,7 +125,7 @@ class AuthController extends BaseController {
         await _storage.saveUser(user);
         debugPrint("--> [Register] Read back user from Storage: ${_storage.getUser()?.toJson()}");
 
-        Get.offAllNamed(AppRoutes.home);
+        Get.offAllNamed(AppRoutes.mainBottomNavScreen);
       } catch (error) {
         Get.snackbar(
           'Error',
