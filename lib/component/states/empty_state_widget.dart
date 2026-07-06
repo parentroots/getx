@@ -20,7 +20,7 @@ class EmptyStateWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _StateShell(
-      icon: Icons.inbox_outlined,
+      icon: Icons.message,
       title: title,
       message: message,
       actionLabel: actionLabel,
