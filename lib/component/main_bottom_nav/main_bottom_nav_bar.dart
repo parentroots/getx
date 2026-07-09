@@ -61,23 +61,17 @@ class MainBottomNavBar extends StatelessWidget {
         margin: EdgeInsets.fromLTRB(20.w, 0, 20.w, 12.h),
         padding: EdgeInsets.symmetric(horizontal: 12.w),
         decoration: BoxDecoration(
-          color: isDark
-              ? AppColors.darkSurface.withValues(alpha: 0.9)
-              : Colors.white.withValues(alpha: 0.9),
+          color: theme.colorScheme.surface.withValues(alpha: 0.9),
           borderRadius: BorderRadius.circular(24.r),
           border: Border.all(
-            color: isDark
-                ? Colors.white.withValues(alpha: 0.08)
-                : AppColors.border.withValues(alpha: 0.5),
+            color: theme.colorScheme.outlineVariant.withValues(alpha: 0.5),
             width: 1,
           ),
           boxShadow: [
             BoxShadow(
-              color: isDark
-                  ? Colors.black.withValues(alpha: 0.3)
-                  : AppColors.primary.withValues(
-                      alpha: 0.06,
-                    ),
+              color: Colors.black.withValues(
+                alpha: isDark ? 0.3 : 0.06,
+              ),
               blurRadius: 20.r,
               offset: const Offset(0, 8),
             ),

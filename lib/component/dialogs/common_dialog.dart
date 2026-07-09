@@ -353,7 +353,7 @@ class CommonDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
-    final Color resolvedBg = isDark ? AppColors.darkSurface : AppColors.lightSurface;
+    final Color resolvedBg = theme.colorScheme.surface;
     final Color accentColor = _getAccentColor();
 
     return Dialog(
@@ -379,7 +379,7 @@ class CommonDialog extends StatelessWidget {
                     textAlign: TextAlign.center,
                     fontSize: titleFontSize,
                     weight: TextWeight.bold,
-                    color: titleColor ?? (isDark ? AppColors.textLight : AppColors.textDark),
+                    color: titleColor ?? theme.colorScheme.onSurface,
                     maxLines: 3,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -389,7 +389,7 @@ class CommonDialog extends StatelessWidget {
                     textAlign: TextAlign.center,
                     fontSize: subtitleFontSize,
                     weight: TextWeight.regular,
-                    color: subtitleColor ?? (isDark ? Colors.grey.shade400 : AppColors.muted),
+                    color: subtitleColor ?? theme.colorScheme.onSurface.withValues(alpha: 0.7),
                     maxLines: 6,
                     overflow: TextOverflow.ellipsis,
                   ),

@@ -11,6 +11,7 @@ import 'package:getx_template/component/layout/common_text.dart';
 import 'package:getx_template/utils/constants/app_colors.dart';
 import 'package:getx_template/utils/constants/app_string.dart';
 import 'package:getx_template/core/routing/app_routes.dart';
+import 'package:getx_template/utils/extensions/context_extensions.dart';
 import 'package:getx_template/utils/extensions/screen_extensions.dart';
 import 'package:getx_template/utils/helper/validators.dart';
 import 'package:getx_template/features/auth/screen/controller/auth_controller.dart';
@@ -58,8 +59,9 @@ class LoginScreen extends StatelessWidget {
                   SizedBox(height: 24.h),
 
                   // Greeting Titles
-                  const Center(
+                  Center(
                     child: CommonText(
+                      color: AppColors.themeSurface(context),
                       "Welcome Back!",
                       variant: TextVariant.header,
                       weight: TextWeight.bold,
@@ -69,6 +71,7 @@ class LoginScreen extends StatelessWidget {
                   SizedBox(height: 8.h),
                   Center(
                     child: CommonText(
+
                       "Enter your credentials to continue into the app",
                       variant: TextVariant.body,
                       color: isDark

@@ -7,16 +7,16 @@ import 'package:getx_template/utils/constants/app_colors.dart';
 abstract final class AppTheme {
   static ThemeData get light => _build(
     brightness: Brightness.light,
-    background: AppColors.lightBackground,
-    surface: AppColors.lightSurface,
-    text: AppColors.textDark,
+    background: AppColors.textBorder50,
+    surface: AppColors.white,
+    text: AppColors.textBorder900,
   );
 
   static ThemeData get dark => _build(
     brightness: Brightness.dark,
-    background: AppColors.darkBackground,
-    surface: AppColors.darkSurface,
-    text: AppColors.textLight,
+    background: AppColors.textBorder900,
+    surface: AppColors.textBorder800,
+    text: AppColors.textBorder50,
   );
 
   static ThemeData _build({
@@ -28,8 +28,12 @@ abstract final class AppTheme {
     final scheme = ColorScheme.fromSeed(
       seedColor: AppColors.primary,
       brightness: brightness,
+      primary: AppColors.primary,
       surface: surface,
-      error: AppColors.error,
+      error: brightness == Brightness.light ? AppColors.error500 : AppColors.error300,
+      errorContainer: brightness == Brightness.light ? AppColors.error50 : AppColors.error900,
+      tertiary: brightness == Brightness.light ? AppColors.warning500 : AppColors.warning300,
+      secondary: brightness == Brightness.light ? AppColors.success500 : AppColors.success300,
     );
 
     return ThemeData(

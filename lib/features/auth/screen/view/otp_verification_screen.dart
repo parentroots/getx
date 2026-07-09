@@ -31,10 +31,10 @@ class OtpVerificationScreen extends StatelessWidget {
         color: theme.textTheme.bodyLarge?.color,
       ),
       decoration: BoxDecoration(
-        color: isDark ? AppColors.darkSurface : AppColors.lightBackground,
+        color: theme.colorScheme.surfaceContainerLow ?? theme.colorScheme.surface,
         borderRadius: BorderRadius.circular(12.r),
         border: Border.all(
-          color: isDark ? Colors.white.withValues(alpha: 0.08) : AppColors.border,
+          color: theme.colorScheme.outlineVariant,
         ),
       ),
     );
