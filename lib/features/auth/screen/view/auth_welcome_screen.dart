@@ -9,6 +9,7 @@ import 'package:getx_template/core/theme/app_spacing.dart';
 import 'package:getx_template/utils/constants/app_colors.dart';
 import 'package:getx_template/utils/extensions/screen_extensions.dart';
 
+
 class AuthWelcomeScreen extends StatelessWidget {
   const AuthWelcomeScreen({super.key});
 

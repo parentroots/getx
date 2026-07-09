@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:getx_template/component/dialogs/common_snackbar.dart';
 import 'package:getx_template/core/routing/app_routes.dart';
 import 'package:getx_template/data/models/user_model.dart';
 import 'package:getx_template/services/storage/shared_preferences_service.dart';
@@ -10,7 +11,8 @@ class ProfileController extends BaseController {
   final nameController = TextEditingController();
   final emailController = TextEditingController();
 
-  final SharedPreferencesService _storage =Get.find<SharedPreferencesService>();
+  final SharedPreferencesService _storage =
+      Get.find<SharedPreferencesService>();
 
   final Rxn<UserModel> rxUser = Rxn<UserModel>();
 
@@ -41,12 +43,10 @@ class ProfileController extends BaseController {
       rxUser.value = updatedUser;
 
       Get.back<void>();
-      Get.snackbar(
-        'Success',
-        'Profile changes updated in Local Storage.',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.green,
-        colorText: Colors.white,
+
+      CommonSnackbar.showSuccess(
+        title: "Profile Update",
+        message: "Profile Update Successful",
       );
     }
   }
@@ -55,11 +55,6 @@ class ProfileController extends BaseController {
     _storage.clearUser();
     rxUser.value = null;
     Get.offAllNamed(AppRoutes.login);
-    Get.snackbar(
-      'Logged Out',
-      'You have been logged out successfully.',
-      snackPosition: SnackPosition.BOTTOM,
-    );
   }
 
   @override

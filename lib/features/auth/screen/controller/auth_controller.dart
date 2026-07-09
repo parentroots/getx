@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:getx_template/component/dialogs/common_snackbar.dart';
 import 'package:getx_template/core/routing/app_routes.dart';
 import 'package:getx_template/data/models/paginated_response.dart';
 import 'package:getx_template/data/models/user_model.dart';
@@ -10,10 +11,9 @@ import 'package:getx_template/shared/controllers/base_controller.dart';
 import 'package:getx_template/component/pickers/common_country_picker.dart';
 
 class AuthController extends BaseController {
-  final AuthRepository _authRepository =
-      Get.find<AuthRepository>();
-  final SharedPreferencesService _storage =
-      Get.find<SharedPreferencesService>();
+
+  final AuthRepository _authRepository = Get.find<AuthRepository>();
+  final SharedPreferencesService _storage = Get.find<SharedPreferencesService>();
 
   List<String> tabList = ['All', 'new', 'old'];
 
@@ -21,49 +21,31 @@ class AuthController extends BaseController {
   final registerFormKey = GlobalKey<FormState>();
   final forgotPasswordFormKey = GlobalKey<FormState>();
   final otpFormKey = GlobalKey<FormState>();
+  final changePasswordFormKey = GlobalKey<FormState>();
 
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final nameController = TextEditingController();
   final otpController = TextEditingController();
 
-  final RxBool isSwitchOn = false.obs;
 
+  final currentPasswordTEController = TextEditingController();
+  final newPasswordTEController = TextEditingController();
+  final confirmNewPasswordTEController = TextEditingController();
+
+
+  final RxBool isSwitchOn = false.obs;
   final RxInt currentTabIndex = 0.obs;
 
   final phoneController = TextEditingController();
   final RxDouble appRating = 5.0.obs;
   final RxBool obscurePassword = true.obs;
-  final Rxn<CountryModel> selectedCountry =
-      Rxn<CountryModel>();
+  final Rxn<CountryModel> selectedCountry = Rxn<CountryModel>();
   final Rxn<DateTime> selectedDate = Rxn<DateTime>();
   final RxList<File> selectedImages = <File>[].obs;
 
-  Future<PaginatedResponse<String>> loadPageData(
-    int page,
-  ) async {
-    // Simulate API fetch delay (network latency)
-    await Future.delayed(const Duration(seconds: 1));
 
-    final items = List.generate(
-      5,
-      (index) => "Item ${(page - 1) * 5 + index + 1}",
-    );
-    return PaginatedResponse(
-      items: items,
-      currentPage: page,
-      lastPage: 3, // Simulate 3 total pages
-      total: 15,
-    );
-  }
-
-  void onTabChanged(int index) {
-    currentTabIndex.value = index;
-    debugPrint("${currentTabIndex.value}");
-  }
-
-  void togglePasswordVisibility() =>
-      obscurePassword.toggle();
+  void togglePasswordVisibility() => obscurePassword.toggle();
 
   Future<void> submitLogin() async {
     debugPrint("--> [Login] submitLogin button clicked");
@@ -81,20 +63,19 @@ class AuthController extends BaseController {
           id: '123',
           name: emailController.text.trim().split('@').first.capitalizeFirst,
           email: emailController.text.trim(),
-          token: 'dummy_jwt_token',
+          token: 'hello-i-am-dummy-jwt-token',
         );
         debugPrint("--> [Login] Saving User to Storage: ${user.toJson()}");
+
         await _storage.saveUser(user);
+
         debugPrint("--> [Login] Read back user from Storage: ${_storage.getUser()?.toJson()}");
 
         Get.offAllNamed(AppRoutes.mainBottomNavScreen);
       } catch (error) {
-        Get.snackbar(
-          'Error',
-          error.toString(),
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.redAccent,
-          colorText: Colors.white,
+        CommonSnackbar.showError(
+          title: 'Error',
+          message: error.toString(),
         );
       }
     }
@@ -127,14 +108,48 @@ class AuthController extends BaseController {
 
         Get.offAllNamed(AppRoutes.mainBottomNavScreen);
       } catch (error) {
-        Get.snackbar(
-          'Error',
-          error.toString(),
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.redAccent,
-          colorText: Colors.white,
+        CommonSnackbar.showError(
+          title: 'Error',
+          message: error.toString(),
         );
       }
+    }
+  }
+
+  Future<void> changePassword() async {
+    final isValid = changePasswordFormKey.currentState?.validate() ?? false;
+    if (!isValid) return;
+
+    if (newPasswordTEController.text.trim() != confirmNewPasswordTEController.text.trim()) {
+      CommonSnackbar.showError(
+        title: "Validation Error",
+        message: "Password Doesn't match",
+      );
+      return;
+    }
+
+    try {
+      await runBusy(() => _authRepository.changePassword(
+        currentPassword: currentPasswordTEController.text,
+        newPassword: newPasswordTEController.text,
+      ));
+
+      CommonSnackbar.showSuccess(
+        title: "Success",
+        message: "Password changed successfully",
+      );
+
+      // Clear fields
+      currentPasswordTEController.clear();
+      newPasswordTEController.clear();
+      confirmNewPasswordTEController.clear();
+
+      Get.back();
+    } catch (error) {
+      CommonSnackbar.showError(
+        title: "Error",
+        message: error.toString(),
+      );
     }
   }
 
@@ -143,20 +158,13 @@ class AuthController extends BaseController {
     AppRoutes.otpVerification,
   );
 
-  void verifyOtp() =>
-      _validate(otpFormKey, AppRoutes.login);
 
-  void _validate(
-    GlobalKey<FormState> key,
-    String nextRoute,
-  ) {
+  void verifyOtp() => _validate(otpFormKey, AppRoutes.login);
+
+
+  void _validate(GlobalKey<FormState> key, String nextRoute,) {
     if (key.currentState?.validate() ?? false) {
       Get.offAllNamed(nextRoute);
-
-     /* CommonSnackbar.showSuccess(
-        title: "Otp Verify",
-        message: "Otp Verification Success Need to Login",
-      );*/
     }
   }
 
@@ -166,6 +174,9 @@ class AuthController extends BaseController {
     passwordController.dispose();
     nameController.dispose();
     otpController.dispose();
+    currentPasswordTEController.dispose();
+    newPasswordTEController.dispose();
+    confirmNewPasswordTEController.dispose();
     super.onClose();
   }
 }

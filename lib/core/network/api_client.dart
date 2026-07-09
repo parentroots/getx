@@ -10,13 +10,18 @@ import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 /// Singleton API Client — wraps Dio with typed error handling.
 class ApiClient {
   ApiClient._internal();
+
   static final ApiClient _instance = ApiClient._internal();
+
   static ApiClient get instance => _instance;
 
   late Dio _dio;
 
   /// Must be called once at app startup before making requests.
-  void init({required AppConfig config, required TokenManager tokenManager}) {
+  void init({
+    required AppConfig config,
+    required TokenManager tokenManager,
+  }) {
     _dio = Dio(
       BaseOptions(
         baseUrl: config.apiBaseUrl,
@@ -25,7 +30,8 @@ class ApiClient {
         responseType: ResponseType.json,
         headers: {
           'Accept': ApiConstants.applicationJson,
-          ApiConstants.contentType: ApiConstants.applicationJson,
+          ApiConstants.contentType:
+              ApiConstants.applicationJson,
         },
       ),
     );
@@ -51,80 +57,96 @@ class ApiClient {
 
   // ─── HTTP Methods ──────────────────────────────
 
-  Future<Response<T>> get<T>(String path, {
+  Future<Response<T>> get<T>(
+    String path, {
     Map<String, dynamic>? queryParameters,
     Options? options,
     CancelToken? cancelToken,
   }) {
-    return _request(() => _dio.get<T>(
-      path,
-      queryParameters: queryParameters,
-      options: options,
-      cancelToken: cancelToken,
-    ));
+    return _request(
+      () => _dio.get<T>(
+        path,
+        queryParameters: queryParameters,
+        options: options,
+        cancelToken: cancelToken,
+      ),
+    );
   }
 
-  Future<Response<T>> post<T>(String path, {
+  Future<Response<T>> post<T>(
+    String path, {
     dynamic data,
     Map<String, dynamic>? queryParameters,
     Options? options,
     CancelToken? cancelToken,
   }) {
-    return _request(() => _dio.post<T>(
-      path,
-      data: data,
-      queryParameters: queryParameters,
-      options: options,
-      cancelToken: cancelToken,
-    ));
+    return _request(
+      () => _dio.post<T>(
+        path,
+        data: data,
+        queryParameters: queryParameters,
+        options: options,
+        cancelToken: cancelToken,
+      ),
+    );
   }
 
-  Future<Response<T>> put<T>(String path, {
+  Future<Response<T>> put<T>(
+    String path, {
     dynamic data,
     Map<String, dynamic>? queryParameters,
     Options? options,
     CancelToken? cancelToken,
   }) {
-    return _request(() => _dio.put<T>(
-      path,
-      data: data,
-      queryParameters: queryParameters,
-      options: options,
-      cancelToken: cancelToken,
-    ));
+    return _request(
+      () => _dio.put<T>(
+        path,
+        data: data,
+        queryParameters: queryParameters,
+        options: options,
+        cancelToken: cancelToken,
+      ),
+    );
   }
 
-  Future<Response<T>> patch<T>(String path, {
+  Future<Response<T>> patch<T>(
+    String path, {
     dynamic data,
     Map<String, dynamic>? queryParameters,
     Options? options,
     CancelToken? cancelToken,
   }) {
-    return _request(() => _dio.patch<T>(
-      path,
-      data: data,
-      queryParameters: queryParameters,
-      options: options,
-      cancelToken: cancelToken,
-    ));
+    return _request(
+      () => _dio.patch<T>(
+        path,
+        data: data,
+        queryParameters: queryParameters,
+        options: options,
+        cancelToken: cancelToken,
+      ),
+    );
   }
 
-  Future<Response<T>> delete<T>(String path, {
+  Future<Response<T>> delete<T>(
+    String path, {
     dynamic data,
     Map<String, dynamic>? queryParameters,
     Options? options,
     CancelToken? cancelToken,
   }) {
-    return _request(() => _dio.delete<T>(
-      path,
-      data: data,
-      queryParameters: queryParameters,
-      options: options,
-      cancelToken: cancelToken,
-    ));
+    return _request(
+      () => _dio.delete<T>(
+        path,
+        data: data,
+        queryParameters: queryParameters,
+        options: options,
+        cancelToken: cancelToken,
+      ),
+    );
   }
 
-  Future<Response<T>> multipartUpload<T>(String path, {
+  Future<Response<T>> multipartUpload<T>(
+    String path, {
     required FormData formData,
     Map<String, dynamic>? queryParameters,
     Options? options,
@@ -133,38 +155,47 @@ class ApiClient {
   }) {
     final uploadOptions = options ?? Options();
     uploadOptions.headers ??= {};
-    uploadOptions.headers![ApiConstants.contentType] = 'multipart/form-data';
+    uploadOptions.headers![ApiConstants.contentType] =
+        'multipart/form-data';
 
-    return _request(() => _dio.post<T>(
-      path,
-      data: formData,
-      queryParameters: queryParameters,
-      options: uploadOptions,
-      cancelToken: cancelToken,
-      onSendProgress: onSendProgress,
-    ));
+    return _request(
+      () => _dio.post<T>(
+        path,
+        data: formData,
+        queryParameters: queryParameters,
+        options: uploadOptions,
+        cancelToken: cancelToken,
+        onSendProgress: onSendProgress,
+      ),
+    );
   }
 
-  Future<Response> download(String urlPath, String savePath, {
+  Future<Response> download(
+    String urlPath,
+    String savePath, {
     Map<String, dynamic>? queryParameters,
     Options? options,
     CancelToken? cancelToken,
     void Function(int, int)? onReceiveProgress,
   }) {
-    return _request(() => _dio.download(
-      urlPath,
-      savePath,
-      queryParameters: queryParameters,
-      options: options,
-      cancelToken: cancelToken,
-      onReceiveProgress: onReceiveProgress,
-    ));
+    return _request(
+      () => _dio.download(
+        urlPath,
+        savePath,
+        queryParameters: queryParameters,
+        options: options,
+        cancelToken: cancelToken,
+        onReceiveProgress: onReceiveProgress,
+      ),
+    );
   }
 
   // ─── Error Handling ────────────────────────────
 
   /// Wraps every request — catches Dio errors and maps them to typed exceptions.
-  Future<Response<T>> _request<T>(Future<Response<T>> Function() call) async {
+  Future<Response<T>> _request<T>(
+    Future<Response<T>> Function() call,
+  ) async {
     try {
       return await call();
     } on DioException catch (e) {
@@ -172,8 +203,15 @@ class ApiClient {
     } on AppException {
       rethrow;
     } catch (e, stack) {
-      AppLog.error('Unexpected network error', error: e, stackTrace: stack);
-      throw NetworkException('An unexpected error occurred.', details: e);
+      AppLog.error(
+        'Unexpected network error',
+        error: e,
+        stackTrace: stack,
+      );
+      throw NetworkException(
+        'An unexpected error occurred.',
+        details: e,
+      );
     }
   }
 
@@ -197,7 +235,9 @@ class ApiClient {
 
       // Invalid SSL certificate
       case DioExceptionType.badCertificate:
-        return const NetworkException('SSL certificate verification failed.');
+        return const NetworkException(
+          'SSL certificate verification failed.',
+        );
 
       // Server responded with an error status code
       case DioExceptionType.badResponse:
@@ -205,8 +245,12 @@ class ApiClient {
 
       // Catch-all (SocketException, etc.)
       case DioExceptionType.unknown:
-        if (_isConnectionError(e.message)) return const NoInternetException();
-        return NetworkException('An unexpected network error occurred.', details: e.message);
+        if (_isConnectionError(e.message))
+          return const NoInternetException();
+        return NetworkException(
+          'An unexpected network error occurred.',
+          details: e.message,
+        );
     }
   }
 
@@ -217,22 +261,51 @@ class ApiClient {
     final msg = _extractMessage(body);
 
     return switch (status) {
-      400 => BadRequestException(msg ?? 'Bad request', body),
-      401 => UnauthorizedException(msg ?? 'Session expired. Please log in again.'),
-      403 => ForbiddenException(msg ?? 'You do not have permission for this action.'),
-      404 => NotFoundException(msg ?? 'The requested resource was not found.'),
-      409 => ConflictException(msg ?? 'A conflict occurred with the resource.'),
-      422 => ValidationException(msg ?? 'The submitted data is invalid.', details: body),
-      429 => TooManyRequestsException(msg ?? 'Too many requests. Try again later.'),
-      500 => ServerException(msg ?? 'Server error. Please try again later.', status),
-      _ => NetworkException(msg ?? 'Request failed (status $status)', statusCode: status, details: body),
+      400 => BadRequestException(
+        msg ?? 'Bad request',
+        body,
+      ),
+      401 => UnauthorizedException(
+        msg ?? 'Session expired. Please log in again.',
+      ),
+      403 => ForbiddenException(
+        msg ??
+            'You do not have permission for this action.',
+      ),
+      404 => NotFoundException(
+        msg ?? 'The requested resource was not found.',
+      ),
+      409 => ConflictException(
+        msg ?? 'A conflict occurred with the resource.',
+      ),
+      422 => ValidationException(
+        msg ?? 'The submitted data is invalid.',
+        details: body,
+      ),
+      429 => TooManyRequestsException(
+        msg ?? 'Too many requests. Try again later.',
+      ),
+      500 => ServerException(
+        msg ?? 'Server error. Please try again later.',
+        status,
+      ),
+      _ => NetworkException(
+        msg ?? 'Request failed (status $status)',
+        statusCode: status,
+        details: body,
+      ),
     };
   }
 
   /// Checks if an unknown error is actually a connection issue.
   bool _isConnectionError(String? message) {
     if (message == null) return false;
-    const patterns = ['SocketException', 'Connection refused', 'Network is unreachable', 'Failed host lookup'];
+    const patterns = [
+      'SocketException',
+      'Connection refused',
+      'Network is unreachable',
+      'Failed host lookup',
+    ];
     return patterns.any(message.contains);
   }
 
@@ -247,14 +320,17 @@ class ApiClient {
     if (data is! Map<String, dynamic>) return null;
 
     // Try common keys
-    if (data['message'] is String) return data['message'] as String;
-    if (data['error'] is String) return data['error'] as String;
+    if (data['message'] is String)
+      return data['message'] as String;
+    if (data['error'] is String)
+      return data['error'] as String;
     if (data['msg'] is String) return data['msg'] as String;
 
     // Nested: { "error": { "message": "..." } }
     if (data['error'] is Map) {
       final nested = data['error'] as Map;
-      if (nested['message'] is String) return nested['message'] as String;
+      if (nested['message'] is String)
+        return nested['message'] as String;
     }
 
     // Validation: { "errors": { "email": ["taken"], "name": ["required"] } }
@@ -277,20 +353,32 @@ class ApiClient {
 
 class ApiLoggingInterceptor extends Interceptor {
   @override
-  void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
-    AppLog.apiRequest("Sending Request: ${options.method} ${options.path}");
+  void onRequest(
+    RequestOptions options,
+    RequestInterceptorHandler handler,
+  ) {
+    AppLog.apiRequest(
+      "Sending Request: ${options.method} ${options.path}",
+    );
     handler.next(options);
   }
 
   @override
-  void onResponse(Response response, ResponseInterceptorHandler handler) {
+  void onResponse(
+    Response response,
+    ResponseInterceptorHandler handler,
+  ) {
     AppLog.apiResponse(
-        "Received Response: ${response.requestOptions.method} ${response.requestOptions.path} [${response.statusCode}]");
+      "Received Response: ${response.requestOptions.method} ${response.requestOptions.path} [${response.statusCode}]",
+    );
     handler.next(response);
   }
 
   @override
-  void onError(DioException err, ErrorInterceptorHandler handler) {
+  void onError(
+    DioException err,
+    ErrorInterceptorHandler handler,
+  ) {
     AppLog.error(
       "API Error: ${err.requestOptions.method} ${err.requestOptions.path} [${err.response?.statusCode ?? 'No Code'}]",
       error: err.message,

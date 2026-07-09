@@ -27,9 +27,12 @@ class DependencyInjection extends Bindings {
     Get.put(DialogService(), permanent: true);
     Get.putAsync(() => NotificationService().init());
     Get.put(GlobalErrorHandler(), permanent: true);
-    
+
+
     // Repositories
     Get.lazyPut(() => AuthRepository(), fenix: true);
+
+
 
     // Controllers
     Get.lazyPut(() => MainBottomNavController(), fenix: true);

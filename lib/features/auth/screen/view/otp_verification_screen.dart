@@ -11,6 +11,7 @@ import 'package:getx_template/utils/helper/validators.dart';
 import 'package:getx_template/features/auth/screen/controller/auth_controller.dart';
 import 'package:pinput/pinput.dart';
 
+
 class OtpVerificationScreen extends StatelessWidget {
   const OtpVerificationScreen({super.key});
 

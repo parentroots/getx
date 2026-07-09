@@ -24,10 +24,14 @@ class RegisterScreen extends StatelessWidget {
         child: ListView(
           padding: EdgeInsets.symmetric(vertical: 16.h),
           children: [
-            CommonText(
-              'Start with a clean account surface',
-              variant: TextVariant.header,
-              weight: TextWeight.bold,
+            Align(
+              alignment: Alignment.center,
+              child: CommonText(
+                'Sign-Up',
+                variant: TextVariant.header,
+                weight: TextWeight.bold,
+                fontSize: 22,
+              ),
             ),
             SizedBox(height: AppSpacing.xl.h),
             CommonTextField(

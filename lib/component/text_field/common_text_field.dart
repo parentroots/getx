@@ -48,6 +48,7 @@ class CommonTextField extends StatefulWidget {
     this.enableSuggestions = true,
     this.autofillHints,
     this.showPasswordToggle = true,
+    this.autoValidateMode=AutovalidateMode.onUserInteraction,
   });
 
   /// Label shown above or floating inside input frame.
@@ -70,6 +71,9 @@ class CommonTextField extends StatefulWidget {
 
   /// Custom prefix widget (overrides [prefixIcon]).
   final Widget? prefixWidget;
+
+  ///auto validate mod
+  final AutovalidateMode autoValidateMode;
 
   /// Icon displayed on the suffix edge of input.
   final IconData? suffixIcon;
@@ -237,6 +241,7 @@ class _CommonTextFieldState extends State<CommonTextField> {
     }
 
     return TextFormField(
+      autovalidateMode: widget.autoValidateMode,
       controller: widget.controller,
       initialValue: widget.initialValue,
       focusNode: widget.focusNode,

@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:getx_template/component/app_bar/common_app_bar.dart';
 import 'package:getx_template/component/button/common_button.dart';
 import 'package:getx_template/component/card/common_card.dart';
 import 'package:getx_template/component/layout/common_text.dart';
 import 'package:getx_template/component/layout/common_scaffold.dart';
-import 'package:getx_template/utils/constants/app_colors.dart';
 import 'package:getx_template/core/routing/app_routes.dart';
 import 'package:getx_template/core/theme/app_spacing.dart';
 import 'package:getx_template/features/profile/screen/controller/profile_controller.dart';
+import 'package:getx_template/utils/extensions/screen_extensions.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -17,9 +16,7 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<ProfileController>();
-    // Ensure we have fresh user data whenever profile screen is displayed
     controller.loadUserData();
-
     return CommonScaffold(
       body: ListView(
         padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
@@ -58,6 +55,12 @@ class ProfileScreen extends StatelessWidget {
           CommonButton(
             titleText: "Edit Profile",
             onTap: () => Get.toNamed(AppRoutes.editProfile),
+          ),
+
+          10.height,
+          CommonButton(
+            titleText: "Change Password",
+            onTap: () => Get.toNamed(AppRoutes.changePassword),
           ),
 
 

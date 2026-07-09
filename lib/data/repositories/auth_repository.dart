@@ -28,4 +28,19 @@ class AuthRepository extends BaseRepository {
     );
     return response.data as Map<String, dynamic>;
   }
+
+  Future<Map<String, dynamic>> changePassword({
+    required String currentPassword,
+    required String newPassword,
+  }) async {
+    final response = await apiClient.post(
+      ApiEndpoint.changePassword,
+      data: {
+        'oldPassword': currentPassword,
+        'newPassword': newPassword,
+      },
+    );
+    return response.data as Map<String, dynamic>;
+  }
 }
+
