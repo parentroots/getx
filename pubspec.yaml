@@ -35,7 +35,7 @@ dependencies:
   socket_io_client: ^2.0.3
   shimmer: ^3.0.0
   url_launcher: ^6.3.2
-  pinput: ^4.0.0
+  pinput: ^6.0.2
 
   
 
