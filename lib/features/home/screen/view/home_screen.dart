@@ -19,63 +19,39 @@ class HomeScreen extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
     return CommonScaffold(
-
       appBar: CommonAppBar(
         centerTitle: true,
+        titleColor: context.appColors.primary,
         title: 'Home',
         showBack: false,
-      /*  leading: IconButton(
-          icon: const Icon(Icons.menu),
+        leading: IconButton(
+          icon: Icon(
+            Icons.menu,
+            color: context.appColors.primary,
+          ),
           onPressed: () {
-            Get.find<MainBottomNavController>().openDrawer();
+            Get.find<MainBottomNavController>()
+                .openDrawer();
           },
-        ),*/
-      ),
-      body: Column(
-        children: [
-
-
-
-          CommonButton(
-
-            buttonColor: context.appColors.testColor,
-              titleText: "This Is Buttton"),
-
-
-
-
-
-          _buildThemeToggle(context, isDark),
-
-
-        ],
-
-
-      ),
-    );
-  }
-
-
-  Widget _buildThemeToggle(
-      BuildContext context,
-      bool isDark,
-      ) {
-    final theme = Theme.of(context);
-    return Padding(
-      padding: EdgeInsets.only(bottom: 6.h),
-      child: SwitchListTile(
-        value: isDark,
-        onChanged: (bool val) {
-          Get.changeThemeMode(
-            val ? ThemeMode.dark : ThemeMode.light,
-          );
-        },
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12.r),
         ),
-        activeColor: context.appColors.primary,
+      ),
+      body: ListView(
+        padding: EdgeInsets.all(AppSpacing.lg),
+        children: [
+          CommonButton(
+            buttonColor: context.appColors.primary,
+            titleText: "This Is Button",
+          ),
+          SizedBox(height: AppSpacing.md),
+          CommonCard(
+            color: context.appColors.border,
+            child: CommonText(
+               "Welcome to GetX Template",
+              color: context.appColors.textColor,
+            ),
+          ),
+        ],
       ),
     );
   }

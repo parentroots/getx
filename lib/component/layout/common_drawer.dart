@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:getx_template/component/dialogs/common_dialog.dart';
@@ -56,9 +56,7 @@ class _CommonDrawerState extends State<CommonDrawer> {
     final isDark = theme.brightness == Brightness.dark;
 
     return Drawer(
-      backgroundColor: theme.brightness == Brightness.dark
-          ? theme.colorScheme.surface
-          : Colors.white,
+      backgroundColor: context.appColors.background,
       elevation: 0,
       width: 280.w,
       child: Column(
@@ -135,9 +133,7 @@ class _CommonDrawerState extends State<CommonDrawer> {
       width: double.infinity,
       padding: EdgeInsets.fromLTRB(20.w, 60.h, 20.w, 24.h),
       decoration: BoxDecoration(
-        color: isDark
-            ? Colors.grey.shade900
-            : theme.primaryColor.withValues(alpha: 0.04),
+        color:context.appColors.background,
         border: Border(
           bottom: BorderSide(
             color: theme.dividerColor,
