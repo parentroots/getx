@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:getx_template/utils/constants/app_colors.dart';
+import 'package:getx_template/utils/extensions/context_extensions.dart';
 import 'package:getx_template/core/routing/app_routes.dart';
 import 'package:getx_template/component/main_bottom_nav/main_bottom_nav_controller.dart';
 
@@ -96,10 +97,8 @@ class MainBottomNavBar extends StatelessWidget {
                   final item = _navItems[index];
                   final isSelected = index == selectedIndex;
                   final iconColor = isSelected
-                      ? AppColors.primary
-                      : (isDark
-                            ? Colors.grey.shade500
-                            : Colors.grey.shade600);
+                      ? context.appColors.primary
+                      : context.appColors.textSecondary;
 
                   return GestureDetector(
                     onTap: () =>
@@ -117,9 +116,9 @@ class MainBottomNavBar extends StatelessWidget {
                       decoration: BoxDecoration(
                         color: isSelected
                             ? (isDark
-                                  ? AppColors.primary
+                                  ? context.appColors.primary
                                         .withValues(alpha: 0.15)
-                                  : AppColors.primary
+                                  : context.appColors.primary
                                         .withValues(alpha: 0.08))
                             : Colors.transparent,
                         borderRadius: BorderRadius.circular(
@@ -148,8 +147,7 @@ class MainBottomNavBar extends StatelessWidget {
                                     child: Text(
                                       item.label,
                                       style: TextStyle(
-                                        color: AppColors
-                                            .primary,
+                                        color: context.appColors.primary,
                                         fontSize: 13.sp,
                                         fontWeight:
                                             FontWeight.w600,

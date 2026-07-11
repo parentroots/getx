@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:getx_template/utils/constants/app_colors.dart';
+import 'package:getx_template/utils/extensions/context_extensions.dart';
 
 /// A premium, highly customizable input text field component.
 /// Featuring automated password visibility toggles, text casing configurations,
@@ -197,10 +198,10 @@ class _CommonTextFieldState extends State<CommonTextField> {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
     
-    final defaultBorderColor = widget.borderColor ?? (isDark ? Colors.grey.shade500 : Colors.grey.shade300);
-    final defaultFocusColor = widget.focusBorderColor ?? AppColors.primary;
-    final defaultErrorColor = widget.errorBorderColor ?? AppColors.red;
-    final defaultFillColor = widget.fillColor ?? (isDark ? Colors.grey.shade800 : Colors.grey.shade50);
+    final defaultBorderColor = widget.borderColor ?? context.appColors.border;
+    final defaultFocusColor = widget.focusBorderColor ?? context.appColors.primary;
+    final defaultErrorColor = widget.errorBorderColor ?? context.appColors.red;
+    final defaultFillColor = widget.fillColor ?? context.appColors.surface;
 
     final responsiveBorderRadius = widget.borderRadius.r;
 

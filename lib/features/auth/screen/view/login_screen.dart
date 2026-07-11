@@ -61,7 +61,7 @@ class LoginScreen extends StatelessWidget {
                   // Greeting Titles
                   Center(
                     child: CommonText(
-                      color: AppColors.themeSurface(context),
+                      color: context.appColors.textColor,
                       "Welcome Back!",
                       variant: TextVariant.header,
                       weight: TextWeight.bold,
@@ -128,7 +128,7 @@ class LoginScreen extends StatelessWidget {
                             () => CommonSwitch(
                               height: 18.h,
                               width: 40,
-                              activeColor: AppColors.primary,
+                              activeColor: context.appColors.primary,
                               enableHaptic: true,
                               value: controller
                                   .isSwitchOn
@@ -194,7 +194,7 @@ class LoginScreen extends StatelessWidget {
                           child: CommonText(
                           "Sign Up",
                           variant: TextVariant.body,
-                          color: AppColors.primary,
+                          color: context.appColors.primary,
                           weight: TextWeight.bold,
                         ),
                       ),

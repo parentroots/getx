@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:getx_template/core/theme/app_dimensions.dart';
 import 'package:getx_template/core/theme/app_spacing.dart';
+import 'package:getx_template/utils/extensions/context_extensions.dart';
 
 class CommonScaffold extends StatelessWidget {
   const CommonScaffold({
@@ -36,6 +37,7 @@ class CommonScaffold extends StatelessWidget {
     );
 
     return Scaffold(
+      backgroundColor: context.appColors.background,
       key: scaffoldKey,
       appBar: appBar,
       drawer: drawer,

@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:getx_template/component/button/common_button.dart';
@@ -7,6 +7,7 @@ import 'package:getx_template/component/layout/common_text.dart';
 import 'package:getx_template/core/routing/app_routes.dart';
 import 'package:getx_template/core/theme/app_spacing.dart';
 import 'package:getx_template/utils/constants/app_colors.dart';
+import 'package:getx_template/utils/extensions/context_extensions.dart';
 import 'package:getx_template/utils/extensions/screen_extensions.dart';
 
 
@@ -63,9 +64,9 @@ class AuthWelcomeScreen extends StatelessWidget {
 
               Expanded(
                 child: CommonButton(
-                  buttonColor: AppColors.white,
+                  buttonColor: context.appColors.white,
                   border: true,
-                  borderColor: AppColors.primary,
+                  borderColor: context.appColors.primary,
                   titleText: 'Sign-Up',
                   titleColor: Colors.black,
                   onTap: () =>

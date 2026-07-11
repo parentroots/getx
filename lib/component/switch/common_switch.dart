@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:getx_template/utils/constants/app_colors.dart';
+import 'package:getx_template/utils/extensions/context_extensions.dart';
 
 /// A premium, highly customizable, and animated toggle switch widget.
 /// Featuring elastic iOS-style thumb stretching, custom inner icons,
@@ -118,9 +119,8 @@ class _CommonSwitchState extends State<CommonSwitch>
     final double resolvedThumbSize = resolvedHeight - 4.r;
     final double maxMove = resolvedWidth - resolvedThumbSize - 6.r;
 
-    final Color resolvedActiveColor = widget.activeColor ?? AppColors.primaryColor;
-    final Color resolvedInactiveColor = widget.inactiveColor ??
-        (isDark ? Colors.grey.shade800 : Colors.grey.shade300);
+    final Color resolvedActiveColor = widget.activeColor ?? context.appColors.primary;
+    final Color resolvedInactiveColor = widget.inactiveColor ?? context.appColors.border;
 
     return GestureDetector(
       onTap: _onTap,

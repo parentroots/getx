@@ -5,6 +5,7 @@ import 'package:getx_template/component/button/common_button.dart';
 import 'package:getx_template/component/layout/common_text.dart';
 import 'package:getx_template/component/layout/common_scaffold.dart';
 import 'package:getx_template/utils/constants/app_colors.dart';
+import 'package:getx_template/utils/extensions/context_extensions.dart';
 import 'package:getx_template/features/onboarding/screen/controller/onboarding_controller.dart';
 
 class OnboardingScreen extends StatelessWidget {
@@ -81,7 +82,7 @@ class OnboardingScreen extends StatelessWidget {
               child: Column(
                 children: [
                   // Page Indicators
-                  Obx(() => _buildIndicators(controller.currentIndex.value)),
+                  Obx(() => _buildIndicators(context, controller.currentIndex.value)),
                   SizedBox(height: 32.h),
 
                   // Next / Explore Now Button
@@ -102,7 +103,7 @@ class OnboardingScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildIndicators(int currentIndex) {
+  Widget _buildIndicators(BuildContext context, int currentIndex) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: List.generate(3, (index) {
@@ -114,8 +115,8 @@ class OnboardingScreen extends StatelessWidget {
           width: isSelected ? 24.w : 8.w,
           decoration: BoxDecoration(
             color: isSelected 
-                ? AppColors.primary 
-                : AppColors.primary.withOpacity(0.2),
+                ? context.appColors.primary 
+                : context.appColors.primary.withOpacity(0.2),
             borderRadius: BorderRadius.circular(4.r),
           ),
         );

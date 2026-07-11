@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart';
+import 'package:getx_template/utils/app_log/app_log.dart';
 import 'package:socket_io_client/socket_io_client.dart' as io;
 
 /// A Singleton Socket Client that handles all WebSockets/Socket.IO connections.
@@ -32,6 +33,7 @@ class SocketClient {
           .disableAutoConnect()         // Disable auto-connect to control the flow
           .setExtraHeaders(headers ?? {}) // Pass any required headers
           .build(),
+
     );
 
     _setupListeners();
@@ -75,28 +77,28 @@ class SocketClient {
   void _setupListeners() {
     _socket?.onConnect((_) {
       if (kDebugMode) {
-        print('Socket Connected: ${_socket?.id}');
+        AppLog.api('Socket Connected: ${_socket?.id}');
       }
       _connectionStatusController.add(true);
     });
 
     _socket?.onDisconnect((_) {
       if (kDebugMode) {
-        print('Socket Disconnected');
+        AppLog.api('Socket Disconnected');
       }
       _connectionStatusController.add(false);
     });
 
     _socket?.onConnectError((error) {
       if (kDebugMode) {
-        print('Socket Connect Error: $error');
+        AppLog.api('Socket Connect Error: $error');
       }
       _connectionStatusController.add(false);
     });
 
     _socket?.onError((error) {
       if (kDebugMode) {
-        print('Socket Error: $error');
+        AppLog.api('Socket Error: $error');
       }
     });
   }

@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:getx_template/component/button/common_button.dart';
 import 'package:getx_template/component/layout/common_text.dart';
 import 'package:getx_template/utils/constants/app_colors.dart';
+import 'package:getx_template/utils/extensions/context_extensions.dart';
 
 enum DialogType {
   success,
@@ -238,18 +239,18 @@ class CommonDialog extends StatelessWidget {
 
   // Builder Methods =======================================================
 
-  Color _getAccentColor() {
+  Color _getAccentColor(BuildContext context) {
     switch (type) {
       case DialogType.success:
-        return AppColors.success;
+        return context.appColors.success;
       case DialogType.error:
-        return AppColors.error;
+        return context.appColors.error;
       case DialogType.warning:
-        return AppColors.warning;
+        return context.appColors.warning;
       case DialogType.info:
-        return AppColors.info;
+        return context.appColors.info;
       case DialogType.confirmation:
-        return AppColors.primary;
+        return context.appColors.primary;
     }
   }
 
@@ -263,7 +264,7 @@ class CommonDialog extends StatelessWidget {
       );
     }
 
-    final Color accentColor = _getAccentColor();
+    final Color accentColor = _getAccentColor(context);
     IconData iconData;
     switch (type) {
       case DialogType.success:
@@ -354,7 +355,7 @@ class CommonDialog extends StatelessWidget {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
     final Color resolvedBg = theme.colorScheme.surface;
-    final Color accentColor = _getAccentColor();
+    final Color accentColor = _getAccentColor(context);
 
     return Dialog(
       backgroundColor: resolvedBg,

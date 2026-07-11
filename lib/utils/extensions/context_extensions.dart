@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:getx_template/utils/constants/app_colors.dart';
 
 /// A set of premium, high-readability extensions on [BuildContext]
 /// to write clean, concise layout code.
@@ -27,4 +28,7 @@ extension ContextExtensions on BuildContext {
 
   /// Check if dark mode is active.
   bool get isDarkMode => theme.brightness == Brightness.dark;
+
+  /// Access namespaced responsive theme colors via the unified [ThemeColor] extension.
+  ThemeColor get appColors => Theme.of(this).extension<ThemeColor>()!;
 }

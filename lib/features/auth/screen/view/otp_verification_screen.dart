@@ -6,6 +6,7 @@ import 'package:getx_template/component/button/common_button.dart';
 import 'package:getx_template/component/layout/common_text.dart';
 import 'package:getx_template/component/layout/common_scaffold.dart';
 import 'package:getx_template/utils/constants/app_colors.dart';
+import 'package:getx_template/utils/extensions/context_extensions.dart';
 import 'package:getx_template/core/theme/app_spacing.dart';
 import 'package:getx_template/utils/helper/validators.dart';
 import 'package:getx_template/features/auth/screen/controller/auth_controller.dart';
@@ -41,13 +42,13 @@ class OtpVerificationScreen extends StatelessWidget {
 
     final focusedPinTheme = defaultPinTheme.copyWith(
       decoration: defaultPinTheme.decoration?.copyWith(
-        border: Border.all(color: AppColors.primary, width: 2),
+        border: Border.all(color: context.appColors.primary, width: 2),
       ),
     );
 
     final submittedPinTheme = defaultPinTheme.copyWith(
       decoration: defaultPinTheme.decoration?.copyWith(
-        border: Border.all(color: AppColors.primary.withValues(alpha: 0.5)),
+        border: Border.all(color: context.appColors.primary.withValues(alpha: 0.5)),
       ),
     );
 

@@ -30,7 +30,7 @@ Future<void> main() async {
       ApiClient.instance.init(config: appConfig, tokenManager: tokenManager);
 
       // Initialize Global Socket Client (connect to a base URL or specific endpoint)
-      SocketClient.instance.init(url: appConfig.apiBaseUrl);
+      SocketClient.instance.init(url: appConfig.apiSocketUrl);
 
       runApp(const StarterApp(config: appConfig));
     },

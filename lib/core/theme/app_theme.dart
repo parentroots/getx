@@ -1,39 +1,45 @@
 import 'package:flutter/material.dart';
-
 import 'package:getx_template/core/theme/app_radius.dart';
 import 'package:getx_template/core/theme/app_typography.dart';
 import 'package:getx_template/utils/constants/app_colors.dart';
 
 abstract final class AppTheme {
   static ThemeData get light => _build(
-    brightness: Brightness.light,
-    background: AppColors.textBorder50,
-    surface: AppColors.white,
-    text: AppColors.textBorder900,
-  );
+        brightness: Brightness.light,
+        background: ThemeColor.light.background,
+        surface: ThemeColor.light.surface,
+        text: ThemeColor.light.textColor,
+        primaryColor: ThemeColor.light.primary,
+      );
 
   static ThemeData get dark => _build(
-    brightness: Brightness.dark,
-    background: AppColors.textBorder900,
-    surface: AppColors.textBorder800,
-    text: AppColors.textBorder50,
-  );
+        brightness: Brightness.dark,
+        background: ThemeColor.dark.background,
+        surface: ThemeColor.dark.surface,
+        text: ThemeColor.dark.textColor,
+        primaryColor: ThemeColor.dark.primary,
+      );
 
   static ThemeData _build({
     required Brightness brightness,
     required Color background,
     required Color surface,
     required Color text,
+    required Color primaryColor,
   }) {
+    final isLight = brightness == Brightness.light;
+
     final scheme = ColorScheme.fromSeed(
-      seedColor: AppColors.primary,
+      seedColor: primaryColor,
       brightness: brightness,
-      primary: AppColors.primary,
+      primary: primaryColor,
       surface: surface,
-      error: brightness == Brightness.light ? AppColors.error500 : AppColors.error300,
-      errorContainer: brightness == Brightness.light ? AppColors.error50 : AppColors.error900,
-      tertiary: brightness == Brightness.light ? AppColors.warning500 : AppColors.warning300,
-      secondary: brightness == Brightness.light ? AppColors.success500 : AppColors.success300,
+      error: isLight ? ThemeColor.light.error : ThemeColor.dark.error,
+      errorContainer: isLight
+          ? ThemeColor.light.error.withValues(alpha: 0.1)
+          : ThemeColor.dark.error.withValues(alpha: 0.2),
+      tertiary: isLight ? ThemeColor.light.warning : ThemeColor.dark.warning,
+      secondary: isLight ? ThemeColor.light.success : ThemeColor.dark.success,
     );
 
     return ThemeData(
@@ -78,6 +84,9 @@ abstract final class AppTheme {
           side: BorderSide(color: scheme.outlineVariant),
         ),
       ),
+      extensions: [
+        isLight ? ThemeColor.light : ThemeColor.dark,
+      ],
     );
   }
 }

@@ -1,149 +1,171 @@
 import 'package:flutter/material.dart';
-import 'package:getx_template/utils/extensions/context_extensions.dart';
 
-class AppColors {
-  AppColors._();
+@immutable
+class ThemeColor extends ThemeExtension<ThemeColor> {
+  const ThemeColor({
+    required this.primary,
+    required this.primaryHover,
+    required this.secondary,
+    required this.background,
+    required this.surface,
+    required this.surfaceSecondary,
+    required this.border,
+    required this.textColor,
+    required this.textSecondary,
+    required this.textMuted,
+    required this.success,
+    required this.warning,
+    required this.error,
+    required this.info,
+    required this.accent,
+    required this.testColor,
+  });
 
-  // --- Main Colors (Preserved) ---
-  static const Color primary = Color(0xFF2563EB); // Main Primary (Blue)
-  static const Color primaryColor = Color(0xFFFFBF00); // Amber Primary
-  static const Color secondary = Color(0xff454545);
-  static const Color background = Color(0xFFFAFAFA);
-  static const Color transparent = Colors.transparent;
-  static const Color white = Colors.white;
-  static const Color black = Colors.black;
-  static const Color red = Colors.red;
-  static const Color filledColor = Color(0xFFe7e7e7);
-  static const Color textFiledColor = Color(0xFF979797);
-  static const Color blueLight = Color(0xffe8e8f5);
-  static const Color primaryGrey = Color(0xFF757680);
-  static const Color backGroundColor = Color(0xfffbf4f9);
-  static const Color greyColor = Color(0xFF6B7280);
+  final Color primary;
+  final Color primaryHover;
+  final Color secondary;
+  final Color background;
+  final Color surface;
+  final Color surfaceSecondary;
+  final Color border;
+  final Color textColor;
+  final Color textSecondary;
+  final Color textMuted;
+  final Color success;
+  final Color warning;
+  final Color error;
+  final Color info;
+  final Color accent;
+  final Color testColor;
 
-  // Status & Highlight Colors (Preserved fallback)
-  static const Color accent = Color(0xFFF59E0B);
-  static const Color success = Color(0xFF16A34A);
-  static const Color warning = Color(0xFFF97316);
-  static const Color error = Color(0xFFDC2626);
-  static const Color info = Color(0xFF0284C7);
+  // ── Dark ===============================================
+  static const ThemeColor dark = ThemeColor(
+    primary: Color(0xFF3B82F6),
+    primaryHover: Color(0xFF60A5FA),
+    secondary: Color(0xFF94A3B8),
+    background: Color(0xFF0B1329),
+    surface: Color(0xFF111827),
+    surfaceSecondary: Color(0xFF1F2937),
+    border: Color(0xFF374151),
+    textColor: Color(0xFFF40000),
+    textSecondary: Color(0xFF94A3B8),
+    textMuted: Color(0xFF64748B),
+    success: Color(0xFF10B981),
+    warning: Color(0xFFFBBF24),
+    error: Color(0xFFF43F5E),
+    info: Color(0xFF38BDF8),
+    accent: Color(0xFF6366F1),
+    testColor: Color(0XFF4BF301),
+  );
 
-  // Surface & Theme backgrounds (Preserved fallback)
-  static const Color lightBackground = Color(0xFFF8FAFC);
-  static const Color lightSurface = Colors.white;
-  static const Color darkBackground = Color(0xFF0B1120);
-  static const Color darkSurface = Color(0xFF111827);
-  
-  // Text & Border Colors (Preserved fallback)
-  static const Color textDark = Color(0xFF0F172A);
-  static const Color textLight = Color(0xFFF8FAFC);
-  static const Color muted = Color(0xFF64748B);
-  static const Color border = Color(0xFFE2E8F0);
+  // ── Light ==============================================
+  static const ThemeColor light = ThemeColor(
+    primary: Color(0xFF2563EB),
+    primaryHover: Color(0xFF1D4ED8),
+    secondary: Color(0xFF475569),
+    background: Color(0xFFF8FAFC),
+    surface: Color(0xFFFFFFFF),
+    surfaceSecondary: Color(0xFFF1F5F9),
+    border: Color(0xFFE2E8F0),
+    textColor: Color(0xFF4BF301),
+    textSecondary: Color(0xFF64748B),
+    textMuted: Color(0xFF94A3B8),
+    success: Color(0xFF059669),
+    warning: Color(0xFFF59E0B),
+    error: Color(0xFFE11D48),
+    info: Color(0xFF0284C7),
+    accent: Color(0xFF4F46E5),
+    testColor: Color(0xFFB700FF),
+  );
 
+  // ── Common Colors (Same in both Light and Dark mode) ===
+  Color get transparent => Colors.transparent;
 
+  Color get white => Colors.white;
 
-  // --- NEW CUSTOM PALETTE ---
+  Color get black => Colors.black;
 
-  // --- Error Shades ---
-  static const Color error50 = Color(0xFFFAE6E6);
-  static const Color error_50 = error50;
-  static const Color error100 = Color(0xFFEFB0B0);
-  static const Color error_100 = error100;
-  static const Color error200 = Color(0xFFE88A8A);
-  static const Color error_200 = error200;
-  static const Color error300 = Color(0xFFDD5454);
-  static const Color error_300 = error300;
-  static const Color error400 = Color(0xFFD63333);
-  static const Color error_400 = error400;
-  static const Color error500 = Color(0xFFCC0000);
-  static const Color error_500 = error500;
-  static const Color error600 = Color(0xFFBA0000);
-  static const Color error_600 = error600;
-  static const Color error700 = Color(0xFF910000);
-  static const Color error_700 = error700;
-  static const Color error800 = Color(0xFF700000);
-  static const Color error_800 = error800;
-  static const Color error900 = Color(0xFF560000);
-  static const Color error_900 = error900;
+  Color get red => Colors.red;
 
-  // --- Warning Shades ---
-  static const Color warning50 = Color(0xFFFBFBE8);
-  static const Color warning_50 = warning50;
-  static const Color warning100 = Color(0xFFF1F2B6);
-  static const Color warning_100 = warning100;
-  static const Color warning200 = Color(0xFFEAEC93);
-  static const Color warning_200 = warning200;
-  static const Color warning300 = Color(0xFFE1E362);
-  static const Color warning_300 = warning300;
-  static const Color warning400 = Color(0xFFDBDD44);
-  static const Color warning_400 = warning400;
-  static const Color warning500 = Color(0xFFD2D515);
-  static const Color warning_500 = warning500;
-  static const Color warning600 = Color(0xFFBFC213);
-  static const Color warning_600 = warning600;
-  static const Color warning700 = Color(0xFF95970F);
-  static const Color warning_700 = warning700;
-  static const Color warning800 = Color(0xFF74750C);
-  static const Color warning_800 = warning800;
-  static const Color warning900 = Color(0xFF585909);
-  static const Color warning_900 = warning900;
+  @override
+  ThemeColor copyWith({
+    Color? primary,
+    Color? primaryHover,
+    Color? secondary,
+    Color? background,
+    Color? surface,
+    Color? surfaceSecondary,
+    Color? border,
+    Color? textColor,
+    Color? textSecondary,
+    Color? textMuted,
+    Color? success,
+    Color? warning,
+    Color? error,
+    Color? info,
+    Color? accent,
+    Color? testColor,
+  }) {
+    return ThemeColor(
+      primary: primary ?? this.primary,
+      primaryHover: primaryHover ?? this.primaryHover,
+      secondary: secondary ?? this.secondary,
+      background: background ?? this.background,
+      surface: surface ?? this.surface,
+      surfaceSecondary:
+          surfaceSecondary ?? this.surfaceSecondary,
+      border: border ?? this.border,
+      textColor: textColor ?? this.textColor,
+      textSecondary: textSecondary ?? this.textSecondary,
+      textMuted: textMuted ?? this.textMuted,
+      success: success ?? this.success,
+      warning: warning ?? this.warning,
+      error: error ?? this.error,
+      info: info ?? this.info,
+      accent: accent ?? this.accent,
+      testColor: testColor ?? this.testColor,
+    );
+  }
 
-  // --- Success Shades ---
-  static const Color success50 = Color(0xFFE9F7F5);
-  static const Color success_50 = success50;
-  static const Color success100 = Color(0xFFBAE7DE);
-  static const Color success_100 = success100;
-  static const Color success200 = Color(0xFF98DCCF);
-  static const Color success_200 = success200;
-  static const Color success300 = Color(0xFF69CCB9);
-  static const Color success_300 = success300;
-  static const Color success400 = Color(0xFF4CC2AB);
-  static const Color success_400 = success400;
-  static const Color success500 = Color(0xFF1FB396);
-  static const Color success_500 = success500;
-  static const Color success600 = Color(0xFF1CA389);
-  static const Color success_600 = success600;
-  static const Color success700 = Color(0xFF167F6B);
-  static const Color success_700 = success700;
-  static const Color success800 = Color(0xFF116253);
-  static const Color success_800 = success800;
-  static const Color success900 = Color(0xFF0D4B3F);
-  static const Color success_900 = success900;
-
-  // --- Text & Border (Neutral) Shades ---
-  static const Color textBorder50 = Color(0xFFF2F2F2);
-  static const Color text_border_50 = textBorder50;
-  static const Color textBorder100 = Color(0xFFD7D7D7);
-  static const Color text_border_100 = textBorder100;
-  static const Color textBorder200 = Color(0xFFC3C3C3);
-  static const Color text_border_200 = textBorder200;
-  static const Color textBorder300 = Color(0xFFA8A8A8);
-  static const Color text_border_300 = textBorder300;
-  static const Color textBorder400 = Color(0xFF979797);
-  static const Color text_border_400 = textBorder400;
-  static const Color textBorder500 = Color(0xFF7D7D7D);
-  static const Color text_border_500 = textBorder500;
-  static const Color textBorder600 = Color(0xFF727272);
-  static const Color text_border_600 = textBorder600;
-  static const Color textBorder700 = Color(0xFF595959);
-  static const Color text_border_700 = textBorder700;
-  static const Color textBorder800 = Color(0xFF454545);
-  static const Color text_border_800 = textBorder800;
-  static const Color textBorder900 = Color(0xFF353535);
-  static const Color text_border_900 = textBorder900;
-
-
-
-  static Color themeBackground(BuildContext context) =>
-      context.isDarkMode ? textBorder900 : textBorder50;
-
-  static Color themeSurface(BuildContext context) =>
-      context.isDarkMode ? textBorder800 : white;
-
-  static Color themeText(BuildContext context) =>
-      context.isDarkMode ? textBorder50 : textBorder900;
-
-  static Color themeBorder(BuildContext context) =>
-      context.isDarkMode ? textBorder700 : textBorder100;
-
-
+  @override
+  ThemeColor lerp(
+    ThemeExtension<ThemeColor>? other,
+    double t,
+  ) {
+    if (other is! ThemeColor) return this;
+    return ThemeColor(
+      primary: Color.lerp(primary, other.primary, t)!,
+      primaryHover: Color.lerp(
+        primaryHover,
+        other.primaryHover,
+        t,
+      )!,
+      secondary: Color.lerp(secondary, other.secondary, t)!,
+      background: Color.lerp(
+        background,
+        other.background,
+        t,
+      )!,
+      surface: Color.lerp(surface, other.surface, t)!,
+      surfaceSecondary: Color.lerp(
+        surfaceSecondary,
+        other.surfaceSecondary,
+        t,
+      )!,
+      border: Color.lerp(border, other.border, t)!,
+      textColor: Color.lerp(textColor, other.textColor, t)!,
+      textSecondary: Color.lerp(
+        textSecondary,
+        other.textSecondary,
+        t,
+      )!,
+      textMuted: Color.lerp(textMuted, other.textMuted, t)!,
+      success: Color.lerp(success, other.success, t)!,
+      warning: Color.lerp(warning, other.warning, t)!,
+      error: Color.lerp(error, other.error, t)!,
+      info: Color.lerp(info, other.info, t)!,
+      accent: Color.lerp(accent, other.accent, t)!,
+      testColor: Color.lerp(testColor, other.testColor, t)!,
+    );
+  }
 }

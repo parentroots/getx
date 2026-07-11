@@ -1,10 +1,11 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:getx_template/component/dialogs/common_dialog.dart';
 import 'package:getx_template/component/layout/common_text.dart';
 import 'package:getx_template/services/storage/shared_preferences_service.dart';
 import 'package:getx_template/utils/constants/app_colors.dart';
+import 'package:getx_template/utils/extensions/context_extensions.dart';
 import 'package:getx_template/core/routing/app_routes.dart';
 
 class CommonDrawer extends StatefulWidget {
@@ -194,8 +195,8 @@ class _CommonDrawerState extends State<CommonDrawer> {
         leading: Icon(
           icon,
           color: isSelected
-              ? AppColors.primaryColor
-              : Colors.grey.shade600,
+              ? context.appColors.primary
+              : context.appColors.textSecondary,
           size: 22.r,
         ),
         title: CommonText(
@@ -238,7 +239,7 @@ class _CommonDrawerState extends State<CommonDrawer> {
           isDark
               ? Icons.dark_mode_rounded
               : Icons.light_mode_rounded,
-          color: isDark ? theme.primaryColor : Colors.red,
+          color: context.appColors.primary,
           size: 22.r,
         ),
         title: CommonText(
@@ -249,9 +250,7 @@ class _CommonDrawerState extends State<CommonDrawer> {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12.r),
         ),
-        activeColor: isDark
-            ? AppColors.primary
-            : Colors.red,
+        activeColor: context.appColors.primary,
       ),
     );
   }

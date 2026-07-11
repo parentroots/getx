@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:getx_template/utils/constants/app_colors.dart';
+import 'package:getx_template/utils/extensions/context_extensions.dart';
 
 
 class CommonButton extends StatefulWidget {
@@ -101,7 +102,7 @@ class _CommonButtonState extends State<CommonButton>
 
   @override
   Widget build(BuildContext context) {
-    final Color resolvedBackgroundColor = widget.buttonColor ?? AppColors.primary;
+    final Color resolvedBackgroundColor = widget.buttonColor ?? context.appColors.primary;
     final Color resolvedTitleColor = widget.titleColor ?? Colors.white;
     final Color resolvedBorderColor = widget.borderColor ??
         (widget.border ? const Color(0xFF16C3C1) : Colors.transparent);
