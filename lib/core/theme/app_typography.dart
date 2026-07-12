@@ -12,9 +12,6 @@ class AppTypography {
 
   static const String _fontFamily = 'Roboto'; // <-- replace with your font
 
-  //this is comment==============================
-  //Base font size scale (px). Ekhane size change korle shob style automatically update hobe.
-  //this is comment==============================
   static const double _heading1 = 32;
   static const double _heading2 = 28;
   static const double _heading3 = 24;
@@ -29,9 +26,7 @@ class AppTypography {
   static const double _text3 = 13;
   static const double _text4 = 12;
 
-  //this is comment==============================
-  //Private base builder — shob style ei function theke generate hocche
-  //this is comment==============================
+
   static TextStyle _base({
     required double size,
     required FontWeight weight,
@@ -47,9 +42,7 @@ class AppTypography {
     );
   }
 
-  //this is comment==============================
-  //REGULAR (FontWeight.w400)
-  //this is comment==============================
+
   static TextStyle get headingRegular1 => _base(size: _heading1, weight: FontWeight.w400);
   static TextStyle get headingRegular2 => _base(size: _heading2, weight: FontWeight.w400);
   static TextStyle get headingRegular3 => _base(size: _heading3, weight: FontWeight.w400);
@@ -64,9 +57,7 @@ class AppTypography {
   static TextStyle get textRegular3 => _base(size: _text3, weight: FontWeight.w400);
   static TextStyle get textRegular4 => _base(size: _text4, weight: FontWeight.w400);
 
-  //this is comment==============================
-  //MEDIUM (FontWeight.w500)
-  //this is comment==============================
+
   static TextStyle get headingMedium1 => _base(size: _heading1, weight: FontWeight.w500);
   static TextStyle get headingMedium2 => _base(size: _heading2, weight: FontWeight.w500);
   static TextStyle get headingMedium3 => _base(size: _heading3, weight: FontWeight.w500);
@@ -81,9 +72,7 @@ class AppTypography {
   static TextStyle get textMedium3 => _base(size: _text3, weight: FontWeight.w500);
   static TextStyle get textMedium4 => _base(size: _text4, weight: FontWeight.w500);
 
-  //this is comment==============================
-  //SEMIBOLD (FontWeight.w600)
-  //this is comment==============================
+
   static TextStyle get headingSemiBold1 => _base(size: _heading1, weight: FontWeight.w600);
   static TextStyle get headingSemiBold2 => _base(size: _heading2, weight: FontWeight.w600);
   static TextStyle get headingSemiBold3 => _base(size: _heading3, weight: FontWeight.w600);
@@ -98,9 +87,6 @@ class AppTypography {
   static TextStyle get textSemiBold3 => _base(size: _text3, weight: FontWeight.w600);
   static TextStyle get textSemiBold4 => _base(size: _text4, weight: FontWeight.w600);
 
-  //this is comment==============================
-  //BOLD (FontWeight.w700)
-  //this is comment==============================
   static TextStyle get headingBold1 => _base(size: _heading1, weight: FontWeight.w700);
   static TextStyle get headingBold2 => _base(size: _heading2, weight: FontWeight.w700);
   static TextStyle get headingBold3 => _base(size: _heading3, weight: FontWeight.w700);
@@ -115,9 +101,7 @@ class AppTypography {
   static TextStyle get textBold3 => _base(size: _text3, weight: FontWeight.w700);
   static TextStyle get textBold4 => _base(size: _text4, weight: FontWeight.w700);
 
-  //this is comment==============================
-  //TextTheme builder for standard Flutter Theme system mapping
-  //this is comment==============================
+
   static TextTheme textTheme(Color color) {
     return TextTheme(
       displayLarge: headingBold1.copyWith(color: color),
@@ -136,4 +120,6 @@ class AppTypography {
       labelSmall: textRegular4.copyWith(color: color),
     );
   }
+
+
 }

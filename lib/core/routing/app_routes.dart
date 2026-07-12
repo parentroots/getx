@@ -55,11 +55,10 @@ class AppRoutes {
     GetPage(name: changePassword, page: () => const ChangePasswordScreen()),
   ];
 
-  final unknownRoute = GetPage(
-    name: error,
-    page: () => const ErrorScreen(
-      title: 'Page not found',
+  final unknownRoute = GetPage(name: error, page: () =>
+  const ErrorScreen(title: 'Page not found',
       message: 'The route you opened is not registered in this app.',
     ),
   );
+
 }

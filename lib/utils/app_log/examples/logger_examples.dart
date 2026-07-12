@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:getx_template/utils/app_log/logger.dart';
 
 /// A class demonstrating a sample user model for pretty-print JSON testing.

@@ -1,4 +1,4 @@
-import 'package:getx_template/core/network/api_endpoint/api_endpoint.dart';
+import 'package:getx_template/core/network/api_endpoint.dart';
 import 'package:getx_template/data/repositories/base_repository.dart';
 
 class AuthRepository extends BaseRepository {

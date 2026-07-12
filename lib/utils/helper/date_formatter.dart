@@ -10,4 +10,7 @@ abstract final class DateFormatter {
 
   static String apiDate(DateTime value) => DateFormat('yyyy-MM-dd').format(value);
 
+
+  static String fullDate(DateTime value) => DateFormat.yMMMMEEEEd().format(value);
+
 }
