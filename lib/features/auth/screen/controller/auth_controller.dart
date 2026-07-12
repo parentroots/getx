@@ -3,12 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getx_template/component/dialogs/common_snackbar.dart';
 import 'package:getx_template/core/routing/app_routes.dart';
-import 'package:getx_template/data/models/paginated_response.dart';
 import 'package:getx_template/data/models/user_model.dart';
 import 'package:getx_template/data/repositories/auth_repository.dart';
 import 'package:getx_template/services/storage/shared_preferences_service.dart';
 import 'package:getx_template/shared/controllers/base_controller.dart';
 import 'package:getx_template/component/pickers/common_country_picker.dart';
+import 'package:getx_template/utils/app_log/app_log.dart';
+
 
 class AuthController extends BaseController {
 
@@ -45,18 +46,26 @@ class AuthController extends BaseController {
   final RxList<File> selectedImages = <File>[].obs;
 
 
-  void togglePasswordVisibility() => obscurePassword.toggle();
+
 
   Future<void> submitLogin() async {
     debugPrint("--> [Login] submitLogin button clicked");
+
+
+
+    AppLog.info("Login Button Clicked");
+
     final isValid = loginFormKey.currentState?.validate() ?? false;
-    debugPrint("--> [Login] Form validation status: $isValid");
+
+    AppLog.info("Form validation status: $isValid");
+
+
     if (isValid) {
       try {
-        /* await runBusy(() => _authRepository.login(
+        /* await runWithLoading(() => _authRepository.login(
           emailController.text.trim(),
           passwordController.text,
-        )); */
+        ));*/
 
         // Save mock user details locally
         final user = UserModel(
@@ -87,7 +96,7 @@ class AuthController extends BaseController {
     debugPrint("--> [Register] Form validation status: $isValid");
     if (isValid) {
       try {
-        /* await runBusy(
+        /* await runWithLoading(
           () => _authRepository.register(
             name: nameController.text.trim(),
             email: emailController.text.trim(),
@@ -129,7 +138,7 @@ class AuthController extends BaseController {
     }
 
     try {
-      await runBusy(() => _authRepository.changePassword(
+      await runWithLoading(() => _authRepository.changePassword(
         currentPassword: currentPasswordTEController.text,
         newPassword: newPasswordTEController.text,
       ));

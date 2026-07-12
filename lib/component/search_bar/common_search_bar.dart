@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:getx_template/utils/extensions/context_extensions.dart';
 import 'package:getx_template/utils/helper/debouncer.dart';
 
 /// A premium, highly customizable Search Bar widget.
@@ -158,13 +159,12 @@ class _CommonSearchBarState extends State<CommonSearchBar> {
     }
   }
 
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final isDark = theme.brightness == Brightness.dark;
 
-    final defaultBgColor = widget.backgroundColor ??
-        (isDark ? Colors.grey.shade900 : Colors.grey.shade100);
+    final defaultBgColor = widget.backgroundColor ?? context.appColors.border;
     final resolvedRadius = BorderRadius.circular(widget.borderRadius.r);
 
     final searchBarStyle = ButtonStyle(
@@ -188,13 +188,13 @@ class _CommonSearchBarState extends State<CommonSearchBar> {
       hintStyle: WidgetStateProperty.all(
         widget.hintStyle ??
             theme.textTheme.bodyMedium?.copyWith(
-              color: Colors.grey.shade500,
+              color: context.appColors.textColor.withOpacity(0.5),
             ),
       ),
       textStyle: WidgetStateProperty.all(
         widget.textStyle ?? theme.textTheme.bodyMedium,
       ),
-      leading: widget.leading ?? const Icon(Icons.search, color: Colors.grey),
+      leading: widget.leading ?? Icon(Icons.search, color: context.appColors.textColor),
       trailing: [
         if (_controller.text.isNotEmpty && widget.enabled)
           IconButton(
@@ -204,7 +204,7 @@ class _CommonSearchBarState extends State<CommonSearchBar> {
               widget.onChanged?.call('');
               widget.onCleared?.call();
             },
-            icon: const Icon(Icons.close, color: Colors.grey),
+            icon: Icon(Icons.close, color: context.appColors.textColor  ),
           ),
         ...?widget.trailing,
       ],

@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:getx_template/utils/constants/app_colors.dart';
 import 'package:getx_template/utils/extensions/context_extensions.dart';
-import 'package:getx_template/core/routing/app_routes.dart';
 import 'package:getx_template/component/main_bottom_nav/main_bottom_nav_controller.dart';
 
 class _BottomNavItem {

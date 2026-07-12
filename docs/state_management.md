@@ -14,7 +14,7 @@ class LoginController extends BaseController {
   final passwordController = TextEditingController();
 
   Future<void> login() async {
-    await runBusy(() async {
+    await runWithLoading(() async {
       // call repository here
     });
   }
@@ -86,13 +86,13 @@ Obx(() => Text('${controller.count.value}'))
 
 - `isLoading`
 - `errorMessage`
-- `runBusy`
+- `runWithLoading`
 
 Example:
 
 ```dart
 Future<void> loadData() async {
-  await runBusy(() async {
+  await runWithLoading(() async {
     data.value = await repository.loadData();
   });
 }

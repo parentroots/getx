@@ -47,7 +47,7 @@ class ArticlesController extends BaseController {
   }
 
   Future<void> loadArticles() async {
-    await runBusy(() async {
+    await runWithLoading(() async {
       articles.assignAll(await _repository.fetchArticles());
     });
   }

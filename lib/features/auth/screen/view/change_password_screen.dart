@@ -11,10 +11,12 @@ class ChangePasswordScreen extends StatefulWidget {
   const ChangePasswordScreen({super.key});
 
   @override
-  State<ChangePasswordScreen> createState() => _ChangePasswordScreenState();
+  State<ChangePasswordScreen> createState() =>
+      _ChangePasswordScreenState();
 }
 
-class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
+class _ChangePasswordScreenState
+    extends State<ChangePasswordScreen> {
   final controller = Get.find<AuthController>();
 
   @override
@@ -31,36 +33,56 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
           child: Column(
             children: [
               60.height,
+
               CommonTextField(
                 hint: "Enter Current Password",
-                controller: controller.currentPasswordTEController,
+                controller:
+                    controller.currentPasswordTEController,
                 obscureText: true,
-                validator: (value) =>
-                    Validators.required(value, field: 'Current Password'),
+                validator: (value) => Validators.required(
+                  value,
+                  field: 'Current Password',
+                ),
               ),
+
+              10.height,
+
               CommonTextField(
                 hint: "Enter New Password",
-                controller: controller.newPasswordTEController,
+                controller:
+                    controller.newPasswordTEController,
                 obscureText: true,
                 validator: Validators.password,
               ),
+              10.height,
+
               CommonTextField(
                 hint: "Confirm New Password",
-                controller: controller.confirmNewPasswordTEController,
+                controller: controller
+                    .confirmNewPasswordTEController,
                 obscureText: true,
                 validator: (value) {
-                  final requiredError =
-                      Validators.required(value, field: 'Confirm Password');
-                  if (requiredError != null) return requiredError;
-                  if (value != controller.newPasswordTEController.text) {
+                  final requiredError = Validators.required(
+                    value,
+                    field: 'Confirm Password',
+                  );
+                  if (requiredError != null)
+                    return requiredError;
+                  if (value !=
+                      controller
+                          .newPasswordTEController
+                          .text) {
                     return "Passwords do not match";
                   }
                   return null;
                 },
               ),
+
               30.height,
+
               Obx(
                 () => CommonButton(
+                  buttonWidth: double.maxFinite,
                   isLoading: controller.isLoading.value,
                   onTap: () {
                     controller.changePassword();
@@ -75,4 +97,3 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
     );
   }
 }
-

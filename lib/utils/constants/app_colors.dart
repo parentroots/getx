@@ -47,7 +47,7 @@ class ThemeColor extends ThemeExtension<ThemeColor> {
     surface: Color(0xFF111827),
     surfaceSecondary: Color(0xFF1F2937),
     border: Color(0xFF374151),
-    textColor: Color(0xFFF40000),
+    textColor: Color(0xFFFFFFFF),
     textSecondary: Color(0xFF94A3B8),
     textMuted: Color(0xFF64748B),
     success: Color(0xFF10B981),
@@ -58,7 +58,9 @@ class ThemeColor extends ThemeExtension<ThemeColor> {
     testColor: Color(0XFF4BF301),
   );
 
-  // ── Light ==============================================
+  // Light ==============================================
+
+
   static const ThemeColor light = ThemeColor(
     primary: Color(0xFF2563EB),
     primaryHover: Color(0xFF1D4ED8),
@@ -67,7 +69,7 @@ class ThemeColor extends ThemeExtension<ThemeColor> {
     surface: Color(0xFFFFFFFF),
     surfaceSecondary: Color(0xFFF1F5F9),
     border: Color(0xFFE2E8F0),
-    textColor: Color(0xFF4BF301),
+    textColor: Color(0xFF000000),
     textSecondary: Color(0xFF64748B),
     textMuted: Color(0xFF94A3B8),
     success: Color(0xFF059669),
@@ -78,7 +80,7 @@ class ThemeColor extends ThemeExtension<ThemeColor> {
     testColor: Color(0xFFB700FF),
   );
 
-  // ── Common Colors (Same in both Light and Dark mode) ===
+  //Common Colors (Same in both Light and Dark mode) ===
   Color get transparent => Colors.transparent;
 
   Color get white => Colors.white;
@@ -112,8 +114,7 @@ class ThemeColor extends ThemeExtension<ThemeColor> {
       secondary: secondary ?? this.secondary,
       background: background ?? this.background,
       surface: surface ?? this.surface,
-      surfaceSecondary:
-          surfaceSecondary ?? this.surfaceSecondary,
+      surfaceSecondary: surfaceSecondary ?? this.surfaceSecondary,
       border: border ?? this.border,
       textColor: textColor ?? this.textColor,
       textSecondary: textSecondary ?? this.textSecondary,

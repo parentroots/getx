@@ -66,11 +66,11 @@ await Get.find<TokenManager>().clear();
 
 Dio errors are mapped to `NetworkException`.
 
-Controllers can use `runBusy`:
+Controllers can use `runWithLoading`:
 
 ```dart
 Future<void> submit() async {
-  await runBusy(() async {
+  await runWithLoading(() async {
     await repository.submitForm();
   });
 }

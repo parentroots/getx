@@ -14,10 +14,8 @@ class MessageScreen extends StatelessWidget {
         showBack: false,
       ),
       body: Center(
-
         child: EmptyStateWidget(
           title: 'No Messages',
-
           message: 'Your conversations will appear here.',
         ),
       ),

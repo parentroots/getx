@@ -70,7 +70,7 @@ class ProfileController extends BaseController {
   final profile = Rxn<Profile>();
 
   Future<void> loadProfile() async {
-    await runBusy(() async {
+    await runWithLoading(() async {
       profile.value = await _repository.getProfile();
     });
   }

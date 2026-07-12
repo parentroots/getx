@@ -2,6 +2,7 @@
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:getx_template/component/button/common_button.dart';
 import 'package:getx_template/component/layout/common_text.dart';
+import 'package:getx_template/utils/extensions/context_extensions.dart';
 
 class EmptyStateWidget extends StatelessWidget {
   const EmptyStateWidget({
@@ -52,7 +53,7 @@ class _StateShell extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(icon, size: 48.r, color: Theme.of(context).colorScheme.primary),
+            Icon(icon, size: 48.r, color: context.appColors.primary),
             SizedBox(height: 16.h),
             CommonText(
               title,

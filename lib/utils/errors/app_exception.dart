@@ -1,4 +1,4 @@
-// ─── Base ────────────────────────────────────
+// ─── Base =============================================
 
 class AppException implements Exception {
   const AppException(this.message, {this.code, this.details});
@@ -11,14 +11,14 @@ class AppException implements Exception {
   String toString() => code == null ? message : '[$code] $message';
 }
 
-// ─── Network (catch-all) ─────────────────────
+// ─── Network (catch-all) =============================================
 
 class NetworkException extends AppException {
   const NetworkException(super.message, {this.statusCode, super.code, super.details});
   final int? statusCode;
 }
 
-// ─── HTTP Status Code Exceptions ─────────────
+// ─── HTTP Status Code Exceptions=============================================
 
 class BadRequestException extends NetworkException {
   const BadRequestException([String message = 'Bad request', Object? details])
@@ -60,7 +60,7 @@ class ServerException extends NetworkException {
       : super(message, statusCode: statusCode ?? 500);
 }
 
-// ─── Connection Exceptions ───────────────────
+// ─── Connection Exceptions =============================================
 
 class NoInternetException extends NetworkException {
   const NoInternetException([String message = 'No internet connection.'])

@@ -2,6 +2,7 @@
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:getx_template/component/button/common_button.dart';
 import 'package:getx_template/component/layout/common_text.dart';
+import 'package:getx_template/utils/extensions/context_extensions.dart';
 
 class ErrorStateWidget extends StatelessWidget {
   const ErrorStateWidget({
@@ -26,7 +27,7 @@ class ErrorStateWidget extends StatelessWidget {
             Icon(
               Icons.error_outline,
               size: 48.r,
-              color: Theme.of(context).colorScheme.error,
+              color: context.appColors.error,
             ),
             SizedBox(height: 16.h),
             CommonText(
@@ -40,14 +41,13 @@ class ErrorStateWidget extends StatelessWidget {
               message,
               variant: TextVariant.body,
               textAlign: TextAlign.center,
-              color: Colors.grey,
+              color: context.appColors.textColor,
             ),
             if (onRetry != null) ...[
               SizedBox(height: 24.h),
               CommonButton(
-
                 onTap: onRetry,
-                titleText: "",
+                titleText: "Retry",
               ),
             ],
           ],

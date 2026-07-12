@@ -3,11 +3,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:getx_template/component/app_bar/common_app_bar.dart';
 import 'package:getx_template/component/button/common_button.dart';
+import 'package:getx_template/component/image/common_image.dart';
 import 'package:getx_template/component/switch/common_switch.dart';
 import 'package:getx_template/component/tab_bar/common_tab_bar.dart';
 import 'package:getx_template/component/text_field/common_text_field.dart';
 import 'package:getx_template/component/layout/common_scaffold.dart';
 import 'package:getx_template/component/layout/common_text.dart';
+import 'package:getx_template/utils/constants/app_assets.dart';
 import 'package:getx_template/utils/constants/app_colors.dart';
 import 'package:getx_template/utils/constants/app_string.dart';
 import 'package:getx_template/core/routing/app_routes.dart';
@@ -168,11 +170,26 @@ class LoginScreen extends StatelessWidget {
                   SizedBox(height: 32.h),
 
                   // Login Button
-                  CommonButton(
-                    titleText: "Log In",
-                    buttonWidth: double.maxFinite,
-                    onTap: controller.submitLogin,
-                  ),
+
+
+                  Obx(() {
+                    if (controller.isLoading.value) {
+
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+
+                    return CommonButton(
+                      titleText: "Log In",
+                      buttonWidth: double.maxFinite,
+                      onTap: controller.submitLogin,
+                    );
+                  }),
+
+
+
+
                   SizedBox(height: 24.h),
 
                   // Register Redirection
