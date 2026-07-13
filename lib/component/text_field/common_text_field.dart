@@ -36,7 +36,7 @@ class CommonTextField extends StatefulWidget {
     this.borderColor,
     this.focusBorderColor,
     this.errorBorderColor,
-    this.borderRadius = 8.0,
+    this.borderRadius = 16.0,
     this.contentPadding,
     this.textStyle,
     this.hintStyle,

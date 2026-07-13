@@ -88,7 +88,7 @@ class LoginScreen extends StatelessWidget {
 
 
 
-                  CommonText("Email Address"),
+                  CommonText("Email Address",weight: TextWeight.bold,),
 
                   6.height,
 
@@ -103,7 +103,7 @@ class LoginScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 12.h),
 
-                  CommonText("Password"),
+                  CommonText("Password",weight: TextWeight.bold,),
 
                   6.height,
 
@@ -167,7 +167,7 @@ class LoginScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SizedBox(height: 32.h),
+                  SizedBox(height: 120.h),
 
                   // Login Button
 
@@ -181,6 +181,9 @@ class LoginScreen extends StatelessWidget {
                     }
 
                     return CommonButton(
+                      isLoading: controller.isLoading.value,
+                      borderColor: context.appColors.white,
+                      borderWidth: 1,
                       titleText: "Log In",
                       buttonWidth: double.maxFinite,
                       onTap: controller.submitLogin,

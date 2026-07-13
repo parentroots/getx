@@ -71,7 +71,7 @@ class CommonText extends StatelessWidget {
         fontWeight = FontWeight.w500;
         break;
       case TextWeight.bold:
-        fontWeight = FontWeight.w700;
+        fontWeight = FontWeight.w600;
         break;
       case TextWeight.regular:
       default:
