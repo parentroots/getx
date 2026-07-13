@@ -105,10 +105,10 @@ class _CommonButtonState extends State<CommonButton>
     final Color resolvedBackgroundColor = widget.buttonColor ?? context.appColors.primary;
     final Color resolvedTitleColor = widget.titleColor ?? Colors.white;
     final Color resolvedBorderColor = widget.borderColor ??
-        (widget.border ? const Color(0xFF16C3C1) : Colors.transparent);
+        (widget.border ? context.appColors.primary : Colors.transparent);
     final double resolvedBorderWidth =
         widget.borderWidth ?? (widget.border ? 1.0 : 0.0);
-    final double resolvedRadius = widget.buttonRadius ?? 8.0;
+    final double resolvedRadius = widget.buttonRadius ?? 16.0;
     final double resolvedHeight = widget.buttonHeight ?? 50.0;
     final double resolvedElevation = widget.elevation ?? 2.0;
     final EdgeInsets resolvedPadding = (widget.padding ??

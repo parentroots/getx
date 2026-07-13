@@ -40,7 +40,7 @@ class ThemeColor extends ThemeExtension<ThemeColor> {
 
   // ── Dark ===============================================
   static const ThemeColor dark = ThemeColor(
-    primary: Color(0xFF3B82F6),
+    primary: Color(0xFF16A95D),
     primaryHover: Color(0xFF60A5FA),
     secondary: Color(0xFF94A3B8),
     background: Color(0xFF0B1329),
@@ -62,7 +62,7 @@ class ThemeColor extends ThemeExtension<ThemeColor> {
 
 
   static const ThemeColor light = ThemeColor(
-    primary: Color(0xFF2563EB),
+    primary: Color(0xFF16A95D),
     primaryHover: Color(0xFF1D4ED8),
     secondary: Color(0xFF475569),
     background: Color(0xFFF8FAFC),

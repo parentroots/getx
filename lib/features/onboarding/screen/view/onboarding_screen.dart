@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:getx_template/component/button/common_button.dart';
+import 'package:getx_template/component/image/common_image.dart';
 import 'package:getx_template/component/layout/common_text.dart';
 import 'package:getx_template/component/layout/common_scaffold.dart';
 import 'package:getx_template/utils/constants/app_colors.dart';
@@ -55,19 +56,19 @@ class OnboardingScreen extends StatelessWidget {
                 onPageChanged: controller.updateIndex,
                 children: const [
                   _OnboardingPage(
-                    icon: Icons.rocket_launch_rounded,
+                    icon: "assets/images/onboarding_one.png",
                     title: "Fast Development",
                     description: "Pre-wired boilerplate with GetX, routing, dependency injection, and theme management ready to roll.",
                     colors: [Color(0xFFFF8C00), Color(0xFFFF3E00)],
                   ),
                   _OnboardingPage(
-                    icon: Icons.cloud_sync_rounded,
+                    icon: "assets/images/onboarding_two.png",
                     title: "Robust Networking",
                     description: "Fully integrated Dio API client with status mapping, auto token refresh, and complete error handling.",
                     colors: [Color(0xFF00C6FF), Color(0xFF0072FF)],
                   ),
                   _OnboardingPage(
-                    icon: Icons.auto_awesome_rounded,
+                    icon: "assets/images/onboarding_three.png",
                     title: "Beautiful UI Components",
                     description: "Interactive pre-built widgets like animated buttons, indicators, loaders, and glassmorphic navigation bars.",
                     colors: [Color(0xFF9D50BB), Color(0xFF6E48AA)],
@@ -89,9 +90,12 @@ class OnboardingScreen extends StatelessWidget {
                   Obx(() {
                     final isLast = controller.currentIndex.value == 2;
                     return CommonButton(
+                      borderColor: context.appColors.white,
+                      borderWidth: 1,
+                      buttonColor: context.appColors.primary,
                       titleText: isLast ? "Explore Now" : "Next",
                       buttonWidth: double.maxFinite,
-                      onTap: controller.nextPage,
+                      onTap: isLast ? controller.finish : controller.nextPage,
                     );
                   }),
                 ],
@@ -126,7 +130,7 @@ class OnboardingScreen extends StatelessWidget {
 }
 
 class _OnboardingPage extends StatelessWidget {
-  final IconData icon;
+  final String icon;
   final String title;
   final String description;
   final List<Color> colors;
@@ -147,33 +151,11 @@ class _OnboardingPage extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Container(
-            padding: EdgeInsets.all(28.r),
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              gradient: LinearGradient(
-                colors: colors,
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: colors.first.withOpacity(0.3),
-                  blurRadius: 24.r,
-                  offset: const Offset(0, 10),
-                ),
-              ],
-            ),
-            child: Icon(
-              icon,
-              size: 80.r,
-              color: Colors.white,
-            ),
-          ),
+           CommonImage(src: icon),
+
           SizedBox(height: 48.h),
           CommonText(
             title,
-            variant: TextVariant.title,
             weight: TextWeight.bold,
             textAlign: TextAlign.center,
           ),
