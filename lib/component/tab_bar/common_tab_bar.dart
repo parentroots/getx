@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:getx_template/component/layout/common_text.dart';
+import 'package:getx_template/utils/extensions/context_extensions.dart';
 
 /// Selection styling options for the tab bar indicator.
 enum CommonTabStyle {
@@ -101,20 +102,18 @@ class CommonTabBar extends StatelessWidget {
         tabs!.map((t) => CommonTabItem(label: t)).toList();
     final tabsLength = resolvedItems.length;
 
-    final resolvedBgColor = backgroundColor ??
-        (isDark ? Colors.grey.shade900 : Colors.grey.shade100);
+    final resolvedBgColor = backgroundColor ?? context.appColors.surfaceSecondary;
     
     final trackBgColor = tabStyle == CommonTabStyle.underline
-        ? (backgroundColor ?? Colors.transparent)
+        ? (backgroundColor ?? context.appColors.transparent)
         : resolvedBgColor;
 
     final resolvedIndicatorColor = indicatorColor ??
-        (isDark ? Colors.grey.shade800 : Colors.white);
+        (isDark ? context.appColors.surfaceSecondary : context.appColors.white);
     
-    final resolvedActiveTextColor = activeTextColor ?? theme.primaryColor;
+    final resolvedActiveTextColor = activeTextColor ?? context.appColors.primary;
     
-    final resolvedInactiveTextColor = inactiveTextColor ??
-        (isDark ? Colors.grey.shade500 : Colors.grey.shade600);
+    final resolvedInactiveTextColor = inactiveTextColor ?? context.appColors.textSecondary;
 
     final Border? trackBorder = borderColor != null
         ? Border.all(color: borderColor!, width: (borderWidth ?? 1.0).r)
@@ -163,7 +162,7 @@ class CommonTabBar extends StatelessWidget {
                               ? []
                               : [
                                   BoxShadow(
-                                    color: Colors.black.withValues(alpha: 0.06),
+                                    color: context.appColors.black.withValues(alpha: 0.06),
                                     blurRadius: 6.r,
                                     offset: Offset(0, 2.r),
                                   ),
@@ -239,8 +238,8 @@ class CommonTabBar extends StatelessWidget {
           ),
           child: CommonText(
             item.label,
-            variant: TextVariant.body,
-            weight: isSelected ? TextWeight.bold : TextWeight.medium,
+            style: context.textTheme.bodyMedium,
+            fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
             color: isSelected ? activeColor : inactiveColor,
           ),
         ),
@@ -249,13 +248,13 @@ class CommonTabBar extends StatelessWidget {
           Container(
             padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 2.h),
             decoration: BoxDecoration(
-              color: item.badgeColor ?? Colors.red,
+              color: item.badgeColor ?? context.appColors.red,
               borderRadius: BorderRadius.circular(10.r),
             ),
             child: Text(
               item.badge!,
               style: TextStyle(
-                color: Colors.white,
+                color: context.appColors.white,
                 fontSize: 10.sp,
                 fontWeight: FontWeight.bold,
               ),

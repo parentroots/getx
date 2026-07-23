@@ -63,10 +63,10 @@ class LoginScreen extends StatelessWidget {
                   // Greeting Titles
                   Center(
                     child: CommonText(
-                      color: context.appColors.textColor,
+                      color: context.appColors.text,
                       "Welcome Back!",
-                      variant: TextVariant.header,
-                      weight: TextWeight.bold,
+                      style: Theme.of(context).textTheme.headlineMedium,
+                      fontWeight: FontWeight.bold,
                       textAlign: TextAlign.center,
                     ),
                   ),
@@ -75,7 +75,7 @@ class LoginScreen extends StatelessWidget {
                     child: CommonText(
 
                       "Enter your credentials to continue into the app",
-                      variant: TextVariant.body,
+                      style: Theme.of(context).textTheme.bodyMedium,
                       color: isDark
                           ? Colors.grey.shade400
                           : Colors.grey.shade600,
@@ -88,7 +88,7 @@ class LoginScreen extends StatelessWidget {
 
 
 
-                  CommonText("Email Address",weight: TextWeight.bold,),
+                  CommonText("Email Address",fontWeight: FontWeight.bold,),
 
                   6.height,
 
@@ -103,7 +103,7 @@ class LoginScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 12.h),
 
-                  CommonText("Password",weight: TextWeight.bold,),
+                  CommonText("Password",fontWeight: FontWeight.bold,),
 
                   6.height,
 
@@ -145,7 +145,7 @@ class LoginScreen extends StatelessWidget {
                           SizedBox(width: 8.w),
                           CommonText(
                             "Remember me",
-                            variant: TextVariant.caption,
+                            style: Theme.of(context).textTheme.bodySmall,
                             color: isDark
                                 ? Colors.grey.shade300
                                 : Colors.grey.shade700,
@@ -159,9 +159,9 @@ class LoginScreen extends StatelessWidget {
                         child: CommonText(
 
                           "Forgot Password?",
-                          variant: TextVariant.caption,
+                          style: Theme.of(context).textTheme.bodySmall,
                           color: theme.primaryColor,
-                          weight: TextWeight.medium,
+                          fontWeight: FontWeight.w500,
                           decoration: TextDecoration.underline,
                         ),
                       ),
@@ -202,7 +202,7 @@ class LoginScreen extends StatelessWidget {
                     children: [
                       CommonText(
                         "Don't have an account? ",
-                        variant: TextVariant.body,
+                        style: Theme.of(context).textTheme.bodyMedium,
                         color: isDark
                             ? Colors.grey.shade400
                             : Colors.grey.shade600,
@@ -213,9 +213,9 @@ class LoginScreen extends StatelessWidget {
                         ),
                           child: CommonText(
                           "Sign Up",
-                          variant: TextVariant.body,
+                          style: Theme.of(context).textTheme.bodyMedium,
                           color: context.appColors.primary,
-                          weight: TextWeight.bold,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ],

@@ -1,5 +1,6 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:getx_template/utils/extensions/context_extensions.dart';
 
 class CommonDropdown<T> extends StatelessWidget {
   const CommonDropdown({
@@ -40,15 +41,12 @@ class CommonDropdown<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final isDark = theme.brightness == Brightness.dark;
-
     final defaultBorderColor =
-        borderColor ?? (isDark ? Colors.grey.shade700 : Colors.grey.shade300);
-    final defaultFocusColor = focusBorderColor ?? theme.primaryColor;
-    final defaultErrorColor = errorBorderColor ?? theme.colorScheme.error;
+        borderColor ?? context.appColors.border;
+    final defaultFocusColor = focusBorderColor ?? context.appColors.primary;
+    final defaultErrorColor = errorBorderColor ?? context.appColors.error;
     final defaultFillColor =
-        fillColor ?? (isDark ? Colors.grey.shade800 : Colors.grey.shade50);
+        fillColor ?? context.appColors.surfaceSecondary;
 
     final responsiveBorderRadius = borderRadius.r;
 
@@ -87,7 +85,7 @@ class CommonDropdown<T> extends StatelessWidget {
         focusedBorder: focusBorder,
         errorBorder: errorBorder,
       ),
-      dropdownColor: isDark ? Colors.grey.shade800 : Colors.white,
+      dropdownColor: context.appColors.surface,
       borderRadius: BorderRadius.circular(responsiveBorderRadius),
     );
   }

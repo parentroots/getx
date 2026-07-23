@@ -188,13 +188,13 @@ class _CommonSearchBarState extends State<CommonSearchBar> {
       hintStyle: WidgetStateProperty.all(
         widget.hintStyle ??
             theme.textTheme.bodyMedium?.copyWith(
-              color: context.appColors.textColor.withOpacity(0.5),
+              color: context.appColors.text.withOpacity(0.5),
             ),
       ),
       textStyle: WidgetStateProperty.all(
         widget.textStyle ?? theme.textTheme.bodyMedium,
       ),
-      leading: widget.leading ?? Icon(Icons.search, color: context.appColors.textColor),
+      leading: widget.leading ?? Icon(Icons.search, color: context.appColors.text),
       trailing: [
         if (_controller.text.isNotEmpty && widget.enabled)
           IconButton(
@@ -204,7 +204,7 @@ class _CommonSearchBarState extends State<CommonSearchBar> {
               widget.onChanged?.call('');
               widget.onCleared?.call();
             },
-            icon: Icon(Icons.close, color: context.appColors.textColor  ),
+            icon: Icon(Icons.close, color: context.appColors.text  ),
           ),
         ...?widget.trailing,
       ],

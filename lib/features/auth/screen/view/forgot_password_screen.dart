@@ -27,13 +27,13 @@ class ForgotPasswordScreen extends StatelessWidget {
             SizedBox(height: 16.h),
             CommonText(
               'Reset access',
-              variant: TextVariant.header,
-              weight: TextWeight.bold,
+              style: context.textTheme.headlineMedium,
+              fontWeight: FontWeight.bold,
             ),
             SizedBox(height: AppSpacing.md.h),
-            const CommonText(
+            CommonText(
               'Enter the email connected to the account. Wire this to your auth provider when you build the app.',
-              variant: TextVariant.body,
+              style: context.textTheme.bodyMedium,
               color: Colors.grey,
             ),
             SizedBox(height: AppSpacing.xl.h),

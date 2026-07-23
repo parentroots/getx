@@ -1,10 +1,9 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:getx_template/component/dialogs/common_dialog.dart';
 import 'package:getx_template/component/layout/common_text.dart';
 import 'package:getx_template/services/storage/shared_preferences_service.dart';
-import 'package:getx_template/utils/constants/app_colors.dart';
 import 'package:getx_template/utils/extensions/context_extensions.dart';
 import 'package:getx_template/core/routing/app_routes.dart';
 
@@ -36,7 +35,6 @@ class _CommonDrawerState extends State<CommonDrawer> {
   }
 
   void _showLogoutDialog(BuildContext context) {
-    final theme = Theme.of(context);
     Get.back();
 
     CommonDialog.showWarning(
@@ -107,8 +105,8 @@ class _CommonDrawerState extends State<CommonDrawer> {
                 ),
                 title: CommonText(
                   'Logout',
-                  variant: TextVariant.body,
-                  weight: TextWeight.medium,
+                  style: Theme.of(context).textTheme.bodyMedium,
+                  fontWeight: FontWeight.w500,
                   color: theme.colorScheme.error,
                 ),
                 shape: RoundedRectangleBorder(
@@ -136,7 +134,7 @@ class _CommonDrawerState extends State<CommonDrawer> {
         color:context.appColors.background,
         border: Border(
           bottom: BorderSide(
-            color: theme.dividerColor,
+            color: context.appColors.border,
             width: 1.r,
           ),
         ),
@@ -159,15 +157,15 @@ class _CommonDrawerState extends State<CommonDrawer> {
             ],
           ),
           SizedBox(height: 16.h),
-          const CommonText(
+          CommonText(
+
             'MD EBRAHIM NAZMUL',
-            variant: TextVariant.title,
-            weight: TextWeight.bold,
+            fontWeight: FontWeight.bold,
           ),
           SizedBox(height: 4.h),
-          const CommonText(
+          CommonText(
             'ibrahimsparktech@gmail.com',
-            variant: TextVariant.caption,
+            style: Theme.of(context).textTheme.bodySmall,
             color: Colors.grey,
           ),
         ],
@@ -181,7 +179,6 @@ class _CommonDrawerState extends State<CommonDrawer> {
     required String label,
     required String route,
   }) {
-    final theme = Theme.of(context);
     final isSelected = Get.currentRoute == route;
 
     return Padding(
@@ -197,22 +194,18 @@ class _CommonDrawerState extends State<CommonDrawer> {
         ),
         title: CommonText(
           label,
-          variant: TextVariant.body,
-          weight: isSelected
-              ? TextWeight.bold
-              : TextWeight.medium,
-          color: isSelected ? theme.primaryColor : null,
+          style: Theme.of(context).textTheme.bodyMedium,
+          fontWeight: isSelected
+              ? FontWeight.bold
+              : FontWeight.w500,
+          color: isSelected ?context.appColors.text : null,
         ),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12.r),
         ),
         selected: isSelected,
-        selectedTileColor: theme.primaryColor.withValues(
-          alpha: 0.08,
-        ),
-        splashColor: theme.primaryColor.withValues(
-          alpha: 0.05,
-        ),
+        selectedTileColor: context.appColors.primary.withValues(alpha: 0.8),
+        splashColor: context.appColors.primary.withValues(alpha: 0.8),
       ),
     );
   }
@@ -221,7 +214,6 @@ class _CommonDrawerState extends State<CommonDrawer> {
     BuildContext context,
     bool isDark,
   ) {
-    final theme = Theme.of(context);
     return Padding(
       padding: EdgeInsets.only(bottom: 6.h),
       child: SwitchListTile(
@@ -240,8 +232,8 @@ class _CommonDrawerState extends State<CommonDrawer> {
         ),
         title: CommonText(
           isDark ? 'Dark Mode' : 'Light Mode',
-          variant: TextVariant.body,
-          weight: TextWeight.medium,
+          style: Theme.of(context).textTheme.bodyMedium,
+          fontWeight: FontWeight.w500,
         ),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12.r),

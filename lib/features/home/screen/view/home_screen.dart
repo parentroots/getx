@@ -44,7 +44,7 @@ class HomeScreen extends GetView<HomeController> {
             color: context.appColors.border,
             child: CommonText(
                "Welcome to GetX Template",
-              color: context.appColors.textColor,
+              color: context.appColors.text,
             ),
           ),
         ],

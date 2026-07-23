@@ -28,8 +28,8 @@ class RegisterScreen extends StatelessWidget {
               alignment: Alignment.center,
               child: CommonText(
                 'Sign-Up',
-                variant: TextVariant.header,
-                weight: TextWeight.bold,
+                style: context.textTheme.headlineMedium,
+                fontWeight: FontWeight.bold,
                 fontSize: 22,
               ),
             ),

@@ -1,7 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:getx_template/utils/constants/app_colors.dart';
 import 'package:getx_template/utils/extensions/context_extensions.dart';
 
 
@@ -103,9 +102,9 @@ class _CommonButtonState extends State<CommonButton>
   @override
   Widget build(BuildContext context) {
     final Color resolvedBackgroundColor = widget.buttonColor ?? context.appColors.primary;
-    final Color resolvedTitleColor = widget.titleColor ?? Colors.white;
+    final Color resolvedTitleColor = widget.titleColor ?? context.appColors.white;
     final Color resolvedBorderColor = widget.borderColor ??
-        (widget.border ? context.appColors.primary : Colors.transparent);
+        (widget.border ? context.appColors.primary : context.appColors.transparent);
     final double resolvedBorderWidth =
         widget.borderWidth ?? (widget.border ? 1.0 : 0.0);
     final double resolvedRadius = widget.buttonRadius ?? 16.0;

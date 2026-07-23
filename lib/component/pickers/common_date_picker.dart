@@ -1,5 +1,6 @@
-﻿import 'package:flutter/cupertino.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:getx_template/utils/extensions/context_extensions.dart';
 
 class CommonDatePicker {
   /// Shows an iOS-style (Cupertino) date picker in a beautiful bottom sheet.
@@ -20,19 +21,19 @@ class CommonDatePicker {
 
     return showModalBottomSheet<DateTime>(
       context: context,
-      backgroundColor: Colors.transparent,
+      backgroundColor: context.appColors.transparent,
       builder: (BuildContext builder) {
         return Container(
           height: 320,
           decoration: BoxDecoration(
-            color: isDark ? Colors.grey.shade900 : Colors.white,
+            color: context.appColors.surface,
             borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(20.0),
               topRight: Radius.circular(20.0),
             ),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.1),
+                color: context.appColors.black.withOpacity(0.1),
                 blurRadius: 10,
                 offset: const Offset(0, -5),
               ),
@@ -46,7 +47,7 @@ class CommonDatePicker {
                 height: 4,
                 width: 40,
                 decoration: BoxDecoration(
-                  color: Colors.grey.shade400,
+                  color: context.appColors.border,
                   borderRadius: BorderRadius.circular(2),
                 ),
               ),
@@ -62,7 +63,7 @@ class CommonDatePicker {
                       child: Text(
                         cancelText,
                         style: TextStyle(
-                          color: cancelColor ?? Colors.grey.shade600,
+                          color: cancelColor ?? context.appColors.textSecondary,
                           fontSize: 16,
                         ),
                       ),
@@ -78,7 +79,7 @@ class CommonDatePicker {
                       child: Text(
                         confirmText,
                         style: TextStyle(
-                          color: confirmColor ?? theme.primaryColor,
+                          color: confirmColor ?? context.appColors.primary,
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
                         ),
@@ -97,7 +98,7 @@ class CommonDatePicker {
                     brightness: isDark ? Brightness.dark : Brightness.light,
                     textTheme: CupertinoTextThemeData(
                       dateTimePickerTextStyle: TextStyle(
-                        color: isDark ? Colors.white : Colors.black,
+                        color: context.appColors.text,
                         fontSize: 22,
                       ),
                     ),

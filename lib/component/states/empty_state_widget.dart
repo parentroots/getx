@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:getx_template/component/button/common_button.dart';
 import 'package:getx_template/component/layout/common_text.dart';
@@ -57,16 +57,16 @@ class _StateShell extends StatelessWidget {
             SizedBox(height: 16.h),
             CommonText(
               title,
-              variant: TextVariant.title,
-              weight: TextWeight.bold,
+              style: context.textTheme.titleMedium,
+              fontWeight: FontWeight.bold,
               textAlign: TextAlign.center,
             ),
             SizedBox(height: 8.h),
             CommonText(
               message,
-              variant: TextVariant.body,
+              style: context.textTheme.bodyMedium,
               textAlign: TextAlign.center,
-              color: Colors.grey,
+              color: context.appColors.textSecondary,
             ),
             if (actionLabel != null && onAction != null) ...[
               SizedBox(height: 24.h),

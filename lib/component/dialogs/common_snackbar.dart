@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:getx_template/component/layout/common_text.dart';
+import 'package:getx_template/utils/extensions/context_extensions.dart';
 
 enum SnackbarType { success, error, warning, info }
 
@@ -35,27 +36,27 @@ class CommonSnackbar {
         backgroundColor = isDark 
             ? const Color(0xFF064E3B).withValues(alpha: 0.65)
             : const Color(0xFFECFDF5).withValues(alpha: 0.75);
-        indicatorColor = const Color(0xFF10B981);
-        titleTextColor = isDark ? Colors.white : const Color(0xFF065F46);
-        messageTextColor = isDark ? Colors.grey.shade300 : const Color(0xFF047857);
+        indicatorColor = context.appColors.success;
+        titleTextColor = isDark ? context.appColors.white : const Color(0xFF065F46);
+        messageTextColor = isDark ? context.appColors.textSecondary : const Color(0xFF047857);
         defaultIcon = Icons.check_circle_rounded;
         break;
       case SnackbarType.error:
         backgroundColor = isDark 
             ? const Color(0xFF7F1D1D).withValues(alpha: 0.65)
             : const Color(0xFFFEF2F2).withValues(alpha: 0.75);
-        indicatorColor = const Color(0xFFEF4444);
-        titleTextColor = isDark ? Colors.white : const Color(0xFF991B1B);
-        messageTextColor = isDark ? Colors.grey.shade300 : const Color(0xFFB91C1C);
+        indicatorColor = context.appColors.error;
+        titleTextColor = isDark ? context.appColors.white : const Color(0xFF991B1B);
+        messageTextColor = isDark ? context.appColors.textSecondary : const Color(0xFFB91C1C);
         defaultIcon = Icons.error_rounded;
         break;
       case SnackbarType.warning:
         backgroundColor = isDark 
             ? const Color(0xFF78350F).withValues(alpha: 0.65)
             : const Color(0xFFFFFBEB).withValues(alpha: 0.75);
-        indicatorColor = const Color(0xFFF59E0B);
-        titleTextColor = isDark ? Colors.white : const Color(0xFF92400E);
-        messageTextColor = isDark ? Colors.grey.shade300 : const Color(0xFFB45309);
+        indicatorColor = context.appColors.warning;
+        titleTextColor = isDark ? context.appColors.white : const Color(0xFF92400E);
+        messageTextColor = isDark ? context.appColors.textSecondary : const Color(0xFFB45309);
         defaultIcon = Icons.warning_rounded;
         break;
       case SnackbarType.info:
@@ -63,16 +64,14 @@ class CommonSnackbar {
         backgroundColor = isDark 
             ? const Color(0xFF0C4A6E).withValues(alpha: 0.65)
             : const Color(0xFFF0F9FF).withValues(alpha: 0.75);
-        indicatorColor = const Color(0xFF0EA5E9);
-        titleTextColor = isDark ? Colors.white : const Color(0xFF075985);
-        messageTextColor = isDark ? Colors.grey.shade300 : const Color(0xFF0369A1);
+        indicatorColor = context.appColors.info;
+        titleTextColor = isDark ? context.appColors.white : const Color(0xFF075985);
+        messageTextColor = isDark ? context.appColors.textSecondary : const Color(0xFF0369A1);
         defaultIcon = Icons.info_rounded;
         break;
     }
 
-    final thinBorderColor = isDark 
-        ? Colors.grey.shade800.withValues(alpha: 0.4)
-        : Colors.grey.shade200.withValues(alpha: 0.8);
+    final thinBorderColor = context.appColors.border.withValues(alpha: isDark ? 0.4 : 0.8);
         
     final shadowGlowColor = indicatorColor.withValues(alpha:  isDark ? 0.2 : 0.08);
     final iconBgColor = indicatorColor.withValues(alpha:  isDark ? 0.2 : 0.1);
@@ -80,7 +79,7 @@ class CommonSnackbar {
     Get.rawSnackbar(
       snackPosition: position,
       duration: duration,
-      backgroundColor: Colors.transparent,
+      backgroundColor: context.appColors.transparent,
 
       margin: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
       padding: EdgeInsets.zero,
@@ -99,7 +98,7 @@ class CommonSnackbar {
               offset: Offset(0, 4.h),
             ),
             BoxShadow(
-              color: Colors.black.withValues(alpha:  isDark ? 0.3 : 0.05),
+              color: context.appColors.black.withValues(alpha:  isDark ? 0.3 : 0.05),
               blurRadius: 24.r,
               spreadRadius: 0,
               offset: Offset(0, 8.h),
@@ -167,14 +166,14 @@ class CommonSnackbar {
                           children: [
                             CommonText(
                               title,
-                              variant: TextVariant.body,
-                              weight: TextWeight.bold,
+                              style: Theme.of(context).textTheme.bodyMedium,
+                              fontWeight: FontWeight.bold,
                               color: titleTextColor,
                             ),
                             SizedBox(height: 3.h),
                             CommonText(
                               message,
-                              variant: TextVariant.caption,
+                              style: Theme.of(context).textTheme.bodySmall,
                               color: messageTextColor,
                             ),
                           ],

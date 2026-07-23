@@ -1,4 +1,5 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
+import 'package:getx_template/utils/extensions/context_extensions.dart';
 
 /// A premium, highly optimized grid view component that supports
 /// high-performance lazy rendering, automatic scroll-to-load pagination,
@@ -154,11 +155,11 @@ class _CommonGridViewState<T> extends State<CommonGridView<T>> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.grid_view, size: 64, color: Colors.grey.shade400),
+            Icon(Icons.grid_view, size: 64, color: context.appColors.textMuted),
             const SizedBox(height: 16),
             Text(
               'No items found',
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Colors.grey.shade600),
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(color: context.appColors.textSecondary),
             ),
           ],
         ),

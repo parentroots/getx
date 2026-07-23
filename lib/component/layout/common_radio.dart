@@ -1,6 +1,7 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:getx_template/component/layout/common_text.dart';
+import 'package:getx_template/utils/extensions/context_extensions.dart';
 
 class CommonRadio<T> extends StatelessWidget {
   const CommonRadio({
@@ -54,13 +55,13 @@ class CommonRadio<T> extends StatelessWidget {
         contentPadding: contentPadding ?? EdgeInsets.symmetric(horizontal: 16.w, vertical: 4.h),
         title: CommonText(
           title,
-          variant: TextVariant.title,
-          weight: isSelected ? TextWeight.medium : TextWeight.regular,
+          style: context.textTheme.titleMedium,
+          fontWeight: isSelected ? FontWeight.w500 : FontWeight.normal,
         ),
         subtitle: subtitle != null
             ? CommonText(
                 subtitle!,
-                variant: TextVariant.body,
+                style: context.textTheme.bodyMedium,
                 color: Colors.grey,
               )
             : null,

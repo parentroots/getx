@@ -342,13 +342,13 @@ CommonScaffold(
 ```
 
 #### 15. `CommonText`
-💡 **Purpose**: Typography standardization widget. Enforces font sizing, text weights, variants, and light/dark theme color scaling.
+💡 **Purpose**: Typography standardization widget. Enforces standard Flutter `TextStyle` styling, font sizing, font weights, and light/dark theme color scaling.
 🚀 **Usage**:
 ```dart
 CommonText(
   'User Account Staged',
-  variant: TextVariant.header,
-  weight: TextWeight.bold,
+  style: context.textTheme.headlineMedium,
+  fontWeight: FontWeight.bold,
 )
 ```
 
@@ -587,12 +587,14 @@ Widget build(BuildContext context) {
     children: [
       CommonText(
         'Workspace Settings',
-        variant: TextVariant.header,
+        style: context.textTheme.headlineMedium,
         color: context.colorScheme.primary,
       ),
       12.height,
-      const CommonText('Subheading', variant: TextVariant.body)
-          .paddingSymmetric(horizontal: 16.w),
+      CommonText(
+        'Subheading',
+        style: context.textTheme.bodyMedium,
+      ).paddingSymmetric(horizontal: 16.w),
     ],
   );
 }

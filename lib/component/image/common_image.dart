@@ -1,7 +1,8 @@
-﻿import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:getx_template/component/loading/shimmer_box.dart';
+import 'package:getx_template/utils/extensions/context_extensions.dart';
 
 class CommonImage extends StatelessWidget {
   const CommonImage({
@@ -69,7 +70,7 @@ class CommonImage extends StatelessWidget {
 
   Widget _error(BuildContext context) {
     return ColoredBox(
-      color: Theme.of(context).colorScheme.surfaceContainerHighest,
+      color: context.appColors.surfaceSecondary,
       child: const Center(child: Icon(Icons.image_not_supported_outlined)),
     );
   }

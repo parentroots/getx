@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:getx_template/component/layout/common_text.dart';
+import 'package:getx_template/utils/extensions/context_extensions.dart';
 
 class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CommonAppBar({
@@ -9,8 +10,8 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
     // ─── Title ─────────────────────────────────
     this.title,
     this.titleWidget,
-    this.titleVariant = TextVariant.title,
-    this.titleWeight = TextWeight.bold,
+    this.titleStyle,
+    this.titleWeight = FontWeight.bold,
     this.titleColor,
     this.titleFontSize,
     this.titleSpacing,
@@ -61,10 +62,10 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Widget? titleWidget;
 
   /// CommonText variant for the string title.
-  final TextVariant titleVariant;
+  final TextStyle? titleStyle;
 
   /// CommonText weight for the string title.
-  final TextWeight titleWeight;
+  final FontWeight titleWeight;
 
   /// Title text color override.
   final Color? titleColor;
@@ -135,8 +136,8 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
         (title != null
             ? CommonText(
                 title!,
-                variant: titleVariant,
-                weight: titleWeight,
+                style: titleStyle ?? context.textTheme.titleMedium,
+                fontWeight: titleWeight,
                 color: titleColor,
                 fontSize: titleFontSize,
               )

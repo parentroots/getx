@@ -1,16 +1,12 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-enum TextVariant { display, header, title, body, caption, overline, }
-
-enum TextWeight { light, regular, medium, bold }
 
 class CommonText extends StatelessWidget {
   const CommonText(
     this.text, {
     super.key,
-    this.variant = TextVariant.body,
-    this.weight = TextWeight.regular,
+    this.style,
+    this.fontWeight,
     this.color,
     this.fontSize,
     this.textAlign,
@@ -22,8 +18,8 @@ class CommonText extends StatelessWidget {
   });
 
   final String text;
-  final TextVariant variant;
-  final TextWeight weight;
+  final TextStyle? style;
+  final FontWeight? fontWeight;
   final Color? color;
   final double? fontSize;
   final TextAlign? textAlign;
@@ -36,48 +32,7 @@ class CommonText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    
-    // Determine Base TextStyle from Theme according to variant
-    TextStyle baseStyle;
-    switch (variant) {
-      case TextVariant.display:
-        baseStyle = theme.textTheme.displayMedium ?? const TextStyle();
-        break;
-      case TextVariant.header:
-        baseStyle = theme.textTheme.headlineMedium ?? const TextStyle();
-        break;
-      case TextVariant.title:
-        baseStyle = theme.textTheme.titleMedium ?? const TextStyle();
-        break;
-      case TextVariant.caption:
-        baseStyle = theme.textTheme.bodySmall ?? const TextStyle();
-        break;
-      case TextVariant.overline:
-        baseStyle = theme.textTheme.labelSmall ?? const TextStyle();
-        break;
-      case TextVariant.body:
-      default:
-        baseStyle = theme.textTheme.bodyMedium ?? const TextStyle();
-        break;
-    }
-
-    // Determine FontWeight
-    FontWeight fontWeight;
-    switch (weight) {
-      case TextWeight.light:
-        fontWeight = FontWeight.w300;
-        break;
-      case TextWeight.medium:
-        fontWeight = FontWeight.w500;
-        break;
-      case TextWeight.bold:
-        fontWeight = FontWeight.w600;
-        break;
-      case TextWeight.regular:
-      default:
-        fontWeight = FontWeight.w400;
-        break;
-    }
+    final baseStyle = style ?? theme.textTheme.bodyMedium ?? const TextStyle();
 
     final double? baseFontSize = fontSize ?? baseStyle.fontSize;
 
@@ -85,10 +40,10 @@ class CommonText extends StatelessWidget {
     final finalStyle = baseStyle.copyWith(
       color: color ?? baseStyle.color,
       fontSize: baseFontSize?.sp,
-      fontWeight: fontWeight,
+      fontWeight: fontWeight ?? baseStyle.fontWeight,
       height: height ?? baseStyle.height,
-      fontStyle: fontStyle,
-      decoration: decoration,
+      fontStyle: fontStyle ?? baseStyle.fontStyle,
+      decoration: decoration ?? baseStyle.decoration,
     );
 
     return Text(

@@ -8,7 +8,7 @@ abstract final class AppTheme {
         brightness: Brightness.light,
         background: ThemeColor.light.background,
         surface: ThemeColor.light.surface,
-        text: ThemeColor.light.textColor,
+        text: ThemeColor.light.text,
         primaryColor: ThemeColor.light.primary,
       );
 
@@ -16,7 +16,7 @@ abstract final class AppTheme {
         brightness: Brightness.dark,
         background: ThemeColor.dark.background,
         surface: ThemeColor.dark.surface,
-        text: ThemeColor.dark.textColor,
+        text: ThemeColor.dark.text,
         primaryColor: ThemeColor.dark.primary,
       );
 

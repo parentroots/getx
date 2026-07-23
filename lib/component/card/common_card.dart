@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:getx_template/core/theme/app_spacing.dart';
+import 'package:getx_template/utils/extensions/context_extensions.dart';
 
 class CommonCard extends StatelessWidget {
   const CommonCard({
@@ -55,7 +56,6 @@ class CommonCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     final isClickable = onTap != null || onLongPress != null;
 
     // ── Resolve padding & borders ──────────────
@@ -110,7 +110,7 @@ class CommonCard extends StatelessWidget {
 
     // ── Build final Card ─────────────────────────
     return Card(
-      color: gradient != null ? Colors.transparent : color,
+      color: gradient != null ? context.appColors.transparent : color,
       shadowColor: shadowColor,
       surfaceTintColor: surfaceTintColor,
       elevation: elevation,

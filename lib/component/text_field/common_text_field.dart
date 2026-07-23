@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:getx_template/utils/constants/app_colors.dart';
 import 'package:getx_template/utils/extensions/context_extensions.dart';
 
 /// A premium, highly customizable input text field component.
@@ -196,7 +195,6 @@ class _CommonTextFieldState extends State<CommonTextField> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final isDark = theme.brightness == Brightness.dark;
     
     final defaultBorderColor = widget.borderColor ?? context.appColors.border;
     final defaultFocusColor = widget.focusBorderColor ?? context.appColors.primary;
@@ -229,7 +227,7 @@ class _CommonTextFieldState extends State<CommonTextField> {
         icon: Icon(
           _obscureText ? Icons.visibility_off_outlined : Icons.visibility_outlined,
           size: 20.r,
-          color: Colors.grey,
+          color: context.appColors.textSecondary,
         ),
         onPressed: () {
           setState(() {
@@ -270,12 +268,12 @@ class _CommonTextFieldState extends State<CommonTextField> {
       decoration: InputDecoration(
         labelText: widget.label,
         labelStyle: (widget.labelStyle ?? theme.textTheme.bodyMedium)?.copyWith(
-          color: Colors.grey.shade600,
+          color: context.appColors.textSecondary,
           fontSize: (widget.labelStyle?.fontSize ?? theme.textTheme.bodyMedium?.fontSize ?? 14).sp,
         ),
         hintText: widget.hint,
         hintStyle: (widget.hintStyle ?? theme.textTheme.bodyMedium)?.copyWith(
-          color: Colors.grey.shade500,
+          color: context.appColors.textMuted,
           fontSize: (widget.hintStyle?.fontSize ?? theme.textTheme.bodyMedium?.fontSize ?? 14).sp,
         ),
         errorStyle: widget.errorStyle?.copyWith(

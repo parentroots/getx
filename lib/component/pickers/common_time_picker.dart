@@ -1,7 +1,8 @@
-﻿import 'package:flutter/cupertino.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:getx_template/component/layout/common_text.dart';
+import 'package:getx_template/utils/extensions/context_extensions.dart';
 
 /// A premium, responsive iOS-style (Cupertino) time picker
 /// displayed in a beautifully styled and dark-mode-ready bottom sheet.
@@ -31,20 +32,20 @@ class CommonTimePicker {
 
     final DateTime? result = await showModalBottomSheet<DateTime>(
       context: context,
-      backgroundColor: Colors.transparent,
+      backgroundColor: context.appColors.transparent,
       isScrollControlled: true,
       builder: (BuildContext builder) {
         return Container(
           height: 320.h,
           decoration: BoxDecoration(
-            color: isDark ? Colors.grey.shade900 : Colors.white,
+            color: context.appColors.surface,
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(24.r),
               topRight: Radius.circular(24.r),
             ),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withValues(alpha: 0.1),
+                color: context.appColors.black.withValues(alpha: 0.1),
                 blurRadius: 10.r,
                 offset: Offset(0, -5.r),
               ),
@@ -58,7 +59,7 @@ class CommonTimePicker {
                 height: 4.h,
                 width: 40.w,
                 decoration: BoxDecoration(
-                  color: isDark ? Colors.grey.shade700 : Colors.grey.shade300,
+                  color: context.appColors.border,
                   borderRadius: BorderRadius.circular(2.r),
                 ),
               ),
@@ -73,23 +74,23 @@ class CommonTimePicker {
                       onPressed: () => Navigator.of(context).pop(),
                       child: CommonText(
                         cancelText,
-                        variant: TextVariant.body,
-                        color: cancelColor ?? (isDark ? Colors.grey.shade400 : Colors.grey.shade600),
-                        weight: TextWeight.medium,
+                        style: context.textTheme.bodyMedium,
+                        color: cancelColor ?? context.appColors.textSecondary,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
                     CommonText(
                       title,
-                      variant: TextVariant.title,
-                      weight: TextWeight.bold,
+                      style: context.textTheme.titleMedium,
+                      fontWeight: FontWeight.bold,
                     ),
                     TextButton(
                       onPressed: () => Navigator.of(context).pop(selectedDateTime),
                       child: CommonText(
                         confirmText,
-                        variant: TextVariant.body,
-                        color: confirmColor ?? theme.primaryColor,
-                        weight: TextWeight.bold,
+                        style: context.textTheme.bodyMedium,
+                        color: confirmColor ?? context.appColors.primary,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ],
@@ -105,7 +106,7 @@ class CommonTimePicker {
                     brightness: isDark ? Brightness.dark : Brightness.light,
                     textTheme: CupertinoTextThemeData(
                       dateTimePickerTextStyle: TextStyle(
-                        color: isDark ? Colors.white : Colors.black,
+                        color: context.appColors.text,
                         fontSize: 22.sp,
                         fontFamily: theme.textTheme.bodyMedium?.fontFamily,
                       ),

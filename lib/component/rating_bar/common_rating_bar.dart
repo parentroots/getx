@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:getx_template/utils/extensions/context_extensions.dart';
 
 /// A premium, highly customizable rating bar component.
 /// Supports both interactive rating selection and static read-only star previews
@@ -106,6 +107,9 @@ class _CommonRatingBarState extends State<CommonRatingBar> {
     final spacing = widget.spacing.w;
     final totalWidth = widget.itemCount * size + (widget.itemCount - 1) * spacing;
 
+    final resolvedFilledColor = widget.filledColor == Colors.amber ? context.appColors.warning : widget.filledColor;
+    final resolvedUnfilledColor = widget.unfilledColor == const Color(0xFFE0E0E0) ? context.appColors.border : widget.unfilledColor;
+
     Widget ratingBar = Row(
       mainAxisSize: MainAxisSize.min,
       children: List.generate(widget.itemCount, (index) {
@@ -116,21 +120,21 @@ class _CommonRatingBarState extends State<CommonRatingBar> {
         // Determine fraction filled
         if (activeRating >= indexValue + 1) {
           isFilled = true;
-          iconWidget = Icon(widget.filledIcon, size: size, color: widget.filledColor);
+          iconWidget = Icon(widget.filledIcon, size: size, color: resolvedFilledColor);
         } else if (activeRating > indexValue) {
           final double fraction = activeRating - indexValue;
           isFilled = fraction >= 0.5;
           iconWidget = Stack(
             children: [
-              Icon(widget.unfilledIcon, size: size, color: widget.unfilledColor),
+              Icon(widget.unfilledIcon, size: size, color: resolvedUnfilledColor),
               ClipRect(
                 clipper: _FractionalClipper(fraction),
-                child: Icon(widget.filledIcon, size: size, color: widget.filledColor),
+                child: Icon(widget.filledIcon, size: size, color: resolvedFilledColor),
               ),
             ],
           );
         } else {
-          iconWidget = Icon(widget.unfilledIcon, size: size, color: widget.unfilledColor);
+          iconWidget = Icon(widget.unfilledIcon, size: size, color: resolvedUnfilledColor);
         }
 
         // Star item wrapped with scale transition if interactive

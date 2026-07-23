@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:getx_template/utils/extensions/context_extensions.dart';
 import 'package:getx_template/data/models/paginated_response.dart';
 
 /// A premium, highly optimized list view component that supports
@@ -231,7 +232,6 @@ class _CommonListViewState<T> extends State<CommonListView<T>> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     final displayList = _displayItems;
     final loading = _isLoadingState;
 
@@ -313,11 +313,11 @@ class _CommonListViewState<T> extends State<CommonListView<T>> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.inbox_outlined, size: 64.r, color: Colors.grey.shade400),
+            Icon(Icons.inbox_outlined, size: 64.r, color: context.appColors.textMuted),
             SizedBox(height: 16.h),
             Text(
               'No items found',
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Colors.grey.shade600),
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(color: context.appColors.textSecondary),
             ),
           ],
         ),

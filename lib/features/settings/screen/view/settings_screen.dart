@@ -29,10 +29,10 @@ class SettingsScreen extends StatelessWidget {
                 ListTile(
                   contentPadding: EdgeInsets.zero,
                   leading: Icon(Icons.person_outline, size: 24.r),
-                  title: const CommonText(
+                  title: CommonText(
                     'Profile Details',
-                    variant: TextVariant.body,
-                    weight: TextWeight.medium,
+                    style: context.textTheme.bodyMedium,
+                    fontWeight: FontWeight.w500,
                   ),
                   trailing: Icon(Icons.chevron_right, size: 24.r),
                   onTap: () => Get.back(),
@@ -44,17 +44,17 @@ class SettingsScreen extends StatelessWidget {
                     segments: [
                       ButtonSegment(
                         value: ThemeMode.system,
-                        label: CommonText('System', variant: TextVariant.caption, fontSize: 11.sp),
+                        label: CommonText('System', style: context.textTheme.bodySmall, fontSize: 11),
                         icon: Icon(Icons.brightness_auto, size: 16.r),
                       ),
                       ButtonSegment(
                         value: ThemeMode.light,
-                        label: CommonText('Light', variant: TextVariant.caption, fontSize: 11.sp),
+                        label: CommonText('Light', style: context.textTheme.bodySmall, fontSize: 11),
                         icon: Icon(Icons.light_mode, size: 16.r),
                       ),
                       ButtonSegment(
                         value: ThemeMode.dark,
-                        label: CommonText('Dark', variant: TextVariant.caption, fontSize: 11.sp),
+                        label: CommonText('Dark', style: context.textTheme.bodySmall, fontSize: 11),
                         icon: Icon(Icons.dark_mode, size: 16.r),
                       ),
                     ],
@@ -67,9 +67,9 @@ class SettingsScreen extends StatelessWidget {
             ),
           ),
           SizedBox(height: AppSpacing.lg.h),
-          const CommonText(
+          CommonText(
             'Keep app-level settings here. Feature-specific settings should live with their feature module.',
-            variant: TextVariant.body,
+            style: context.textTheme.bodyMedium,
             color: Colors.grey,
           ),
         ],

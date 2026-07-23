@@ -38,8 +38,8 @@ class SplashScreen extends GetView<SplashController> {
               SizedBox(height: AppSpacing.lg.h),
               CommonText(
                 appName,
-                variant: TextVariant.header,
-                weight: TextWeight.bold,
+                style: context.textTheme.headlineMedium,
+                fontWeight: FontWeight.bold,
                 textAlign: TextAlign.center,
               ),
               SizedBox(height: AppSpacing.md.h),

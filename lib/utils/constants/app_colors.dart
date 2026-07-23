@@ -10,7 +10,7 @@ class ThemeColor extends ThemeExtension<ThemeColor> {
     required this.surface,
     required this.surfaceSecondary,
     required this.border,
-    required this.textColor,
+    required this.text,
     required this.textSecondary,
     required this.textMuted,
     required this.success,
@@ -18,7 +18,7 @@ class ThemeColor extends ThemeExtension<ThemeColor> {
     required this.error,
     required this.info,
     required this.accent,
-    required this.testColor,
+    required this.tertiary,
   });
 
   final Color primary;
@@ -28,7 +28,7 @@ class ThemeColor extends ThemeExtension<ThemeColor> {
   final Color surface;
   final Color surfaceSecondary;
   final Color border;
-  final Color textColor;
+  final Color text;
   final Color textSecondary;
   final Color textMuted;
   final Color success;
@@ -36,58 +36,66 @@ class ThemeColor extends ThemeExtension<ThemeColor> {
   final Color error;
   final Color info;
   final Color accent;
-  final Color testColor;
+  final Color tertiary;
 
-  // ── Dark ===============================================
+  // ===================== DARK THEME =====================
+
   static const ThemeColor dark = ThemeColor(
-    primary: Color(0xFF16A95D),
-    primaryHover: Color(0xFF60A5FA),
+    primary: Color(0xFF22C55E),
+    primaryHover: Color(0xFF16A34A),
     secondary: Color(0xFF94A3B8),
-    background: Color(0xFF0B1329),
-    surface: Color(0xFF111827),
-    surfaceSecondary: Color(0xFF1F2937),
-    border: Color(0xFF374151),
-    textColor: Color(0xFFFFFFFF),
-    textSecondary: Color(0xFF94A3B8),
-    textMuted: Color(0xFF64748B),
-    success: Color(0xFF10B981),
-    warning: Color(0xFFFBBF24),
-    error: Color(0xFFF43F5E),
+
+    background: Color(0xFF0F172A),
+    surface: Color(0xFF1E293B),
+    surfaceSecondary: Color(0xFF334155),
+    border: Color(0xFF475569),
+
+    text: Color(0xFFF8FAFC),
+    textSecondary: Color(0xFFCBD5E1),
+    textMuted: Color(0xFF94A3B8),
+
+    success: Color(0xFF22C55E),
+    warning: Color(0xFFF59E0B),
+    error: Color(0xFFEF4444),
     info: Color(0xFF38BDF8),
+
     accent: Color(0xFF6366F1),
-    testColor: Color(0XFF4BF301),
+    tertiary: Color(0xFF8B5CF6),
   );
 
-  // Light ==============================================
-
+  // ===================== LIGHT THEME =====================
 
   static const ThemeColor light = ThemeColor(
-    primary: Color(0xFF16A95D),
-    primaryHover: Color(0xFF1D4ED8),
-    secondary: Color(0xFF475569),
+    primary: Color(0xFF16A34A),
+    primaryHover: Color(0xFF15803D),
+    secondary: Color(0xFF64748B),
+
     background: Color(0xFFF8FAFC),
     surface: Color(0xFFFFFFFF),
     surfaceSecondary: Color(0xFFF1F5F9),
     border: Color(0xFFE2E8F0),
-    textColor: Color(0xFF000000),
-    textSecondary: Color(0xFF64748B),
-    textMuted: Color(0xFF94A3B8),
-    success: Color(0xFF059669),
-    warning: Color(0xFFF59E0B),
-    error: Color(0xFFE11D48),
+
+    text: Color(0xFF0F172A),
+    textSecondary: Color(0xFF475569),
+    textMuted: Color(0xFF64748B),
+
+    success: Color(0xFF16A34A),
+    warning: Color(0xFFD97706),
+    error: Color(0xFFDC2626),
     info: Color(0xFF0284C7),
+
     accent: Color(0xFF4F46E5),
-    testColor: Color(0xFFB700FF),
+    tertiary: Color(0xFF7C3AED),
   );
 
-  //Common Colors (Same in both Light and Dark mode) ===
+  // ===================== COMMON COLORS =====================
+
   Color get transparent => Colors.transparent;
-
   Color get white => Colors.white;
-
   Color get black => Colors.black;
-
   Color get red => Colors.red;
+
+  // ===================== COPY WITH =====================
 
   @override
   ThemeColor copyWith({
@@ -98,7 +106,7 @@ class ThemeColor extends ThemeExtension<ThemeColor> {
     Color? surface,
     Color? surfaceSecondary,
     Color? border,
-    Color? textColor,
+    Color? text,
     Color? textSecondary,
     Color? textMuted,
     Color? success,
@@ -106,7 +114,7 @@ class ThemeColor extends ThemeExtension<ThemeColor> {
     Color? error,
     Color? info,
     Color? accent,
-    Color? testColor,
+    Color? tertiary,
   }) {
     return ThemeColor(
       primary: primary ?? this.primary,
@@ -116,7 +124,7 @@ class ThemeColor extends ThemeExtension<ThemeColor> {
       surface: surface ?? this.surface,
       surfaceSecondary: surfaceSecondary ?? this.surfaceSecondary,
       border: border ?? this.border,
-      textColor: textColor ?? this.textColor,
+      text: text ?? this.text,
       textSecondary: textSecondary ?? this.textSecondary,
       textMuted: textMuted ?? this.textMuted,
       success: success ?? this.success,
@@ -124,49 +132,38 @@ class ThemeColor extends ThemeExtension<ThemeColor> {
       error: error ?? this.error,
       info: info ?? this.info,
       accent: accent ?? this.accent,
-      testColor: testColor ?? this.testColor,
+      tertiary: tertiary ?? this.tertiary,
     );
   }
 
+  // ===================== LERP =====================
+
   @override
   ThemeColor lerp(
-    ThemeExtension<ThemeColor>? other,
-    double t,
-  ) {
+      ThemeExtension<ThemeColor>? other,
+      double t,
+      ) {
     if (other is! ThemeColor) return this;
+
     return ThemeColor(
       primary: Color.lerp(primary, other.primary, t)!,
-      primaryHover: Color.lerp(
-        primaryHover,
-        other.primaryHover,
-        t,
-      )!,
+      primaryHover: Color.lerp(primaryHover, other.primaryHover, t)!,
       secondary: Color.lerp(secondary, other.secondary, t)!,
-      background: Color.lerp(
-        background,
-        other.background,
-        t,
-      )!,
+      background: Color.lerp(background, other.background, t)!,
       surface: Color.lerp(surface, other.surface, t)!,
-      surfaceSecondary: Color.lerp(
-        surfaceSecondary,
-        other.surfaceSecondary,
-        t,
-      )!,
+      surfaceSecondary:
+      Color.lerp(surfaceSecondary, other.surfaceSecondary, t)!,
       border: Color.lerp(border, other.border, t)!,
-      textColor: Color.lerp(textColor, other.textColor, t)!,
-      textSecondary: Color.lerp(
-        textSecondary,
-        other.textSecondary,
-        t,
-      )!,
+      text: Color.lerp(text, other.text, t)!,
+      textSecondary:
+      Color.lerp(textSecondary, other.textSecondary, t)!,
       textMuted: Color.lerp(textMuted, other.textMuted, t)!,
       success: Color.lerp(success, other.success, t)!,
       warning: Color.lerp(warning, other.warning, t)!,
       error: Color.lerp(error, other.error, t)!,
       info: Color.lerp(info, other.info, t)!,
       accent: Color.lerp(accent, other.accent, t)!,
-      testColor: Color.lerp(testColor, other.testColor, t)!,
+      tertiary: Color.lerp(tertiary, other.tertiary, t)!,
     );
   }
 }

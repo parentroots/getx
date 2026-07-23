@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl_phone_field/country_picker_dialog.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:getx_template/component/layout/common_text.dart';
+import 'package:getx_template/utils/extensions/context_extensions.dart';
 
 /// A country model containing dialing details adapted for backward compatibility.
 class CountryPhoneCode {
@@ -73,12 +74,9 @@ class _CommonPhoneTextFieldState extends State<CommonPhoneTextField> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final isDark = theme.brightness == Brightness.dark;
 
-    final defaultFillColor = widget.fillColor ??
-        (isDark ? Colors.grey.shade800 : Colors.grey.shade50);
-    final defaultBorderColor = widget.borderColor ??
-        (isDark ? Colors.grey.shade700 : Colors.grey.shade300);
+    final defaultFillColor = widget.fillColor ?? context.appColors.surfaceSecondary;
+    final defaultBorderColor = widget.borderColor ?? context.appColors.border;
 
     final borderDecoration = OutlineInputBorder(
       borderRadius: BorderRadius.circular(widget.borderRadius.r),
@@ -91,8 +89,8 @@ class _CommonPhoneTextFieldState extends State<CommonPhoneTextField> {
         if (widget.label.isNotEmpty) ...[
           CommonText(
             widget.label,
-            variant: TextVariant.body,
-            weight: TextWeight.medium,
+            style: context.textTheme.bodyMedium,
+            fontWeight: FontWeight.w500,
           ),
           SizedBox(height: 8.h),
         ],
@@ -130,19 +128,19 @@ class _CommonPhoneTextFieldState extends State<CommonPhoneTextField> {
           dropdownIcon: Icon(
             Icons.arrow_drop_down,
             size: 18.r,
-            color: Colors.grey,
+            color: context.appColors.textSecondary,
           ),
           pickerDialogStyle: PickerDialogStyle(
-            backgroundColor: isDark ? Colors.grey.shade900 : Colors.white,
+            backgroundColor: context.appColors.surface,
             countryNameStyle: theme.textTheme.bodyMedium,
-            countryCodeStyle: theme.textTheme.bodyMedium?.copyWith(color: Colors.grey),
+            countryCodeStyle: theme.textTheme.bodyMedium?.copyWith(color: context.appColors.textSecondary),
             searchFieldInputDecoration: InputDecoration(
               hintText: 'Search country name or code...',
-              hintStyle: TextStyle(fontSize: 14.sp, color: Colors.grey),
-              prefixIcon: const Icon(Icons.search, color: Colors.grey),
+              hintStyle: TextStyle(fontSize: 14.sp, color: context.appColors.textMuted),
+              prefixIcon: Icon(Icons.search, color: context.appColors.textSecondary),
               contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
               filled: true,
-              fillColor: isDark ? Colors.grey.shade800 : Colors.grey.shade100,
+              fillColor: context.appColors.surfaceSecondary,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12.r),
                 borderSide: BorderSide.none,
@@ -152,7 +150,7 @@ class _CommonPhoneTextFieldState extends State<CommonPhoneTextField> {
           decoration: InputDecoration(
             hintText: widget.hintText ?? 'Enter number',
             hintStyle: theme.textTheme.bodyMedium?.copyWith(
-              color: Colors.grey.shade400,
+              color: context.appColors.textMuted,
               fontSize: 14.sp,
             ),
             filled: true,
@@ -161,13 +159,13 @@ class _CommonPhoneTextFieldState extends State<CommonPhoneTextField> {
             border: borderDecoration,
             enabledBorder: borderDecoration,
             focusedBorder: borderDecoration.copyWith(
-              borderSide: BorderSide(color: theme.primaryColor, width: 1.5.r),
+              borderSide: BorderSide(color: context.appColors.primary, width: 1.5.r),
             ),
             errorBorder: borderDecoration.copyWith(
-              borderSide: BorderSide(color: theme.colorScheme.error, width: 1.r),
+              borderSide: BorderSide(color: context.appColors.error, width: 1.r),
             ),
             focusedErrorBorder: borderDecoration.copyWith(
-              borderSide: BorderSide(color: theme.colorScheme.error, width: 1.5.r),
+              borderSide: BorderSide(color: context.appColors.error, width: 1.5.r),
             ),
           ),
         ),

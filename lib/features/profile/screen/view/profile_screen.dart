@@ -39,13 +39,13 @@ class ProfileScreen extends StatelessWidget {
                 children: [
                   CommonText(
                     user?.name ?? 'Guest User',
-                    variant: TextVariant.title,
-                    weight: TextWeight.bold,
+                    style: context.textTheme.titleMedium,
+                    fontWeight: FontWeight.bold,
                   ),
                   SizedBox(height: AppSpacing.sm.h),
                   CommonText(
                     user?.email ?? 'No email associated',
-                    variant: TextVariant.body,
+                    style: context.textTheme.bodyMedium,
                   ),
                 ],
               ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:country_picker/country_picker.dart';
 import 'package:getx_template/component/layout/common_text.dart';
+import 'package:getx_template/utils/extensions/context_extensions.dart';
 
 /// A country model containing dialing details and matching flag emoji.
 class CountryModel {
@@ -45,8 +46,8 @@ class CommonCountryPicker {
     return showModalBottomSheet<CountryModel>(
       context: context,
       isScrollControlled: true,
-      backgroundColor: Colors.transparent,
-      barrierColor: Colors.black.withValues(alpha: 0.55),
+      backgroundColor: context.appColors.transparent,
+      barrierColor: context.appColors.black.withValues(alpha: 0.55),
       builder: (BuildContext builderContext) {
         return _CountryPickerBottomSheet(
           countries: countries,
@@ -54,7 +55,7 @@ class CommonCountryPicker {
           title: title,
           searchHint: searchHint,
           isDark: isDark,
-          primaryColor: primaryColor ?? theme.primaryColor,
+          primaryColor: primaryColor ?? context.appColors.primary,
         );
       },
     );
@@ -168,10 +169,10 @@ class _CountryPickerBottomSheetState extends State<_CountryPickerBottomSheet> {
     final theme = Theme.of(context);
     
     // Style configurations based on theme
-    final backgroundColor = widget.isDark ? const Color(0xFF111827) : Colors.white;
-    final secondaryTextColor = widget.isDark ? Colors.grey.shade400 : Colors.grey.shade600;
-    final dividerColor = widget.isDark ? Colors.grey.shade800 : Colors.grey.shade200;
-    final searchFillColor = widget.isDark ? const Color(0xFF1F2937) : Colors.grey.shade100;
+    final backgroundColor = context.appColors.surface;
+    final secondaryTextColor = context.appColors.textSecondary;
+    final dividerColor = context.appColors.border;
+    final searchFillColor = context.appColors.surfaceSecondary;
     final highlightStyle = TextStyle(
       color: widget.primaryColor,
       fontWeight: FontWeight.bold,
@@ -210,7 +211,7 @@ class _CountryPickerBottomSheetState extends State<_CountryPickerBottomSheet> {
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.15),
+            color: context.appColors.black.withValues(alpha: 0.15),
             blurRadius: 20.r,
             offset: const Offset(0, -5),
           ),
@@ -224,7 +225,7 @@ class _CountryPickerBottomSheetState extends State<_CountryPickerBottomSheet> {
             height: 5.h,
             width: 45.w,
             decoration: BoxDecoration(
-              color: widget.isDark ? Colors.grey.shade800 : Colors.grey.shade300,
+              color: context.appColors.border,
               borderRadius: BorderRadius.circular(2.5.r),
             ),
           ),
@@ -237,8 +238,8 @@ class _CountryPickerBottomSheetState extends State<_CountryPickerBottomSheet> {
               children: [
                 CommonText(
                   widget.title,
-                  variant: TextVariant.title,
-                  weight: TextWeight.bold,
+                  style: context.textTheme.titleMedium,
+                  fontWeight: FontWeight.bold,
                 ),
                 IconButton(
                   onPressed: () => Navigator.of(context).pop(),
@@ -246,12 +247,12 @@ class _CountryPickerBottomSheetState extends State<_CountryPickerBottomSheet> {
                     padding: EdgeInsets.all(6.r),
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: widget.isDark ? Colors.grey.shade800 : Colors.grey.shade100,
+                      color: context.appColors.surfaceSecondary,
                     ),
                     child: Icon(
                       Icons.close,
                       size: 16.r,
-                      color: widget.isDark ? Colors.white : Colors.black87,
+                      color: context.appColors.text,
                     ),
                   ),
                 ),
@@ -267,17 +268,17 @@ class _CountryPickerBottomSheetState extends State<_CountryPickerBottomSheet> {
               onChanged: _filter,
               style: TextStyle(
                 fontSize: 15.sp,
-                color: widget.isDark ? Colors.white : Colors.black87,
+                color: context.appColors.text,
               ),
               decoration: InputDecoration(
                 hintText: widget.searchHint,
                 hintStyle: TextStyle(
                   fontSize: 14.sp,
-                  color: Colors.grey.shade500,
+                  color: context.appColors.textMuted,
                 ),
                 prefixIcon: Icon(
                   Icons.search_rounded,
-                  color: Colors.grey.shade500,
+                  color: context.appColors.textMuted,
                   size: 20.r,
                 ),
                 suffixIcon: _searchQuery.isNotEmpty
@@ -288,7 +289,7 @@ class _CountryPickerBottomSheetState extends State<_CountryPickerBottomSheet> {
                         },
                         child: Icon(
                           Icons.cancel_rounded,
-                          color: Colors.grey.shade500,
+                          color: context.appColors.textMuted,
                           size: 20.r,
                         ),
                       )
@@ -324,9 +325,9 @@ class _CountryPickerBottomSheetState extends State<_CountryPickerBottomSheet> {
                 alignment: Alignment.centerLeft,
                 child: CommonText(
                   "Popular Countries",
-                  variant: TextVariant.caption,
+                  style: context.textTheme.bodySmall,
                   color: secondaryTextColor,
-                  weight: TextWeight.medium,
+                  fontWeight: FontWeight.w500,
                 ),
               ),
             ),
@@ -352,12 +353,12 @@ class _CountryPickerBottomSheetState extends State<_CountryPickerBottomSheet> {
                         decoration: BoxDecoration(
                           color: isSelected
                               ? widget.primaryColor.withValues(alpha: 0.15)
-                              : (widget.isDark ? const Color(0xFF1F2937) : Colors.grey.shade100),
+                              : context.appColors.surfaceSecondary,
                           borderRadius: BorderRadius.circular(12.r),
                           border: Border.all(
                             color: isSelected
                                 ? widget.primaryColor
-                                : (widget.isDark ? Colors.grey.shade800 : Colors.grey.shade200),
+                                : context.appColors.border,
                             width: 1.r,
                           ),
                         ),
@@ -370,11 +371,11 @@ class _CountryPickerBottomSheetState extends State<_CountryPickerBottomSheet> {
                             SizedBox(width: 6.w),
                             CommonText(
                               country.code,
-                              variant: TextVariant.body,
-                              weight: isSelected ? TextWeight.bold : TextWeight.medium,
+                              style: context.textTheme.bodyMedium,
+                              fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
                               color: isSelected
                                   ? widget.primaryColor
-                                  : (widget.isDark ? Colors.white : Colors.black87),
+                                  : context.appColors.text,
                             ),
                           ],
                         ),
@@ -401,13 +402,13 @@ class _CountryPickerBottomSheetState extends State<_CountryPickerBottomSheet> {
                           Icon(
                             Icons.public_off_rounded,
                             size: 48.r,
-                            color: Colors.grey.shade400,
+                            color: context.appColors.textMuted,
                           ),
                           SizedBox(height: 12.h),
                           CommonText(
                             'No countries found matching "$_searchQuery"',
-                            variant: TextVariant.body,
-                            color: Colors.grey,
+                            style: context.textTheme.bodyMedium,
+                            color: context.appColors.textSecondary,
                             textAlign: TextAlign.center,
                           ),
                         ],
@@ -425,13 +426,11 @@ class _CountryPickerBottomSheetState extends State<_CountryPickerBottomSheet> {
                       if (item is String) {
                         return Container(
                           padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 6.h),
-                          color: widget.isDark
-                              ? const Color(0xFF1F2937).withValues(alpha: 0.4)
-                              : Colors.grey.shade50,
+                          color: context.appColors.surfaceSecondary.withValues(alpha: widget.isDark ? 0.4 : 0.2),
                           child: CommonText(
                             item,
-                            variant: TextVariant.body,
-                            weight: TextWeight.bold,
+                            style: context.textTheme.bodyMedium,
+                            fontWeight: FontWeight.bold,
                             color: widget.primaryColor,
                           ),
                         );
@@ -451,7 +450,7 @@ class _CountryPickerBottomSheetState extends State<_CountryPickerBottomSheet> {
                           decoration: BoxDecoration(
                             color: isSelected
                                 ? widget.primaryColor.withValues(alpha: 0.06)
-                                : Colors.transparent,
+                                : context.appColors.transparent,
                           ),
                           child: Row(
                             children: [
@@ -467,16 +466,16 @@ class _CountryPickerBottomSheetState extends State<_CountryPickerBottomSheet> {
                                   theme.textTheme.bodyMedium!.copyWith(
                                     fontSize: 15.sp,
                                     fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-                                    color: widget.isDark ? Colors.white : Colors.black87,
+                                    color: context.appColors.text,
                                   ),
                                   highlightStyle,
                                 ),
                               ),
                               CommonText(
                                 country.dialCode,
-                                variant: TextVariant.body,
+                                style: context.textTheme.bodyMedium,
                                 color: isSelected ? widget.primaryColor : secondaryTextColor,
-                                weight: isSelected ? TextWeight.bold : TextWeight.medium,
+                                fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
                               ),
                               if (isSelected) ...[
                                 SizedBox(width: 12.w),

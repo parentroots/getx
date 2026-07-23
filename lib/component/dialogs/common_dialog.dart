@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:getx_template/component/button/common_button.dart';
 import 'package:getx_template/component/layout/common_text.dart';
-import 'package:getx_template/utils/constants/app_colors.dart';
 import 'package:getx_template/utils/extensions/context_extensions.dart';
 
 enum DialogType {
@@ -354,7 +353,7 @@ class CommonDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
-    final Color resolvedBg = theme.colorScheme.surface;
+    final Color resolvedBg = context.appColors.surface;
     final Color accentColor = _getAccentColor(context);
 
     return Dialog(
@@ -379,7 +378,7 @@ class CommonDialog extends StatelessWidget {
                     title,
                     textAlign: TextAlign.center,
                     fontSize: titleFontSize,
-                    weight: TextWeight.bold,
+                    fontWeight: FontWeight.bold,
                     color: titleColor ?? theme.colorScheme.onSurface,
                     maxLines: 3,
                     overflow: TextOverflow.ellipsis,
@@ -389,7 +388,7 @@ class CommonDialog extends StatelessWidget {
                     subtitle,
                     textAlign: TextAlign.center,
                     fontSize: subtitleFontSize,
-                    weight: TextWeight.regular,
+                    fontWeight: FontWeight.normal,
                     color: subtitleColor ?? theme.colorScheme.onSurface.withValues(alpha: 0.7),
                     maxLines: 6,
                     overflow: TextOverflow.ellipsis,

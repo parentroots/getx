@@ -1,7 +1,8 @@
-﻿import 'dart:io';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:getx_template/component/layout/common_text.dart';
+import 'package:getx_template/utils/extensions/context_extensions.dart';
 import 'package:image_picker/image_picker.dart';
 
 class CommonMultiImagePicker extends StatefulWidget {
@@ -104,7 +105,7 @@ class _CommonMultiImagePickerState extends State<CommonMultiImagePicker> {
           height: responsiveSize,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12.r),
-            border: Border.all(color: Colors.grey.shade300, width: 1.r),
+            border: Border.all(color: context.appColors.border, width: 1.r),
             image: DecorationImage(
               image: FileImage(_selectedImages[index]),
               fit: BoxFit.cover,
@@ -119,10 +120,10 @@ class _CommonMultiImagePickerState extends State<CommonMultiImagePicker> {
             child: Container(
               padding: EdgeInsets.all(4.r),
               decoration: BoxDecoration(
-                color: Colors.black.withOpacity(0.6),
+                color: context.appColors.black.withOpacity(0.6),
                 shape: BoxShape.circle,
               ),
-              child: Icon(Icons.close, color: Colors.white, size: 16.r),
+              child: Icon(Icons.close, color: context.appColors.white, size: 16.r),
             ),
           ),
         ),
@@ -138,19 +139,19 @@ class _CommonMultiImagePickerState extends State<CommonMultiImagePicker> {
         width: responsiveSize,
         height: responsiveSize,
         decoration: BoxDecoration(
-          color: Colors.grey.shade100,
+          color: context.appColors.surfaceSecondary,
           borderRadius: BorderRadius.circular(12.r),
-          border: Border.all(color: Colors.grey.shade300, style: BorderStyle.solid, width: 1.r),
+          border: Border.all(color: context.appColors.border, style: BorderStyle.solid, width: 1.r),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.add_photo_alternate_outlined, size: 32.r, color: Colors.grey.shade600),
+            Icon(Icons.add_photo_alternate_outlined, size: 32.r, color: context.appColors.textSecondary),
             SizedBox(height: 8.h),
             CommonText(
               '${_selectedImages.length}/${widget.maxImages}',
-              variant: TextVariant.caption,
-              color: Colors.grey.shade600,
+              style: context.textTheme.bodySmall,
+              color: context.appColors.textSecondary,
             ),
           ],
         ),

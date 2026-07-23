@@ -35,10 +35,10 @@ class OnboardingScreen extends StatelessWidget {
                         opacity: isLast ? 0.0 : 1.0,
                         child: TextButton(
                           onPressed: controller.finish,
-                          child: const CommonText(
+                          child: CommonText(
                             'Skip',
-                            variant: TextVariant.body,
-                            weight: TextWeight.medium,
+                            style: Theme.of(context).textTheme.bodyMedium,
+                            fontWeight: FontWeight.w500,
                             color: Colors.grey,
                           ),
                         ),
@@ -156,13 +156,14 @@ class _OnboardingPage extends StatelessWidget {
           SizedBox(height: 48.h),
           CommonText(
             title,
-            weight: TextWeight.bold,
+            style: Theme.of(context).textTheme.titleLarge, // Using standard titleLarge for slide header
+            fontWeight: FontWeight.bold,
             textAlign: TextAlign.center,
           ),
           SizedBox(height: 16.h),
           CommonText(
             description,
-            variant: TextVariant.body,
+            style: Theme.of(context).textTheme.bodyMedium,
             color: isDark ? Colors.grey.shade400 : Colors.grey.shade600,
             textAlign: TextAlign.center,
           ),

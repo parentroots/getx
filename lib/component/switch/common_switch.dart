@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:getx_template/utils/constants/app_colors.dart';
 import 'package:getx_template/utils/extensions/context_extensions.dart';
 
 /// A premium, highly customizable, and animated toggle switch widget.
@@ -110,8 +109,6 @@ class _CommonSwitchState extends State<CommonSwitch>
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final isDark = theme.brightness == Brightness.dark;
     final isEnabled = widget.onChanged != null;
 
     final double resolvedWidth = widget.width ?? 42.w;
@@ -136,9 +133,10 @@ class _CommonSwitchState extends State<CommonSwitch>
             final double currentThumbWidth = resolvedThumbSize + (stretch * 8.r);
 
             final trackColor = Color.lerp(resolvedInactiveColor, resolvedActiveColor, t);
+            final resolvedThumbColor = widget.thumbColor == Colors.white ? context.appColors.white : widget.thumbColor;
             final currentThumbColor = Color.lerp(
-              widget.thumbColor,
-              widget.activeThumbColor ?? widget.thumbColor,
+              resolvedThumbColor,
+              widget.activeThumbColor ?? resolvedThumbColor,
               t,
             )!;
 
@@ -174,7 +172,7 @@ class _CommonSwitchState extends State<CommonSwitch>
                         color: currentThumbColor,
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withValues(alpha: 0.15),
+                            color: context.appColors.black.withValues(alpha: 0.15),
                             blurRadius: 4.r,
                             offset: Offset(0, 2.r),
                           ),

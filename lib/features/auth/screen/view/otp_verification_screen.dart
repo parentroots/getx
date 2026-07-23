@@ -60,15 +60,15 @@ class OtpVerificationScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             SizedBox(height: 16.h),
-            const CommonText(
+            CommonText(
               'Enter code',
-              variant: TextVariant.header,
-              weight: TextWeight.bold,
+              style: Theme.of(context).textTheme.headlineMedium,
+              fontWeight: FontWeight.bold,
             ),
             SizedBox(height: AppSpacing.md.h),
-            const CommonText(
+            CommonText(
               'This screen is provider-neutral and ready for SMS, email, or authenticator-code flows.',
-              variant: TextVariant.body,
+              style: Theme.of(context).textTheme.bodyMedium,
               color: Colors.grey,
             ),
             SizedBox(height: AppSpacing.xl.h),
