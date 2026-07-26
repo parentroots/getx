@@ -590,10 +590,50 @@ Append `.height` or `.width` to integers or doubles for responsive layout spacin
 - `24.width` — Responsive `SizedBox(width: 24.w)`
 
 ### 2. Context Extensions (`lib/core/utils/extenstion/context_extensions.dart`)
-Directly access themes, color schemes, and screen dimension constraints from the current context:
+Directly access themes, color schemes, screen dimension constraints, and custom colors from the current context:
 - `context.theme` — Quick access to `Theme.of(context)`
 - `context.colorScheme` — Quick access to the color scheme tokens
 - `context.screenWidth` — Current display width
+- `context.appColors` — Access custom, theme-adaptive colors directly (e.g., `context.appColors.primary`, `context.appColors.background`, `context.appColors.red`). Colors automatically switch between light and dark modes!
+
+#### 🎨 Widget Color Usage Example:
+You can style any widget's color, text, or icon dynamically depending on the current theme (Light/Dark mode) by passing `context.appColors.<color_name>`:
+
+```dart
+import 'package:your_project_name/utils/extensions/context_extensions.dart';
+
+@override
+Widget build(BuildContext context) {
+  return CommonScaffold(
+    appBar: CommonAppBar(
+      title: 'Home',
+      titleColor: context.appColors.primary, // Green in Light, Bright Green in Dark
+      leading: Icon(
+        Icons.menu,
+        color: context.appColors.primary, 
+      ),
+    ),
+    body: Container(
+      color: context.appColors.background, // Light slate in Light, Dark slate in Dark
+      child: Column(
+        children: [
+          CommonCard(
+            color: context.appColors.surface, // White in Light, Dark slate card in Dark
+            child: CommonText(
+              "Welcome to the App!",
+              color: context.appColors.text, // Dark text in Light, White text in Dark
+            ),
+          ),
+          CommonButton(
+            buttonColor: context.appColors.primary,
+            titleText: "Proceed",
+          ),
+        ],
+      ),
+    ),
+  );
+}
+```
 
 ### 3. Widget Layout Extensions (`lib/core/utils/extenstion/widget_extensions.dart`)
 Add responsiveness, paddings, and alignment inline without wrapping widgets manually:
