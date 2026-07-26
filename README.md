@@ -1,8 +1,34 @@
-# Premium GetX Flutter Boilerplate (Feature-First Architecture)
+# Premium GetX Flutter Boilerplate 🚀
+
+[![GetX Boilerplate CLI](https://img.shields.io/pub/v/getx_boilerplate_cli?color=blue&logo=dart&label=getx_boilerplate_cli)](https://pub.dev/packages/getx_boilerplate_cli)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Flutter](https://img.shields.io/badge/Flutter-%E2%9D%A4-red.svg?logo=flutter)](https://flutter.dev)
 
 A production-ready, highly organized Flutter starter template built with **GetX**, **Clean Feature-First Architecture**, **Centralized Dependency Injection**, **Singleton Routing**, high-performance **Singleton Network Clients**, and deeply customizable **Premium Common UI Components**.
 
 This template is meticulously structured for maximum code readability, rapid developer onboarding, and scalability, making it the perfect foundation for any enterprise-grade mobile application.
+
+---
+
+## ⚡ Quick Start with CLI
+
+Instead of manual cloning and search-and-replace, you can use our official **GetX Boilerplate CLI** from pub.dev to instantly scaffold a new project with this template, automatically configured with your custom project name:
+
+### 1. Install the CLI globally
+```bash
+dart pub global activate getx_boilerplate_cli
+```
+
+### 2. Scaffold a new project
+```bash
+getx_boilerplate_cli create my_awesome_app
+```
+
+This will automatically:
+* Clone the latest template from GitHub.
+* Clear git history to start a new project.
+* Rename all package imports and declarations from `getx_template` to `my_awesome_app`.
+* Run `flutter pub get` so you are ready to code immediately!
 
 ---
 
@@ -626,6 +652,142 @@ Easily trigger email intents, website URLs, and external applications securely:
 UrlLauncherHelper.email("support@example.com");
 UrlLauncherHelper.open("https://pub.dev");
 ```
+
+---
+
+## 🛠️ Core Services, Helpers, Themes & Shared Controllers
+
+### 📁 Category 1: Services (`lib/services/`)
+
+#### 1. `SharedPreferencesService` (Local Key-Value persistence)
+💡 **Purpose**: Singleton service to easily persist primitive values and serialize/deserialize complete model instances locally.
+🚀 **Usage**:
+```dart
+// Fetch the singleton instance
+final storage = SharedPreferencesService.instance;
+
+// Store and retrieve primitives
+await storage.setBool('is_first_time', false);
+final bool? isFirstTime = storage.getBool('is_first_time');
+
+// Serialize/Save custom models
+await storage.saveUser(currentUserModel);
+
+// Fetch custom models (returns UserModel?)
+final user = storage.getUser();
+```
+
+#### 2. `SecureStorageService` (Encrypted Storage)
+💡 **Purpose**: Encrypted storage interface to safely store sensitive keys like JWT access tokens using Android Keystore and iOS Keychain.
+🚀 **Usage**:
+```dart
+final secureStorage = SecureStorageService();
+
+// Write a secret key
+await secureStorage.write('auth_token', 'ey...xT');
+
+// Read a secret key
+final String? token = await secureStorage.read('auth_token');
+
+// Delete keys
+await secureStorage.delete('auth_token');
+```
+
+#### 3. `DialogService`
+💡 **Purpose**: A centralized service (extends `GetxService`) accessible via controllers to trigger app-wide Snackbars, confirm dialogs, loaders, and bottom sheets without requiring BuildContext.
+🚀 **Usage**:
+```dart
+final dialogService = Get.find<DialogService>();
+
+// Trigger floating loader overlay
+dialogService.showLoading(message: 'Processing checkout...');
+
+// Hide loader overlay
+dialogService.hideLoading();
+
+// Show alert dialogs
+dialogService.showError(message: 'Invalid email format.');
+dialogService.showSuccess(title: 'Updated', message: 'Profile changed successfully.');
+```
+
+---
+
+### 📁 Category 2: Utility Helpers & Validators (`lib/utils/helper/`)
+
+#### 1. `Validators`
+💡 **Purpose**: Enforces email validation logic, field requirements, and password security bounds within Form Field inputs.
+🚀 **Usage**:
+```dart
+CommonTextField(
+  label: 'Email',
+  validator: Validators.email,
+);
+
+CommonTextField(
+  label: 'Password',
+  validator: Validators.password,
+);
+```
+
+#### 2. `DateFormatter`
+💡 **Purpose**: Thread-safe date formatting mapping using the `intl` package formatters.
+🚀 **Usage**:
+```dart
+// Returns standard dates format (e.g., Jul 26, 2026)
+final String displayDate = DateFormatter.date(DateTime.now());
+
+// Returns API-compliant format (e.g., 2026-07-26)
+final String apiFormat = DateFormatter.apiDate(DateTime.now());
+```
+
+#### 3. `Debouncer`
+💡 **Purpose**: Standardize call thresholds for search queries, preventing excessive database/network requests on text input change events.
+🚀 **Usage**:
+```dart
+final _debouncer = Debouncer(delay: const Duration(milliseconds: 500));
+
+void onSearchQueryChanged(String query) {
+  _debouncer.call(() {
+    controller.fetchSearchResults(query);
+  });
+}
+```
+
+---
+
+### 📁 Category 3: Base Controller (`lib/shared/controllers/`)
+
+#### 1. `BaseController`
+💡 **Purpose**: Abstract base controller class extending `GetxController` providing standard reactive states (`isLoading`, `errorMessage`) and automatic asynchronous wrapper execution.
+🚀 **Usage**:
+```dart
+class ProfileController extends BaseController {
+  Future<void> updateProfile() async {
+    // Automatically sets isLoading to true, clears errors, runs the task,
+    // catches exceptions into errorMessage, and sets isLoading to false at the end.
+    await runWithLoading(() async {
+      await apiRepository.sendProfileData();
+    });
+  }
+}
+```
+
+---
+
+### 📁 Category 4: App Theme System (`lib/core/theme/`)
+
+#### 1. Theme Configuration
+💡 **Purpose**: Centralized themes providing consistent design patterns (light/dark colors, spacing tokens, border radiuses, and standard typographies) using Material 3 seed color palettes.
+🚀 **Usage**:
+```dart
+GetMaterialApp(
+  theme: AppTheme.light,
+  darkTheme: AppTheme.dark,
+  themeMode: ThemeMode.system,
+);
+```
+* **Radius Constants:** Ensure consistent rounded corners by using standard tokens from `AppRadius` (e.g., `AppRadius.md` is `12.0`).
+* **Spacing Constants:** Use standardized margins/paddings from `AppSpacing` (e.g., `AppSpacing.md` is `16.0`).
 
 ---
 

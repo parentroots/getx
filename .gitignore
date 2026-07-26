@@ -45,3 +45,6 @@ Thumbs.db
 
 # FVM Version Cache
 .fvm/
+
+# Local CLI source files
+getx_boilerplate_cli/
