@@ -1,0 +1,8 @@
+# pub.dev ignore rules
+.dart_tool/
+.packages
+pubspec.lock
+build/
+.vscode/
+.idea/
+*.iml

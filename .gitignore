@@ -47,4 +47,4 @@ Thumbs.db
 .fvm/
 
 # Local CLI source files
-getx_boilerplate_cli/
+# getx_boilerplate_cli/
