@@ -38,34 +38,50 @@ We follow an organized, domain-driven **Feature-First Architecture**. All custom
 
 ```text
 lib/
-├── core/                   # App-wide foundations & configurations
-│   ├── bindings/           # Centralized global Dependency Injection
-│   ├── config/             # App lifecycle observers & configurations
-│   ├── constants/          # Static app constants (API, storage keys, colors, strings)
-│   ├── errors/             # Global error handling logic & custom exceptions
-│   ├── localization/       # Internationalization & translations
-│   ├── network/            # Singleton HTTP and WebSocket Clients
-│   ├── routing/            # Singleton navigation & routes registration
-│   ├── theme/              # Curated light/dark theme config, radius, & typography
-│   └── utils/              # Helper utilities
-│       ├── extenstion/     # Screen, context, and widget layout extensions
-│       └── helper/         # Logger, date formatters, and validators
-│
 ├── component/              # Globally shared, highly customizable Common UI widgets
-│   ├── dialogs/            # App dialogs & Common Snackbars
-│   ├── layout/             # Lists, Grids, Dropdowns, Radios, Scaffolds, and CommonText
-│   ├── loading/            # Common shimmers, page loaders & loading overlays
-│   ├── pickers/            # Compressed Multi-Image, Date, Time, and Country pickers
+│   ├── dialogs/            # App dialogs & Common Snackbars (e.g. LoadingDialog)
+│   ├── layout/             # Scaffolds, dropdowns, lists, radios, grids, and common text
+│   ├── loading/            # Common shimmers, page loaders, and loading overlays
+│   ├── pickers/            # Multi-image picker, date/time pickers, and country picker
 │   └── states/             # Empty, Error, Offline, and Retry state views
 │
-├── features/               # Self-contained modules (domain layers)
-│   ├── [feature_name]/     # Example: auth, home, profile
-│   │   ├── data/           # Module-specific API integrations & data models
-│   │   │   └── model/
-│   │   └── screen/         # Flattened UI Presentation Layer
-│   │       ├── controller/ # GetX Controllers for state management
-│   │       ├── view/       # Screens and Views
-│   │       └── widget/     # Widgets exclusive to this feature
+├── core/                   # Core app configuration and bindings
+│   ├── bindings/           # Centralized global Dependency Injection (dependency_injection.dart)
+│   ├── config/             # App lifecycle observer and general config
+│   ├── localization/       # App translations and locale keys (internationalization)
+│   ├── network/            # HTTP client (ApiClient) and WebSocket client (SocketClient)
+│   ├── routing/            # Singleton navigation & routes registration (AppRoutes)
+│   └── theme/              # Curated light/dark themes, radius, spacing, and typography config
+│
+├── data/                   # Global data layer
+│   ├── models/             # Global data models (e.g. UserModel, PaginatedResponse)
+│   └── repositories/       # Central repositories for data and APIs (e.g. AuthRepository)
+│
+├── features/               # Self-contained modules (feature-first)
+│   └── [feature_name]/     # Example: auth, home, profile, settings, splash, message
+│       └── screen/         # UI Presentation Layer
+│           ├── controller/ # GetX Controllers for feature-specific state management
+│           └── view/       # Screens and Views for this feature
+│
+├── services/               # Device/system level infrastructure services
+│   ├── connectivity/       # Connectivity observer (ConnectivityService)
+│   ├── dialog/             # Dialog service (DialogService)
+│   ├── firebase/           # Firebase initialization & cloud messaging service
+│   ├── launcher/           # URL & intent launcher helper (UrlLauncherHelper)
+│   ├── notification/       # Local notifications service
+│   ├── permissions/        # Runtime permissions helper (PermissionHelper)
+│   ├── pickers/            # Device file picker and image picker helpers
+│   └── storage/            # Secure Storage & SharedPreferences services
+│
+├── shared/                 # Shared logic and controller base classes
+│   └── controllers/        # BaseController for features
+│
+└── utils/                  # Application helper utilities
+    ├── app_log/            # Comprehensive logging utilities (Logger, performance logger)
+    ├── constants/          # Static app constants (assets, colors, strings, storage keys)
+    ├── errors/             # Error exception formatting & global error handling
+    ├── extensions/         # Spacing, context, context/widget helpers (screen_extensions, etc.)
+    └── helper/             # Date formatters, debouncer, and validators
 ```
 
 ---
@@ -125,13 +141,11 @@ Adding a new module (e.g., `chat`) is extremely simple:
 1.  **Create folders**:
     ```text
     lib/features/chat/
-    ├── data/
-    │   └── model/
     └── screen/
         ├── controller/ (chat_controller.dart)
-        ├── view/       (chat_screen.dart)
-        └── widget/     (local_widget.dart)
+        └── view/       (chat_screen.dart)
     ```
+    *Note: Global data models or repositories are managed under the central `lib/data/` directory.*
 2.  **Declare routing**: Add your route to `lib/core/routing/app_routes.dart`:
     ```dart
     static const String chat = '/chat';
@@ -152,7 +166,7 @@ Adding a new module (e.g., `chat`) is extremely simple:
       Widget build(BuildContext context) {
         final controller = Get.find<ChatController>();
         return CommonScaffold(
-          appBar: const CommonTopBar(title: 'Chat'),
+          appBar: const CommonAppBar(title: 'Chat'),
           body: ...
         );
       }
@@ -584,18 +598,18 @@ RetryWidget(onRetry: () => controller.retry())
 
 Unified extension methods reduce widget layout tree nesting:
 
-### 1. Spacing Extensions (`lib/core/utils/extenstion/screen_extensions.dart`)
+### 1. Spacing Extensions (`lib/utils/extensions/screen_extensions.dart`)
 Append `.height` or `.width` to integers or doubles for responsive layout spacing:
 - `16.height` — Responsive `SizedBox(height: 16.h)`
 - `24.width` — Responsive `SizedBox(width: 24.w)`
 
-### 2. Context Extensions (`lib/core/utils/extenstion/context_extensions.dart`)
+### 2. Context Extensions (`lib/utils/extensions/context_extensions.dart`)
 Directly access themes, color schemes, and screen dimension constraints from the current context:
 - `context.theme` — Quick access to `Theme.of(context)`
 - `context.colorScheme` — Quick access to the color scheme tokens
 - `context.screenWidth` — Current display width
 
-### 3. Widget Layout Extensions (`lib/core/utils/extenstion/widget_extensions.dart`)
+### 3. Widget Layout Extensions (`lib/utils/extensions/widget_extensions.dart`)
 Add responsiveness, paddings, and alignment inline without wrapping widgets manually:
 - `widget.paddingAll(16.h)`
 - `widget.paddingSymmetric(horizontal: 20.w)`
@@ -603,9 +617,9 @@ Add responsiveness, paddings, and alignment inline without wrapping widgets manu
 
 #### Example usage:
 ```dart
-import 'package:getx_template/core/utils/extenstion/screen_extensions.dart';
-import 'package:getx_template/core/utils/extenstion/context_extensions.dart';
-import 'package:getx_template/core/utils/extenstion/widget_extensions.dart';
+import 'package:getx_template/utils/extensions/screen_extensions.dart';
+import 'package:getx_template/utils/extensions/context_extensions.dart';
+import 'package:getx_template/utils/extensions/widget_extensions.dart';
 
 @override
 Widget build(BuildContext context) {
