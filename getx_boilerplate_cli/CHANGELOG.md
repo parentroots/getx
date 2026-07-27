@@ -1,3 +1,7 @@
+## 1.0.6
+
+* Added comprehensive parameter and field documentation tables for all 32 custom common widgets.
+
 ## 1.0.5
 
 * Added package usage example.
