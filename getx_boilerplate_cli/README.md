@@ -184,17 +184,32 @@ All widgets are prefix-unified under the **`Common`** namespace. They are design
 ### 📁 Category 1: Form Fields, Inputs & Toggles
 
 #### 1. `CommonButton`
-💡 **Purpose**: Custom button supporting Filled, Outlined, and Text styles, leading/trailing icons, and a built-in loading spinner to handle async operations.
-⚙️ **Key Parameters**:
+💡 **Purpose**: Custom button supporting Filled, Outlined, and Text styles, leading/trailing widgets, gradients, and a built-in loading spinner to handle async operations.
+⚙️ **Parameters**:
 | Parameter | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
 | `titleText` | `String` | *Required* | Text to display on the button. |
-| `onTap` | `VoidCallback?` | `null` | Tap callback. If null, the button is disabled. |
+| `onTap` | `VoidCallback?` | `null` | Tap callback. If null, the button behaves as disabled. |
+| `titleColor` | `Color?` | `null` | Text color. |
+| `buttonColor` | `Color?` | `null` | Background color. |
+| `titleSize` | `double?` | `null` | Font size of the text. |
+| `buttonRadius` | `double?` | `null` | Corner rounding radius. |
+| `alignment` | `MainAxisAlignment` | `MainAxisAlignment.center` | Horizontal alignment of contents inside the button. |
+| `titleWeight` | `FontWeight?` | `null` | Font weight of the text. |
+| `buttonHeight` | `double?` | `null` | Custom height constraint. |
+| `borderWidth` | `double?` | `null` | Border outline thickness. |
 | `isLoading` | `bool` | `false` | Renders a loading spinner and disables taps. |
-| `buttonColor` | `Color?` | `AppColors.primary` | Background color. |
-| `titleColor` | `Color?` | `Colors.white` | Text color. |
-| `buttonRadius` | `double?` | `12.0` | Rounded corners. |
-| `buttonWidth` | `double?` | `double.infinity` | Set custom width bounds. |
+| `buttonWidth` | `double?` | `null` | Custom width (defaults to `double.infinity`). |
+| `borderColor` | `Color?` | `null` | Outline border color. |
+| `prefix` | `Widget?` | `null` | General leading widget (e.g. icon). |
+| `suffix` | `Widget?` | `null` | General trailing widget (e.g. icon). |
+| `elevation` | `double?` | `null` | Shadow elevation. |
+| `gradient` | `Gradient?` | `null` | Background gradient decoration. |
+| `padding` | `EdgeInsetsGeometry?` | `null` | Custom inner padding. |
+| `titleGradient` | `Gradient?` | `null` | Text gradient decoration. |
+| `titleSpacing` | `double` | `0.5` | Text letter spacing. |
+| `border` | `bool` | `false` | Enforce outline border rendering. |
+| `isEnabled` | `bool` | `true` | Enable button interactions. |
 
 🚀 **Usage**:
 ```dart
@@ -206,16 +221,50 @@ CommonButton(
 ```
 
 #### 2. `CommonTextField`
-💡 **Purpose**: Highly customizable input text field component featuring automated password visibility toggles, autofocus, and error border styling.
-⚙️ **Key Parameters**:
+💡 **Purpose**: Highly customizable input text field component featuring automated password visibility toggles, autofocus, custom colors, and error border styling.
+⚙️ **Parameters**:
 | Parameter | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
+| `label` | `String?` | `null` | Label shown above or floating inside input frame. |
+| `hint` | `String?` | `null` | Hint text displayed inside input. |
 | `controller` | `TextEditingController?` | `null` | Text controller. |
-| `label` | `String?` | `null` | Label text shown above. |
-| `hint` | `String?` | `null` | Placeholder hint. |
-| `obscureText` | `bool` | `false` | Hides input text. |
+| `initialValue` | `String?` | `null` | Prepopulated initial text. |
+| `validator` | `String? Function(String?)?` | `null` | Text validation callback. |
 | `prefixIcon` | `IconData?` | `null` | Leading icon. |
-| `validator` | `String? Function(String?)?` | `null` | Validation logic callback. |
+| `suffixIcon` | `IconData?` | `null` | Trailing icon. |
+| `obscureText` | `bool` | `false` | Hides input text (e.g. password). |
+| `keyboardType` | `TextInputType?` | `null` | Keyboard layout type. |
+| `textInputAction` | `TextInputAction?` | `null` | Keyboard action key. |
+| `onChanged` | `ValueChanged<String>?` | `null` | Text change callback. |
+| `onSubmitted` | `ValueChanged<String>?` | `null` | Submit key action callback. |
+| `onTap` | `VoidCallback?` | `null` | Tap callback. |
+| `focusNode` | `FocusNode?` | `null` | Custom focus management node. |
+| `readOnly` | `bool` | `false` | Is read-only input. |
+| `autoFocus` | `bool` | `false` | Is auto-focused. |
+| `maxLines` | `int?` | `1` | Maximum lines. |
+| `minLines` | `int?` | `null` | Minimum lines. |
+| `maxLength` | `int?` | `null` | Character limit. |
+| `inputFormatters` | `List<TextInputFormatter>?` | `null` | Input format filtering rules. |
+| `textAlign` | `TextAlign` | `TextAlign.start` | Text alignment style. |
+| `fillColor` | `Color?` | `null` | Custom background fill color. |
+| `filled` | `bool` | `true` | Should background be filled. |
+| `borderColor` | `Color?` | `null` | Default outline border color. |
+| `focusBorderColor` | `Color?` | `null` | Focused state border color. |
+| `errorBorderColor` | `Color?` | `null` | Error state border color. |
+| `borderRadius` | `double` | `16.0` | Corner rounding radius. |
+| `contentPadding` | `EdgeInsetsGeometry?` | `null` | Inner padding constraints. |
+| `textStyle` | `TextStyle?` | `null` | Input text styling. |
+| `hintStyle` | `TextStyle?` | `null` | Hint text styling. |
+| `labelStyle` | `TextStyle?` | `null` | Label text styling. |
+| `errorStyle` | `TextStyle?` | `null` | Error text styling. |
+| `prefixWidget` | `Widget?` | `null` | Custom leading widget. |
+| `suffixWidget` | `Widget?` | `null` | Custom trailing widget. |
+| `textCapitalization` | `TextCapitalization` | `TextCapitalization.none` | Capitalization format. |
+| `autocorrect` | `bool` | `true` | Enable device autocorrect. |
+| `enableSuggestions` | `bool` | `true` | Show typing suggestions. |
+| `autofillHints` | `Iterable<String>?` | `null` | Autofill category prompts. |
+| `showPasswordToggle` | `bool` | `true` | Show password hide/reveal suffix icon. |
+| `autoValidateMode` | `AutovalidateMode` | `AutovalidateMode.onUserInteraction` | Field validation mode. |
 
 🚀 **Usage**:
 ```dart
@@ -228,29 +277,21 @@ CommonTextField(
 )
 ```
 
-#### 3. `Pinput` (OTP Input Field)
-💡 **Purpose**: Animated pin entry for OTP/verification screens. Integrates the `pinput` package with custom theme overrides matching the app's visual system.
-🚀 **Usage**:
-```dart
-Pinput(
-  length: 6,
-  controller: controller.otpController,
-  defaultPinTheme: defaultPinTheme,
-  focusedPinTheme: focusedPinTheme,
-  showCursor: true,
-  hapticFeedbackType: HapticFeedbackType.lightImpact,
-  keyboardType: TextInputType.number,
-)
-```
-
-#### 4. `CommonPhoneTextField`
+#### 3. `CommonPhoneTextField`
 💡 **Purpose**: Input designed specifically for international mobile numbers. It includes a built-in searchable country dialing-prefix selector bottom sheet.
-⚙️ **Key Parameters**:
+⚙️ **Parameters**:
 | Parameter | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `controller` | `TextEditingController` | *Required* | Phone input controller. |
-| `label` | `String` | `'Phone Number'` | Outer label descriptor. |
+| `controller` | `TextEditingController` | *Required* | Text controller. |
+| `label` | `String` | `'Phone Number'` | Label shown above or inside input frame. |
+| `hintText` | `String?` | `null` | Input placeholder. |
+| `onChanged` | `ValueChanged<PhoneNumber>?` | `null` | Callback when phone input changes. |
+| `onCountryChanged` | `void Function(Country)?` | `null` | Callback when selected country prefix switches. |
+| `validator` | `String? Function(PhoneNumber?)?` | `null` | Validation callback. |
 | `initialCountryCode` | `String` | `'BD'` | Preselected ISO country code. |
+| `fillColor` | `Color?` | `null` | Custom background color. |
+| `borderColor` | `Color?` | `null` | Outline border color. |
+| `borderRadius` | `double` | `12.0` | Corner rounding radius. |
 
 🚀 **Usage**:
 ```dart
@@ -260,13 +301,31 @@ CommonPhoneTextField(
 )
 ```
 
-#### 5. `CommonSearchBar`
-💡 **Purpose**: Sleek search panel that manages its own inner controller and includes a one-click trailing "Clear" button.
-⚙️ **Key Parameters**:
+#### 4. `CommonSearchBar`
+💡 **Purpose**: Sleek search panel that manages its own inner controller, integrates a built-in debouncer, and includes a one-click trailing "Clear" button.
+⚙️ **Parameters**:
 | Parameter | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `onChanged` | `ValueChanged<String>?` | `null` | Triggered on character changes. |
-| `hintText` | `String` | `'Search'` | Input placeholder text. |
+| `controller` | `TextEditingController?` | `null` | Optional text controller. If omitted, a local controller is managed internally. |
+| `onChanged` | `ValueChanged<String>?` | `null` | Callback triggered when search text changes (debounced). |
+| `onSubmitted` | `ValueChanged<String>?` | `null` | Callback triggered when submit key is pressed. |
+| `onCleared` | `VoidCallback?` | `null` | Callback triggered when search input is cleared. |
+| `hintText` | `String` | `'Search'` | Hint placeholder text. |
+| `debounceMilliseconds` | `int` | `400` | Debounce threshold delay in milliseconds. |
+| `backgroundColor` | `Color?` | `null` | Background fill color. |
+| `elevation` | `double` | `0.0` | Shadow elevation. |
+| `borderRadius` | `double` | `12.0` | Rounding corner radius. |
+| `padding` | `EdgeInsetsGeometry?` | `null` | Inner padding. |
+| `margin` | `EdgeInsetsGeometry?` | `null` | Outer margin. |
+| `width` | `double?` | `null` | Explicit width size. |
+| `height` | `double` | `48.0` | Explicit height size. |
+| `autoFocus` | `bool` | `false` | Is auto-focused. |
+| `enabled` | `bool` | `true` | Enable interactions. |
+| `focusNode` | `FocusNode?` | `null` | Custom focus node. |
+| `textStyle` | `TextStyle?` | `null` | Text style. |
+| `hintStyle` | `TextStyle?` | `null` | Hint text style. |
+| `leading` | `Widget?` | `null` | Custom leading widget. |
+| `trailing` | `Widget?` | `null` | Custom trailing widget. |
 
 🚀 **Usage**:
 ```dart
@@ -276,13 +335,21 @@ CommonSearchBar(
 )
 ```
 
-#### 6. `CommonRatingBar`
+#### 5. `CommonRatingBar`
 💡 **Purpose**: Displays ratings. Supports interactive star-based selection and static, read-only star previews.
-⚙️ **Key Parameters**:
+⚙️ **Parameters**:
 | Parameter | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `rating` | `double` | *Required* | Rating score to display. |
-| `onRatingChanged` | `ValueChanged<double>?` | `null` | Interactive selector callback. If null, becomes read-only. |
+| `rating` | `double` | *Required* | Active rating score (e.g. 4.5). |
+| `onRatingChanged` | `ValueChanged<double>?` | `null` | Interactive selection callback. If null, becomes read-only. |
+| `itemCount` | `int` | `5` | Total number of rating icons. |
+| `size` | `double` | `24.0` | Sizing of each icon. |
+| `spacing` | `double` | `4.0` | Spacing between icons. |
+| `filledColor` | `Color` | `Colors.amber` | Color of filled icons. |
+| `unfilledColor` | `Color` | `const Color(0xFFE0E0E0)` | Color of unfilled/empty icons. |
+| `filledIcon` | `IconData` | `Icons.star_rounded` | Icon for filled parts. |
+| `unfilledIcon` | `IconData` | `Icons.star_border_rounded` | Icon for unfilled parts. |
+| `allowHalf` | `bool` | `true` | Enable half-star selections. |
 
 🚀 **Usage**:
 ```dart
@@ -292,8 +359,23 @@ CommonRatingBar(
 )
 ```
 
-#### 7. `CommonSwitch`
+#### 6. `CommonSwitch`
 💡 **Purpose**: Premium custom toggle switch featuring smooth spring animation and customizable track/thumb sizes.
+⚙️ **Parameters**:
+| Parameter | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `value` | `bool` | *Required* | Toggle active status. |
+| `onChanged` | `ValueChanged<bool>?` | `null` | Value select callback. If null, switch behaves as disabled. |
+| `activeColor` | `Color?` | `null` | Track color when active. |
+| `inactiveColor` | `Color?` | `null` | Track color when inactive. |
+| `thumbColor` | `Color` | `Colors.white` | Default thumb knob color. |
+| `activeThumbColor` | `Color?` | `null` | Thumb knob color when active. |
+| `width` | `double?` | `null` | Custom width. |
+| `height` | `double?` | `null` | Custom height. |
+| `enableHaptic` | `bool` | `true` | Trigger haptic feedback on toggles. |
+| `activeThumbIcon` | `Widget?` | `null` | Icon inside thumb when active. |
+| `inactiveThumbIcon` | `Widget?` | `null` | Icon inside thumb when inactive. |
+
 🚀 **Usage**:
 ```dart
 CommonSwitch(
@@ -302,8 +384,27 @@ CommonSwitch(
 )
 ```
 
-#### 8. `CommonTabBar`
+#### 7. `CommonTabBar`
 💡 **Purpose**: Animated category sliding selector. Built with custom physics, featuring a beautiful sliding background block indicator.
+⚙️ **Parameters**:
+| Parameter | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `tabs` | `List<String>?` | `null` | Simple tab string labels. |
+| `tabItems` | `List<CommonTabItem>?` | `null` | Rich tab item models supporting icons and badges. |
+| `selectedIndex` | `int` | *Required* | Selected tab index. |
+| `onTabChanged` | `ValueChanged<int>` | *Required* | Tab select callback. |
+| `height` | `double` | `46.0` | Height of the tab bar. |
+| `borderRadius` | `double` | `12.0` | Rounded corner radius. |
+| `backgroundColor` | `Color?` | `null` | Container background color. |
+| `indicatorColor` | `Color?` | `null` | Indicator sliding background color. |
+| `activeTextColor` | `Color?` | `null` | Active tab text color. |
+| `inactiveTextColor` | `Color?` | `null` | Inactive tab text color. |
+| `borderColor` | `Color?` | `null` | Border outline color. |
+| `borderWidth` | `double?` | `null` | Border thickness. |
+| `padding` | `EdgeInsetsGeometry?` | `null` | Custom outer padding. |
+| `tabStyle` | `CommonTabStyle` | `CommonTabStyle.pill` | Sliding indicator style. |
+| `enableHaptic` | `bool` | `true` | Enable haptic feedback. |
+
 🚀 **Usage**:
 ```dart
 CommonTabBar(
@@ -313,8 +414,26 @@ CommonTabBar(
 )
 ```
 
-#### 9. `CommonDropdown<T>`
+#### 8. `CommonDropdown<T>`
 💡 **Purpose**: Highly styled, customizable dropdown selector wrapper with custom layout themes.
+⚙️ **Parameters**:
+| Parameter | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `items` | `List<T>` | *Required* | Dropdown elements list options. |
+| `value` | `T?` | *Required* | Currently selected value. |
+| `onChanged` | `void Function(T?)` | *Required* | Value select change callback. |
+| `itemBuilder` | `DropdownMenuItem<T> Function(T)` | *Required* | Callback to build each option widget. |
+| `label` | `String?` | `null` | Title text shown above. |
+| `hint` | `String?` | `null` | Placeholder text. |
+| `validator` | `String? Function(T?)?` | `null` | Custom validation callback. |
+| `prefixIcon` | `IconData?` | `null` | Leading icon. |
+| `fillColor` | `Color?` | `null` | Custom field fill background color. |
+| `borderColor` | `Color?` | `null` | Default outline border color. |
+| `focusBorderColor` | `Color?` | `null` | Focused state border color. |
+| `errorBorderColor` | `Color?` | `null` | Error state border color. |
+| `borderRadius` | `double` | `12.0` | Corner radius. |
+| `contentPadding` | `EdgeInsetsGeometry?` | `null` | Inner padding. |
+
 🚀 **Usage**:
 ```dart
 CommonDropdown<String>(
@@ -325,15 +444,29 @@ CommonDropdown<String>(
 )
 ```
 
-#### 10. `CommonRadio<T>`
-💡 **Purpose**: Clean custom radio buttons that enforce visual consistency across Android/iOS platforms.
+#### 9. `CommonRadio<T>`
+💡 **Purpose**: Clean custom radio buttons that enforce visual consistency across platforms.
+⚙️ **Parameters**:
+| Parameter | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `value` | `T` | *Required* | Value represented by this radio. |
+| `groupValue` | `T?` | *Required* | Selected value of the group. |
+| `onChanged` | `ValueChanged<T?>` | *Required* | Selected state callback. |
+| `title` | `String` | *Required* | Title text label. |
+| `subtitle` | `String?` | `null` | Subtitle text description. |
+| `activeColor` | `Color?` | `null` | Color when selected. |
+| `tileColor` | `Color?` | `null` | Background tile color. |
+| `selectedTileColor` | `Color?` | `null` | Selected tile background color. |
+| `shape` | `ShapeBorder?` | `null` | Custom border shape. |
+| `contentPadding` | `EdgeInsetsGeometry?` | `null` | Inner padding. |
+
 🚀 **Usage**:
 ```dart
 CommonRadio<int>(
   value: 1,
   groupValue: controller.selectedRadio.value,
   onChanged: (val) => controller.selectedRadio.value = val,
-  label: "Male",
+  title: "Male",
 )
 ```
 
@@ -341,8 +474,20 @@ CommonRadio<int>(
 
 ### 📁 Category 2: View Layouts, Scaffold & Typography
 
-#### 11. `CommonScaffold`
+#### 10. `CommonScaffold`
 💡 **Purpose**: Multi-device viewport standardizer. Auto-constrains content width for desktop screens and configures safe-areas and uniform edge padding.
+⚙️ **Parameters**:
+| Parameter | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `body` | `Widget` | *Required* | Viewport body content. |
+| `appBar` | `PreferredSizeWidget?` | `null` | Top navigation app bar. |
+| `bottomNavigationBar` | `Widget?` | `null` | Bottom navigation bar. |
+| `floatingActionButton` | `Widget?` | `null` | Floating action button. |
+| `drawer` | `Widget?` | `null` | Left drawer slide menu. |
+| `safeArea` | `bool` | `true` | Enforce rendering within screen safe boundary. |
+| `padding` | `EdgeInsetsGeometry` | `const EdgeInsets.all(AppSpacing.md)` | Inner padding surrounding the body. |
+| `scaffoldKey` | `GlobalKey<ScaffoldState>?` | `null` | Scaffold key for managing overlay/drawer states. |
+
 🚀 **Usage**:
 ```dart
 CommonScaffold(
@@ -351,8 +496,42 @@ CommonScaffold(
 )
 ```
 
-#### 12. `CommonAppBar`
+#### 11. `CommonAppBar`
 💡 **Purpose**: Unified Top App Bar that automatically shows back-nav arrow buttons based on navigation history.
+⚙️ **Parameters**:
+| Parameter | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `title` | `String?` | `null` | Simple title string. |
+| `titleWidget` | `Widget?` | `null` | Custom title widget (overrides `title`). |
+| `titleStyle` | `TextStyle?` | `null` | Title text styling. |
+| `titleWeight` | `FontWeight` | `FontWeight.bold` | Title font weight. |
+| `titleColor` | `Color?` | `null` | Title text color. |
+| `titleFontSize` | `double?` | `null` | Title font size. |
+| `titleSpacing` | `double?` | `null` | Horizontal spacing between leading and title. |
+| `centerTitle` | `bool?` | `null` | Force center alignment. |
+| `leading` | `Widget?` | `null` | Custom leading widget. |
+| `leadingWidth` | `double?` | `null` | Width constraint of leading. |
+| `showBack` | `bool` | `true` | Auto-renders back navigate button if nav stack exists. |
+| `backButtonWidget` | `Widget?` | `null` | Custom back button replacement widget. |
+| `actions` | `List<Widget>?` | `null` | Trailing action list. |
+| `backgroundColor` | `Color?` | `null` | Bar background color. |
+| `foregroundColor` | `Color?` | `null` | Forefront icons/labels color. |
+| `elevation` | `double?` | `null` | Shadow elevation. |
+| `scrolledUnderElevation` | `double?` | `null` | Shadow elevation when scroll overlaps. |
+| `shadowColor` | `Color?` | `null` | Shadow color. |
+| `surfaceTintColor` | `Color?` | `null` | Surface tint overlay. |
+| `shape` | `ShapeBorder?` | `null` | Outer border shape. |
+| `toolbarHeight` | `double?` | `null` | Sizing height of toolbar. |
+| `toolbarTextStyle` | `TextStyle?` | `null` | Text style for toolbar items. |
+| `titleTextStyle` | `TextStyle?` | `null` | Text style for appbar title. |
+| `padding` | `EdgeInsetsGeometry?` | `null` | Inner padding. |
+| `bottom` | `PreferredSizeWidget?` | `null` | Bottom segment widget (e.g. TabBar). |
+| `systemOverlayStyle` | `SystemUiOverlayStyle?` | `null` | Status bar overlay configuration. |
+| `primary` | `bool` | `true` | Should render inside primary layout. |
+| `excludeHeaderSemantics` | `bool` | `false` | Accessibility header check. |
+| `forceMaterialTransparency` | `bool` | `false` | Make material background completely transparent. |
+| `clipBehavior` | `Clip?` | `null` | Clip behavior style. |
+
 🚀 **Usage**:
 ```dart
 CommonAppBar(
@@ -361,28 +540,23 @@ CommonAppBar(
 )
 ```
 
-#### 13. `CommonBottomNavBar`
-💡 **Purpose**: Premium custom floating bottom navigation bar built with backdrop glassmorphism blurs and animated width-expanding page tab indicators.
-🚀 **Usage**:
-```dart
-CommonScaffold(
-  bottomNavigationBar: const CommonBottomNavBar(),
-  body: Obx(() => controller.currentPage),
-)
-```
-
-#### 14. `CommonDrawer`
-💡 **Purpose**: Modern navigation drawer supporting profile headers, animated item selected indicators, and link redirections.
-🚀 **Usage**:
-```dart
-CommonScaffold(
-  drawer: const CommonDrawer(),
-  body: MainContentWidget(),
-)
-```
-
-#### 15. `CommonText`
+#### 12. `CommonText`
 💡 **Purpose**: Typography standardization widget. Enforces standard Flutter `TextStyle` styling, font sizing, font weights, and light/dark theme color scaling.
+⚙️ **Parameters**:
+| Parameter | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `text` | `String` | *Positional, Required* | The text string to display. |
+| `style` | `TextStyle?` | `null` | Base text style. |
+| `fontWeight` | `FontWeight?` | `null` | Font weight override. |
+| `color` | `Color?` | `null` | Font color override. |
+| `fontSize` | `double?` | `null` | Font size override. |
+| `textAlign` | `TextAlign?` | `null` | Horizontal text alignment style. |
+| `maxLines` | `int?` | `null` | Max lines limit. |
+| `overflow` | `TextOverflow?` | `null` | Overflow behavior layout (ellipsis, clip, etc.). |
+| `height` | `double?` | `null` | Line height multiplier. |
+| `fontStyle` | `FontStyle?` | `null` | Font style (italic, normal). |
+| `decoration` | `TextDecoration?` | `null` | Decoration line style (underline, strike-through, etc.). |
+
 🚀 **Usage**:
 ```dart
 CommonText(
@@ -392,8 +566,30 @@ CommonText(
 )
 ```
 
-#### 16. `CommonCard`
+#### 13. `CommonCard`
 💡 **Purpose**: Simple structured wrapper offering standard elevation, borders, padding, and uniform card layout formats.
+⚙️ **Parameters**:
+| Parameter | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `child` | `Widget` | *Required* | Child content widget. |
+| `padding` | `EdgeInsetsGeometry?` | `null` | Inner padding. |
+| `margin` | `EdgeInsetsGeometry?` | `null` | Outer margin. |
+| `color` | `Color?` | `null` | Background fill color. |
+| `shadowColor` | `Color?` | `null` | Drop shadow color. |
+| `surfaceTintColor` | `Color?` | `null` | Surface tint overlay color. |
+| `elevation` | `double?` | `null` | Shadow elevation depth. |
+| `borderRadius` | `BorderRadius?` | `null` | Corner rounding radius shape. |
+| `borderColor` | `Color?` | `null` | Outline border color. |
+| `borderWidth` | `double?` | `null` | Outline border thickness. |
+| `shape` | `ShapeBorder?` | `null` | Custom card border shape. |
+| `clipBehavior` | `Clip?` | `null` | Clip behavior layout. |
+| `width` | `double?` | `null` | Width layout constraint. |
+| `height` | `double?` | `null` | Height layout constraint. |
+| `gradient` | `Gradient?` | `null` | Background gradient decoration. |
+| `onTap` | `VoidCallback?` | `null` | Tap click callback (adds splash ink). |
+| `onLongPress` | `VoidCallback?` | `null` | Long press callback. |
+| `splashColor` | `Color?` | `null` | Inktap ripple splash color. |
+
 🚀 **Usage**:
 ```dart
 CommonCard(
@@ -401,8 +597,17 @@ CommonCard(
 )
 ```
 
-#### 17. `CommonImage`
+#### 14. `CommonImage`
 💡 **Purpose**: Dynamic multi-source image loader that supports asset images, vector SVGs, and network URLs with automatic caching and shimmers.
+⚙️ **Parameters**:
+| Parameter | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `src` | `String` | *Required* | Source string for the image (assets, HTTP/HTTPS URLs, and SVGs). |
+| `width` | `double?` | `null` | Width layout size. |
+| `height` | `double?` | `null` | Height layout size. |
+| `fit` | `BoxFit` | `BoxFit.cover` | Image scale fitting style. |
+| `borderRadius` | `BorderRadius` | `BorderRadius.zero` | Border corner rounding clip bounds. |
+
 🚀 **Usage**:
 ```dart
 CommonImage(
@@ -412,8 +617,16 @@ CommonImage(
 )
 ```
 
-#### 18. `CommonSvgIcon`
+#### 15. `CommonSvgIcon`
 💡 **Purpose**: Renders asset-based SVG images cleanly, injecting custom colors via single-filter color blending.
+⚙️ **Parameters**:
+| Parameter | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `asset` | `String` | *Required* | File path to the SVG asset. |
+| `size` | `double` | `24` | Sizing constraints of the icon width/height. |
+| `color` | `Color?` | `null` | Color filter overlay. |
+| `semanticLabel` | `String?` | `null` | Optional accessibility semantic label screen-reader text. |
+
 🚀 **Usage**:
 ```dart
 CommonSvgIcon(
@@ -422,8 +635,28 @@ CommonSvgIcon(
 )
 ```
 
-#### 19. `CommonListView<T>`
+#### 16. `CommonListView<T>`
 💡 **Purpose**: Scroll list with built-in pull-to-refresh, empty states, and infinite pagination loading indicators.
+⚙️ **Parameters**:
+| Parameter | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `items` | `List<T>` | `const []` | The list of items to render (used in Manual Mode). |
+| `itemBuilder` | `Widget Function(BuildContext, T, int)` | *Required* | Callback to build each item widget. |
+| `onRefresh` | `Future<void> Function()?` | `null` | Callback triggered on pull-to-refresh swipe. |
+| `onLoadMore` | `Future<void> Function()?` | `null` | Callback triggered when list reaches the bottom to load the next page (Manual Mode). |
+| `onLoadPage` | `Future<PaginatedResponse<T>?> Function(int page)?` | `null` | Async callback to fetch a specific page of results (Autonomous Mode). |
+| `isLoading` | `bool` | `false` | Controls the loading state spinner. |
+| `hasMore` | `bool` | `false` | Indicates if there are more items to paginate/load. |
+| `enablePagination` | `bool` | `false` | Enforce pagination behavior. |
+| `currentPage` | `int?` | `null` | Tracking index page value. |
+| `lastPage` | `int?` | `null` | Total pages boundary. |
+| `total` | `int?` | `null` | Total elements count. |
+| `emptyWidget` | `Widget?` | `null` | Custom replacement fallback widget when items list is empty. |
+| `separatorWidget` | `Widget?` | `null` | Custom separator widget between list items. |
+| `padding` | `EdgeInsetsGeometry` | `const EdgeInsets.all(16.0)` | List padding margin constraints. |
+| `scrollPhysics` | `ScrollPhysics` | `const AlwaysScrollableScrollPhysics()` | Custom scroll physics. |
+| `scrollDirection` | `Axis` | `Axis.vertical` | Scroll orientation layout (vertical, horizontal). |
+
 🚀 **Usage**:
 ```dart
 CommonListView<String>(
@@ -434,8 +667,25 @@ CommonListView<String>(
 )
 ```
 
-#### 20. `CommonGridView<T>`
+#### 17. `CommonGridView<T>`
 💡 **Purpose**: Lazy-loaded paginated grid built with integrated pull-to-refresh and separation properties.
+⚙️ **Parameters**:
+| Parameter | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `items` | `List<T>` | *Required* | The list of items to render. |
+| `itemBuilder` | `Widget Function(BuildContext, T, int)` | *Required* | Builder function to render each grid item. |
+| `crossAxisCount` | `int` | `2` | Number of columns in the grid. |
+| `childAspectRatio` | `double` | `1.0` | Ratio of cross-axis to main-axis extent. |
+| `crossAxisSpacing` | `double` | `16.0` | Horizontal spacing gap between items. |
+| `mainAxisSpacing` | `double` | `16.0` | Vertical spacing gap between items. |
+| `onRefresh` | `Future<void> Function()?` | `null` | Pull-to-refresh swipe callback. |
+| `onLoadMore` | `Future<void> Function()?` | `null` | Load more scroll callback. |
+| `isLoading` | `bool` | `false` | Controls loading state visibility spinner. |
+| `hasMore` | `bool` | `false` | Indicates if more elements exist to paginate. |
+| `emptyWidget` | `Widget?` | `null` | Fallback view shown when items list is empty. |
+| `padding` | `EdgeInsetsGeometry` | `const EdgeInsets.all(16.0)` | Inner grid padding edges. |
+| `scrollPhysics` | `ScrollPhysics` | `const AlwaysScrollableScrollPhysics()` | Custom scroll physics. |
+
 🚀 **Usage**:
 ```dart
 CommonGridView<String>(
@@ -449,18 +699,21 @@ CommonGridView<String>(
 
 ### 📁 Category 3: Interactive Pickers & Bottom Sheets
 
-#### 21. `CommonCountryPicker`
-💡 **Purpose**: Searchable modal bottom sheet selector for global countries, highlighting queries and matching check indicators.
-🚀 **Usage**:
-```dart
-final result = await CommonCountryPicker.show(
-  context: context,
-  selectedCountryCode: selected?.code,
-);
-```
-
-#### 22. `CommonDatePicker`
+#### 18. `CommonDatePicker`
 💡 **Purpose**: Premium iOS-style Cupertino date selection wheel in a modern, dark-mode compatible bottom sheet drawer.
+⚙️ **Parameters (via static method `.show`)**:
+| Parameter | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `context` | `BuildContext` | *Required* | BuildContext scope. |
+| `initialDate` | `DateTime?` | `null` | Initially focused date on display. |
+| `minimumDate` | `DateTime?` | `null` | Minimum selectable date. |
+| `maximumDate` | `DateTime?` | `null` | Maximum selectable date. |
+| `title` | `String` | `'Select Date'` | Header title text. |
+| `confirmText` | `String` | `'Done'` | Confirmation button text label. |
+| `cancelText` | `String` | `'Cancel'` | Cancellation button text label. |
+| `confirmColor` | `Color?` | `null` | Color of confirmation button text. |
+| `cancelColor` | `Color?` | `null` | Color of cancellation button text. |
+
 🚀 **Usage**:
 ```dart
 final result = await CommonDatePicker.show(
@@ -469,8 +722,20 @@ final result = await CommonDatePicker.show(
 );
 ```
 
-#### 23. `CommonTimePicker`
+#### 19. `CommonTimePicker`
 💡 **Purpose**: Cupertino hour/minute time wheel inside a modern dark-mode compatible bottom sheet, returning a standard `TimeOfDay`.
+⚙️ **Parameters (via static method `.show`)**:
+| Parameter | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `context` | `BuildContext` | *Required* | BuildContext scope. |
+| `initialTime` | `TimeOfDay?` | `null` | Initially focused time on display. |
+| `title` | `String` | `'Select Time'` | Header title text. |
+| `confirmText` | `String` | `'Done'` | Confirmation button text label. |
+| `cancelText` | `String` | `'Cancel'` | Cancellation button text label. |
+| `confirmColor` | `Color?` | `null` | Color of confirmation button text. |
+| `cancelColor` | `Color?` | `null` | Color of cancellation button text. |
+| `minuteInterval` | `int` | `1` | The granularity of the minutes selector. |
+
 🚀 **Usage**:
 ```dart
 final selectedTime = await CommonTimePicker.show(
@@ -479,8 +744,43 @@ final selectedTime = await CommonTimePicker.show(
 );
 ```
 
-#### 24. `CommonMultiImagePicker`
+#### 20. `CommonCountryPicker`
+💡 **Purpose**: Searchable modal bottom sheet selector for global countries, highlighting queries and matching check indicators.
+⚙️ **Parameters (via static method `.show`)**:
+| Parameter | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `context` | `BuildContext` | *Required* | BuildContext scope. |
+| `customCountries` | `List<CountryModel>?` | `null` | Custom list of country options to choose from. |
+| `selectedCountryCode` | `String?` | `null` | Country ISO code to prepopulate/select. |
+| `title` | `String` | `'Select Country'` | Header title text. |
+| `searchHint` | `String` | `'Search by name...'` | Search input field placeholder text. |
+| `primaryColor` | `Color?` | `null` | Focus/highlight theme color. |
+
+🚀 **Usage**:
+```dart
+final result = await CommonCountryPicker.show(
+  context: context,
+  selectedCountryCode: selected?.code,
+);
+```
+
+#### 21. `CommonMultiImagePicker`
 💡 **Purpose**: Compressed multi-file image selector with thumbnail grids, delete hooks, and memory-safe resolution downscaling.
+⚙️ **Parameters**:
+| Parameter | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `onImagesChanged` | `Function(List<File>)` | *Required* | Callback triggered when the list of selected files updates. |
+| `initialImages` | `List<File>` | `const []` | Initially prepopulated files list. |
+| `maxImages` | `int` | `10` | Maximum image files allowed. |
+| `imageQuality` | `int` | `70` | Quality compression factor (1-100) for memory optimization. |
+| `maxWidth` | `double` | `1080` | Width boundary scale constraint to compress large images. |
+| `maxHeight` | `double` | `1080` | Height boundary scale constraint to compress large images. |
+| `crossAxisCount` | `int` | `3` | Grid column layout count. |
+| `spacing` | `double` | `8.0` | Grid spacing gap. |
+| `imageSize` | `double` | `100.0` | Thumbnail dimension bounding size. |
+| `addButtonWidget` | `Widget?` | `null` | Custom replacement widget for the "add image" card. |
+| `errorColor` | `Color` | `Colors.red` | Icon and error message highlight color. |
+
 🚀 **Usage**:
 ```dart
 CommonMultiImagePicker(
@@ -493,8 +793,29 @@ CommonMultiImagePicker(
 
 ### 📁 Category 4: Dialogs & Notifications
 
-#### 25. `CommonDialog`
+#### 22. `CommonDialog`
 💡 **Purpose**: Premium alert and choice dialog supporting success, error, warning, info, and confirmation variants.
+⚙️ **Parameters**:
+| Parameter | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `title` | `String` | *Required* | Dialog header title. |
+| `subtitle` | `String` | *Required* | Dialog detailed message text. |
+| `type` | `DialogType` | `DialogType.confirmation` | Dialog type configuration. |
+| `image` | `Widget?` | `null` | Optional illustration widget rendered in the header. |
+| `icon` | `IconData?` | `null` | Custom icon displayed inside circular background. |
+| `iconColor` | `Color?` | `null` | Color overlay of the circular icon. |
+| `primaryButtonText` | `String?` | `null` | Label text of the main action button. |
+| `secondaryButtonText` | `String?` | `null` | Label text of the secondary/cancel button. |
+| `onPrimaryTap` | `VoidCallback?` | `null` | Tap callback of the main action button. |
+| `onSecondaryTap` | `VoidCallback?` | `null` | Tap callback of the secondary button. |
+| `onClose` | `VoidCallback?` | `null` | Dialog closed hook. |
+| `showCloseButton` | `bool` | `true` | Renders a closing top-right cross icon button. |
+| `titleFontSize` | `double` | `20` | Font size of the title. |
+| `subtitleFontSize` | `double` | `14` | Font size of the subtitle. |
+| `titleColor` | `Color?` | `null` | Title color overlay. |
+| `subtitleColor` | `Color?` | `null` | Subtitle color overlay. |
+| `titleFontWeight` | `FontWeight` | `FontWeight.w600` | Title font weight. |
+
 🚀 **Usage**:
 ```dart
 final confirmed = await CommonDialog.showConfirmation(
@@ -504,15 +825,31 @@ final confirmed = await CommonDialog.showConfirmation(
 );
 ```
 
-#### 26. `CommonSnackbar`
+#### 23. `CommonSnackbar`
 💡 **Purpose**: Custom floating alert notification panel built on top of `Get.snackbar` featuring colored feedback bars.
+⚙️ **Parameters (via static method `.show`)**:
+| Parameter | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `title` | `String` | *Required* | Snackbar header label. |
+| `message` | `String` | *Required* | Detail description body text. |
+| `type` | `SnackbarType` | `SnackbarType.info` | Accent style type (success, error, warning, info). |
+| `position` | `SnackPosition` | `SnackPosition.TOP` | Layout positioning anchor. |
+| `duration` | `Duration` | `const Duration(seconds: 3)` | Visible duration time span. |
+| `icon` | `Widget?` | `null` | Custom icon prefix. |
+| `isDismissible` | `bool` | `true` | Swipe to dismiss active. |
+
 🚀 **Usage**:
 ```dart
 CommonSnackbar.showSuccess(title: 'Success', message: 'Action completed.');
 ```
 
-#### 27. `LoadingDialog`
+#### 24. `LoadingDialog`
 💡 **Purpose**: Modal overlay layout that blocks touch gestures during heavy asynchronous processing events.
+⚙️ **Parameters**:
+| Parameter | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `message` | `String` | *Required* | Processing message text. |
+
 🚀 **Usage**:
 ```dart
 showDialog(
@@ -526,29 +863,61 @@ showDialog(
 
 ### 📁 Category 5: Loading Indicators, Shimmers & Skeletons
 
-#### 28. `ShimmerBox`
+#### 25. `ShimmerBox`
 💡 **Purpose**: Core rectangular skeleton block used to create loading placeholder cards.
+⚙️ **Parameters**:
+| Parameter | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `width` | `double?` | `null` | Width of the skeleton block. |
+| `height` | `double?` | `null` | Height of the skeleton block. |
+| `borderRadius` | `double` | `8` | Corner rounding radius of the skeleton block. |
+
 🚀 **Usage**:
 ```dart
 ShimmerBox(width: 120, height: 16)
 ```
 
-#### 29. `CommonShimmerCard`
+#### 26. `CommonShimmerCard`
 💡 **Purpose**: Pre-formatted card placeholders that match list items layout definitions.
+⚙️ **Parameters**:
+| Parameter | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `width` | `double?` | `null` | Custom width of the card. |
+| `height` | `double?` | `null` | Custom height of the card. |
+| `borderRadius` | `double` | `16.0` | Corner radius of the card frame. |
+| `padding` | `EdgeInsetsGeometry?` | `null` | Inner padding. |
+| `showImage` | `bool` | `true` | Whether to render a simulated top image skeleton. |
+| `imageHeight` | `double` | `140.0` | Height of the simulated image skeleton. |
+| `showAvatar` | `bool` | `true` | Whether to render a simulated circular avatar skeleton. |
+| `avatarRadius` | `double` | `20.0` | Radius of the circular avatar skeleton. |
+| `lineCount` | `int` | `2` | Number of text line skeleton blocks to render in the card. |
+
 🚀 **Usage**:
 ```dart
 const CommonShimmerCard()
 ```
 
-#### 30. `LoadingOverlay`
+#### 27. `LoadingOverlay`
 💡 **Purpose**: Translucent full-screen overlay panel showing custom spinner messages.
+⚙️ **Parameters**:
+| Parameter | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `isLoading` | `bool` | *Required* | Controls the visibility of the overlay spinner. |
+| `child` | `Widget` | *Required* | Underlying content widget wrapped by the overlay. |
+| `message` | `String` | `'Loading...'` | Informational loading text message. |
+
 🚀 **Usage**:
 ```dart
 LoadingOverlay(message: 'Uploading...')
 ```
 
-#### 31. `PaginationLoader`
+#### 28. `PaginationLoader`
 💡 **Purpose**: Subtle foot loader shown at list margins during page pagination.
+⚙️ **Parameters**:
+| Parameter | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `isLoading` | `bool` | `true` | Controls if the load indicator is shown. |
+
 🚀 **Usage**:
 ```dart
 PaginationLoader()
@@ -558,8 +927,16 @@ PaginationLoader()
 
 ### 📁 Category 6: Empty, Offline & Error Fallback Views
 
-#### 32. `EmptyStateWidget`
+#### 29. `EmptyStateWidget`
 💡 **Purpose**: Fallback illustration displayed when collection elements return empty lists.
+⚙️ **Parameters**:
+| Parameter | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `title` | `String` | `'Nothing here yet'` | Empty view title. |
+| `message` | `String` | `'Content will appear here when it becomes available.'` | Description body. |
+| `actionLabel` | `String?` | `null` | Action button text. |
+| `onAction` | `VoidCallback?` | `null` | Action button tap callback. |
+
 🚀 **Usage**:
 ```dart
 EmptyStateWidget(
@@ -568,8 +945,15 @@ EmptyStateWidget(
 )
 ```
 
-#### 33. `ErrorStateWidget`
+#### 30. `ErrorStateWidget`
 💡 **Purpose**: Retry illustration display presented when data fetching fails.
+⚙️ **Parameters**:
+| Parameter | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `title` | `String` | `'Something went wrong'` | Error view title. |
+| `message` | `String` | `'Please try again in a moment.'` | Description body. |
+| `onRetry` | `VoidCallback?` | `null` | Retry action button tap callback. |
+
 🚀 **Usage**:
 ```dart
 ErrorStateWidget(
@@ -578,21 +962,31 @@ ErrorStateWidget(
 )
 ```
 
-#### 34. `NoInternetWidget`
+#### 31. `NoInternetWidget`
 💡 **Purpose**: View shown automatically when device internet connectivity is offline.
+⚙️ **Parameters**:
+| Parameter | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `onRetry` | `VoidCallback?` | `null` | Retry connection action callback. |
+
 🚀 **Usage**:
 ```dart
 NoInternetWidget(onRetry: () => controller.retry())
 ```
 
-#### 35. `RetryWidget`
+#### 32. `RetryWidget`
 💡 **Purpose**: Simple inline action trigger to re-perform failed processes.
+⚙️ **Parameters**:
+| Parameter | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `onRetry` | `VoidCallback` | *Required* | Retry action callback. |
+| `message` | `String` | `'The request could not be completed.'` | Detailed message text. |
+
 🚀 **Usage**:
 ```dart
 RetryWidget(onRetry: () => controller.retry())
 ```
 
----
 
 ## 📱 Premium High-Readability Extensions
 
