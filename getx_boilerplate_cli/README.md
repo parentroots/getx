@@ -10,6 +10,16 @@ This template is meticulously structured for maximum code readability, rapid dev
 
 ---
 
+## 📸 UI & Features Gallery
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/parentroots/getx/main/docs/images/onboarding_mockup.png" width="280" alt="Onboarding Mockup" />
+  <img src="https://raw.githubusercontent.com/parentroots/getx/main/docs/images/home_mockup.png" width="280" alt="Home Dashboard Mockup" />
+  <img src="https://raw.githubusercontent.com/parentroots/getx/main/docs/images/components_mockup.png" width="280" alt="UI Components Mockup" />
+</p>
+
+---
+
 ## ⚡ Quick Start with CLI
 
 Instead of manual cloning and search-and-replace, you can use our official **GetX Boilerplate CLI** from pub.dev to instantly scaffold a new project with this template, automatically configured with your custom project name:
