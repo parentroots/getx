@@ -1,3 +1,7 @@
+## 1.0.7
+
+* Added UI & Features Gallery screenshots to documentation.
+
 ## 1.0.6
 
 * Added comprehensive parameter and field documentation tables for all 32 custom common widgets.

@@ -15,7 +15,6 @@ pubspec.lock
 # IDEs
 .idea/
 *.iml
-.vscode/
 
 # Android
 android/.gradle/
@@ -48,3 +47,7 @@ Thumbs.db
 
 # Local CLI source files
 # getx_boilerplate_cli/
+branch_structure.json
+temp_auto_push.bat
+temp_interactive_push.bat
+.gitignore
