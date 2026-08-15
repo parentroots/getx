@@ -1,6 +1,6 @@
 name: getx_boilerplate_cli
 description: Command-line interface to generate premium Flutter starter boilerplates utilizing GetX and Clean Architecture.
-version: 1.0.7
+version: 1.0.8
 repository: https://github.com/parentroots/getx/tree/main/getx_boilerplate_cli
 homepage: https://github.com/parentroots/getx/tree/main/getx_boilerplate_cli
 

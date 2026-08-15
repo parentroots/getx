@@ -1,3 +1,8 @@
+## 1.0.8
+
+* Restructured feature folders (`data`, `presentation/controller`, `presentation/screen`, `presentation/widget`) globally.
+* Refactored `CommonText` usages to resolve internal `textTheme` conflicts and improve flexibility.
+
 ## 1.0.7
 
 * Added UI & Features Gallery screenshots to documentation.
