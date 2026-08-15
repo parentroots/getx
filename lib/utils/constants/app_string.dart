@@ -12,7 +12,8 @@ class AppString {
   static const String enterYouPassword = 'Enter you password';
   static const String cancel = 'Cancel';
   static const String done = 'Done';
-  static const String deleteDetails = 'All your changes will be deleted and you will no longer be able to access them.';
+  static const String deleteDetails =
+      'All your changes will be deleted and you will no longer be able to access them.';
   static const String someThingWrong = 'Some Thing Wrong';
   static const String tryAgain = 'Try Again';
   static const String phoneNumber = 'Phone Number';
@@ -34,7 +35,7 @@ class AppString {
   static const String otpIsInValid = 'Otp is inValid';
   static const String resendCode = 'Resend Code';
   static const String resendCodeIn = 'Resend code in';
-  static const String reviewAndMangeYourService = 'Review and manage your service requests from top-tier providers.';
+  static const String reviewAndMangeYourService =
+      'Review and manage your service requests from top-tier providers.';
   static const String minute = 'minute';
-
 }

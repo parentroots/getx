@@ -41,7 +41,9 @@ void appLog(
       if (message is Map<String, dynamic>) {
         new_logger.log.apiResponse(
           statusCode: message['statusCode'] as int? ?? 200,
-          duration: message['duration'] is Duration ? message['duration'] as Duration : Duration.zero,
+          duration: message['duration'] is Duration
+              ? message['duration'] as Duration
+              : Duration.zero,
           body: message['body'],
         );
       } else {
@@ -65,7 +67,9 @@ void appLog(
       if (message is Map<String, dynamic>) {
         new_logger.log.performance(
           message['name'] as String? ?? 'Action',
-          message['duration'] is Duration ? message['duration'] as Duration : Duration.zero,
+          message['duration'] is Duration
+              ? message['duration'] as Duration
+              : Duration.zero,
         );
       } else {
         new_logger.log.performance(finalMessage.toString(), Duration.zero);
@@ -99,14 +103,28 @@ abstract final class AppLog {
     String source = '',
   }) {
     final finalMessage = details != null ? '$message\n$details' : message;
-    appLog(finalMessage, source: source, level: LogLevel.error, error: error, stackTrace: stackTrace);
+    appLog(
+      finalMessage,
+      source: source,
+      level: LogLevel.error,
+      error: error,
+      stackTrace: stackTrace,
+    );
   }
 
-  static void apiRequest(dynamic message, {String? details, String source = ''}) {
+  static void apiRequest(
+    dynamic message, {
+    String? details,
+    String source = '',
+  }) {
     _log(LogLevel.apiRequest, message, details: details, source: source);
   }
 
-  static void apiResponse(dynamic message, {String? details, String source = ''}) {
+  static void apiResponse(
+    dynamic message, {
+    String? details,
+    String source = '',
+  }) {
     _log(LogLevel.apiResponse, message, details: details, source: source);
   }
 
@@ -126,7 +144,11 @@ abstract final class AppLog {
     _log(LogLevel.database, message, details: details, source: source);
   }
 
-  static void navigation(dynamic message, {String? details, String source = ''}) {
+  static void navigation(
+    dynamic message, {
+    String? details,
+    String source = '',
+  }) {
     _log(LogLevel.navigation, message, details: details, source: source);
   }
 
@@ -138,15 +160,28 @@ abstract final class AppLog {
     _log(LogLevel.firebase, message, details: details, source: source);
   }
 
-  static void analytics(dynamic message, {String? details, String source = ''}) {
+  static void analytics(
+    dynamic message, {
+    String? details,
+    String source = '',
+  }) {
     _log(LogLevel.analytics, message, details: details, source: source);
   }
 
-  static void performance(dynamic message, {String? details, String source = ''}) {
+  static void performance(
+    dynamic message, {
+    String? details,
+    String source = '',
+  }) {
     _log(LogLevel.performance, message, details: details, source: source);
   }
 
-  static void _log(LogLevel level, dynamic message, {String? details, String source = ''}) {
+  static void _log(
+    LogLevel level,
+    dynamic message, {
+    String? details,
+    String source = '',
+  }) {
     final finalMessage = details != null ? '$message\n$details' : message;
     appLog(finalMessage, source: source, level: level);
   }

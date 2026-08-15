@@ -16,7 +16,7 @@ class SocketClient {
   static SocketClient get instance => _instance;
 
   io.Socket? _socket;
-  
+
   // Connection state stream controller
   final _connectionStatusController = StreamController<bool>.broadcast();
   Stream<bool> get connectionStatus => _connectionStatusController.stream;
@@ -30,10 +30,9 @@ class SocketClient {
       url,
       io.OptionBuilder()
           .setTransports(['websocket']) // Use WebSockets for performance
-          .disableAutoConnect()         // Disable auto-connect to control the flow
+          .disableAutoConnect() // Disable auto-connect to control the flow
           .setExtraHeaders(headers ?? {}) // Pass any required headers
           .build(),
-
     );
 
     _setupListeners();
@@ -67,7 +66,7 @@ class SocketClient {
   void emit(String event, [dynamic data]) {
     _socket?.emit(event, data);
   }
-  
+
   /// Emit data and wait for acknowledgment
   void emitWithAck(String event, dynamic data, Function(dynamic) ackHandler) {
     _socket?.emitWithAck(event, data, ack: ackHandler);

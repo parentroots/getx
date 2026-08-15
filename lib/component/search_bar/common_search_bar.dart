@@ -159,7 +159,6 @@ class _CommonSearchBarState extends State<CommonSearchBar> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -194,7 +193,8 @@ class _CommonSearchBarState extends State<CommonSearchBar> {
       textStyle: WidgetStateProperty.all(
         widget.textStyle ?? theme.textTheme.bodyMedium,
       ),
-      leading: widget.leading ?? Icon(Icons.search, color: context.appColors.text),
+      leading:
+          widget.leading ?? Icon(Icons.search, color: context.appColors.text),
       trailing: [
         if (_controller.text.isNotEmpty && widget.enabled)
           IconButton(
@@ -204,11 +204,10 @@ class _CommonSearchBarState extends State<CommonSearchBar> {
               widget.onChanged?.call('');
               widget.onCleared?.call();
             },
-            icon: Icon(Icons.close, color: context.appColors.text  ),
+            icon: Icon(Icons.close, color: context.appColors.text),
           ),
         ...?widget.trailing,
       ],
-
     );
 
     if (widget.height != null || widget.width != null) {
@@ -220,10 +219,7 @@ class _CommonSearchBarState extends State<CommonSearchBar> {
     }
 
     if (widget.margin != null) {
-      searchBar = Padding(
-        padding: widget.margin!,
-        child: searchBar,
-      );
+      searchBar = Padding(padding: widget.margin!, child: searchBar);
     }
 
     return searchBar;

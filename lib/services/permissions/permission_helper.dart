@@ -3,7 +3,6 @@ import 'package:permission_handler/permission_handler.dart';
 /// A premium, self-documenting utility service designed to manage, check,
 /// and request system-level permissions dynamically inside the application.
 abstract final class PermissionHelper {
-  
   /// General handler to request any [Permission].
   /// Returns `true` if the permission was granted or limited, and `false` otherwise.
   static Future<bool> request(Permission permission) async {

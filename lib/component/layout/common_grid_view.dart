@@ -39,19 +39,19 @@ class CommonGridView<T> extends StatefulWidget {
 
   /// Spacing between rows.
   final double mainAxisSpacing;
-  
+
   /// Optional pull-to-refresh callback.
   final Future<void> Function()? onRefresh;
 
   /// Optional load-more callback triggered during pagination.
   final Future<void> Function()? onLoadMore;
-  
+
   /// Status showing if a page is currently loading.
   final bool isLoading;
 
   /// Status showing if there are more items to paginate.
   final bool hasMore;
-  
+
   /// Custom fallback view when the grid is empty.
   final Widget? emptyWidget;
 
@@ -85,7 +85,8 @@ class _CommonGridViewState<T> extends State<CommonGridView<T>> {
 
   void _onScroll() {
     // Triggers loadMore callback when user scrolls within 200px of the bottom limit
-    if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent - 200) {
+    if (_scrollController.position.pixels >=
+        _scrollController.position.maxScrollExtent - 200) {
       if (!widget.isLoading && widget.hasMore && widget.onLoadMore != null) {
         widget.onLoadMore!();
       }
@@ -113,23 +114,18 @@ class _CommonGridViewState<T> extends State<CommonGridView<T>> {
               mainAxisSpacing: widget.mainAxisSpacing,
             ),
             delegate: SliverChildBuilderDelegate(
-              (context, index) => widget.itemBuilder(context, widget.items[index], index),
+              (context, index) =>
+                  widget.itemBuilder(context, widget.items[index], index),
               childCount: widget.items.length,
             ),
           ),
         ),
-        if (widget.hasMore)
-          SliverToBoxAdapter(
-            child: _buildLoadingIndicator(),
-          ),
+        if (widget.hasMore) SliverToBoxAdapter(child: _buildLoadingIndicator()),
       ],
     );
 
     if (widget.onRefresh != null) {
-      return RefreshIndicator(
-        onRefresh: widget.onRefresh!,
-        child: scrollView,
-      );
+      return RefreshIndicator(onRefresh: widget.onRefresh!, child: scrollView);
     }
 
     return scrollView;
@@ -159,7 +155,9 @@ class _CommonGridViewState<T> extends State<CommonGridView<T>> {
             const SizedBox(height: 16),
             Text(
               'No items found',
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(color: context.appColors.textSecondary),
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                color: context.appColors.textSecondary,
+              ),
             ),
           ],
         ),

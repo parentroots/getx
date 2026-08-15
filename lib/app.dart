@@ -32,8 +32,7 @@ class StarterApp extends StatelessWidget {
           themeMode: ThemeMode.system,
           routingCallback: (routing) {
             if (routing != null && routing.current.isNotEmpty) {
-              if (routing.isDialog == true ||
-                  routing.isBottomSheet == true) {
+              if (routing.isDialog == true || routing.isBottomSheet == true) {
                 return;
               }
               if (routing.isBack == true) {

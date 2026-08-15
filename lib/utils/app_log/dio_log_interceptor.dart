@@ -31,7 +31,9 @@ class DioLogInterceptor extends Interceptor {
   void onResponse(Response response, ResponseInterceptorHandler handler) {
     final startTime = response.requestOptions.extra[_startTimeKey] as int?;
     final duration = startTime != null
-        ? Duration(milliseconds: DateTime.now().millisecondsSinceEpoch - startTime)
+        ? Duration(
+            milliseconds: DateTime.now().millisecondsSinceEpoch - startTime,
+          )
         : Duration.zero;
 
     // Log the API response
@@ -48,7 +50,9 @@ class DioLogInterceptor extends Interceptor {
   void onError(DioException err, ErrorInterceptorHandler handler) {
     final startTime = err.requestOptions.extra[_startTimeKey] as int?;
     final duration = startTime != null
-        ? Duration(milliseconds: DateTime.now().millisecondsSinceEpoch - startTime)
+        ? Duration(
+            milliseconds: DateTime.now().millisecondsSinceEpoch - startTime,
+          )
         : Duration.zero;
 
     // Log response if one was received
@@ -71,11 +75,7 @@ class DioLogInterceptor extends Interceptor {
     }
 
     // Log the exception details
-    log.e(
-      errorDescription.toString(),
-      err,
-      err.stackTrace,
-    );
+    log.e(errorDescription.toString(), err, err.stackTrace);
 
     super.onError(err, handler);
   }

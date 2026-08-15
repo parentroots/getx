@@ -17,7 +17,8 @@ extension LoggerObjectExtension on Object? {
   void logWarning() => log.w(this);
 
   /// Logs the object as an error message with optional error and stack trace.
-  void logError([Object? error, StackTrace? stackTrace]) => log.e(this, error, stackTrace);
+  void logError([Object? error, StackTrace? stackTrace]) =>
+      log.e(this, error, stackTrace);
 
   /// Logs the object as a Firebase event with optional detail data.
   void logFirebase([dynamic detail]) => log.firebase(this, detail);

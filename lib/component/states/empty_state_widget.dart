@@ -57,20 +57,18 @@ class _StateShell extends StatelessWidget {
             SizedBox(height: 16.h),
             CommonText(
               title,
-              style: context.textTheme.titleMedium,
               fontWeight: FontWeight.bold,
               textAlign: TextAlign.center,
             ),
             SizedBox(height: 8.h),
             CommonText(
               message,
-              style: context.textTheme.bodyMedium,
               textAlign: TextAlign.center,
               color: context.appColors.textSecondary,
             ),
             if (actionLabel != null && onAction != null) ...[
               SizedBox(height: 24.h),
-              CommonButton( onTap: onAction, titleText: '',),
+              CommonButton(onTap: onAction, titleText: ''),
             ],
           ],
         ),

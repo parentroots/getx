@@ -105,10 +105,16 @@ class _CommonRatingBarState extends State<CommonRatingBar> {
     final activeRating = _dragRating ?? widget.rating;
     final size = widget.size.r;
     final spacing = widget.spacing.w;
-    final totalWidth = widget.itemCount * size + (widget.itemCount - 1) * spacing;
+    final totalWidth =
+        widget.itemCount * size + (widget.itemCount - 1) * spacing;
 
-    final resolvedFilledColor = widget.filledColor == Colors.amber ? context.appColors.warning : widget.filledColor;
-    final resolvedUnfilledColor = widget.unfilledColor == const Color(0xFFE0E0E0) ? context.appColors.border : widget.unfilledColor;
+    final resolvedFilledColor = widget.filledColor == Colors.amber
+        ? context.appColors.warning
+        : widget.filledColor;
+    final resolvedUnfilledColor =
+        widget.unfilledColor == const Color(0xFFE0E0E0)
+        ? context.appColors.border
+        : widget.unfilledColor;
 
     Widget ratingBar = Row(
       mainAxisSize: MainAxisSize.min,
@@ -120,30 +126,43 @@ class _CommonRatingBarState extends State<CommonRatingBar> {
         // Determine fraction filled
         if (activeRating >= indexValue + 1) {
           isFilled = true;
-          iconWidget = Icon(widget.filledIcon, size: size, color: resolvedFilledColor);
+          iconWidget = Icon(
+            widget.filledIcon,
+            size: size,
+            color: resolvedFilledColor,
+          );
         } else if (activeRating > indexValue) {
           final double fraction = activeRating - indexValue;
           isFilled = fraction >= 0.5;
           iconWidget = Stack(
             children: [
-              Icon(widget.unfilledIcon, size: size, color: resolvedUnfilledColor),
+              Icon(
+                widget.unfilledIcon,
+                size: size,
+                color: resolvedUnfilledColor,
+              ),
               ClipRect(
                 clipper: _FractionalClipper(fraction),
-                child: Icon(widget.filledIcon, size: size, color: resolvedFilledColor),
+                child: Icon(
+                  widget.filledIcon,
+                  size: size,
+                  color: resolvedFilledColor,
+                ),
               ),
             ],
           );
         } else {
-          iconWidget = Icon(widget.unfilledIcon, size: size, color: resolvedUnfilledColor);
+          iconWidget = Icon(
+            widget.unfilledIcon,
+            size: size,
+            color: resolvedUnfilledColor,
+          );
         }
 
         // Star item wrapped with scale transition if interactive
         final starItem = isReadOnly
             ? iconWidget
-            : _RatingStar(
-                isFilled: isFilled,
-                child: iconWidget,
-              );
+            : _RatingStar(isFilled: isFilled, child: iconWidget);
 
         return Padding(
           padding: EdgeInsets.only(
@@ -157,23 +176,19 @@ class _CommonRatingBarState extends State<CommonRatingBar> {
     if (isReadOnly) return ratingBar;
 
     return GestureDetector(
-      onTapDown: (details) => _handleTouch(details.localPosition.dx, totalWidth),
-      onHorizontalDragUpdate: (details) => _handleTouch(details.localPosition.dx, totalWidth),
+      onTapDown: (details) =>
+          _handleTouch(details.localPosition.dx, totalWidth),
+      onHorizontalDragUpdate: (details) =>
+          _handleTouch(details.localPosition.dx, totalWidth),
       onHorizontalDragEnd: (_) => setState(() => _dragRating = null),
-      child: MouseRegion(
-        cursor: SystemMouseCursors.click,
-        child: ratingBar,
-      ),
+      child: MouseRegion(cursor: SystemMouseCursors.click, child: ratingBar),
     );
   }
 }
 
 /// A micro-animated wrapper that pops/bounces a rating star when filled.
 class _RatingStar extends StatefulWidget {
-  const _RatingStar({
-    required this.isFilled,
-    required this.child,
-  });
+  const _RatingStar({required this.isFilled, required this.child});
 
   final bool isFilled;
   final Widget child;
@@ -182,7 +197,8 @@ class _RatingStar extends StatefulWidget {
   State<_RatingStar> createState() => _RatingStarState();
 }
 
-class _RatingStarState extends State<_RatingStar> with SingleTickerProviderStateMixin {
+class _RatingStarState extends State<_RatingStar>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _scaleAnimation;
 
@@ -196,13 +212,17 @@ class _RatingStarState extends State<_RatingStar> with SingleTickerProviderState
 
     _scaleAnimation = TweenSequence<double>([
       TweenSequenceItem(
-        tween: Tween<double>(begin: 1.0, end: 1.25)
-            .chain(CurveTween(curve: Curves.easeOut)),
+        tween: Tween<double>(
+          begin: 1.0,
+          end: 1.25,
+        ).chain(CurveTween(curve: Curves.easeOut)),
         weight: 50,
       ),
       TweenSequenceItem(
-        tween: Tween<double>(begin: 1.25, end: 1.0)
-            .chain(CurveTween(curve: Curves.easeIn)),
+        tween: Tween<double>(
+          begin: 1.25,
+          end: 1.0,
+        ).chain(CurveTween(curve: Curves.easeIn)),
         weight: 50,
       ),
     ]).animate(_controller);
@@ -231,10 +251,7 @@ class _RatingStarState extends State<_RatingStar> with SingleTickerProviderState
 
   @override
   Widget build(BuildContext context) {
-    return ScaleTransition(
-      scale: _scaleAnimation,
-      child: widget.child,
-    );
+    return ScaleTransition(scale: _scaleAnimation, child: widget.child);
   }
 }
 

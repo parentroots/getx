@@ -5,13 +5,7 @@ class UserModel {
   final String? token;
   final String? profileImage;
 
-  UserModel({
-    this.id,
-    this.name,
-    this.email,
-    this.token,
-    this.profileImage,
-  });
+  UserModel({this.id, this.name, this.email, this.token, this.profileImage});
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(

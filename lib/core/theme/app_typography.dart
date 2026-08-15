@@ -26,7 +26,6 @@ class AppTypography {
   static const double _text3 = 13;
   static const double _text4 = 12;
 
-
   static TextStyle _base({
     required double size,
     required FontWeight weight,
@@ -42,65 +41,105 @@ class AppTypography {
     );
   }
 
+  static TextStyle get headingRegular1 =>
+      _base(size: _heading1, weight: FontWeight.w400);
+  static TextStyle get headingRegular2 =>
+      _base(size: _heading2, weight: FontWeight.w400);
+  static TextStyle get headingRegular3 =>
+      _base(size: _heading3, weight: FontWeight.w400);
+  static TextStyle get headingRegular4 =>
+      _base(size: _heading4, weight: FontWeight.w400);
+  static TextStyle get headingRegular5 =>
+      _base(size: _heading5, weight: FontWeight.w400);
 
-  static TextStyle get headingRegular1 => _base(size: _heading1, weight: FontWeight.w400);
-  static TextStyle get headingRegular2 => _base(size: _heading2, weight: FontWeight.w400);
-  static TextStyle get headingRegular3 => _base(size: _heading3, weight: FontWeight.w400);
-  static TextStyle get headingRegular4 => _base(size: _heading4, weight: FontWeight.w400);
-  static TextStyle get headingRegular5 => _base(size: _heading5, weight: FontWeight.w400);
+  static TextStyle get subHeadingRegular1 =>
+      _base(size: _subHeading1, weight: FontWeight.w400);
+  static TextStyle get subHeadingRegular2 =>
+      _base(size: _subHeading2, weight: FontWeight.w400);
 
-  static TextStyle get subHeadingRegular1 => _base(size: _subHeading1, weight: FontWeight.w400);
-  static TextStyle get subHeadingRegular2 => _base(size: _subHeading2, weight: FontWeight.w400);
+  static TextStyle get textRegular1 =>
+      _base(size: _text1, weight: FontWeight.w400);
+  static TextStyle get textRegular2 =>
+      _base(size: _text2, weight: FontWeight.w400);
+  static TextStyle get textRegular3 =>
+      _base(size: _text3, weight: FontWeight.w400);
+  static TextStyle get textRegular4 =>
+      _base(size: _text4, weight: FontWeight.w400);
 
-  static TextStyle get textRegular1 => _base(size: _text1, weight: FontWeight.w400);
-  static TextStyle get textRegular2 => _base(size: _text2, weight: FontWeight.w400);
-  static TextStyle get textRegular3 => _base(size: _text3, weight: FontWeight.w400);
-  static TextStyle get textRegular4 => _base(size: _text4, weight: FontWeight.w400);
+  static TextStyle get headingMedium1 =>
+      _base(size: _heading1, weight: FontWeight.w500);
+  static TextStyle get headingMedium2 =>
+      _base(size: _heading2, weight: FontWeight.w500);
+  static TextStyle get headingMedium3 =>
+      _base(size: _heading3, weight: FontWeight.w500);
+  static TextStyle get headingMedium4 =>
+      _base(size: _heading4, weight: FontWeight.w500);
+  static TextStyle get headingMedium5 =>
+      _base(size: _heading5, weight: FontWeight.w500);
 
+  static TextStyle get subHeadingMedium1 =>
+      _base(size: _subHeading1, weight: FontWeight.w500);
+  static TextStyle get subHeadingMedium2 =>
+      _base(size: _subHeading2, weight: FontWeight.w500);
 
-  static TextStyle get headingMedium1 => _base(size: _heading1, weight: FontWeight.w500);
-  static TextStyle get headingMedium2 => _base(size: _heading2, weight: FontWeight.w500);
-  static TextStyle get headingMedium3 => _base(size: _heading3, weight: FontWeight.w500);
-  static TextStyle get headingMedium4 => _base(size: _heading4, weight: FontWeight.w500);
-  static TextStyle get headingMedium5 => _base(size: _heading5, weight: FontWeight.w500);
+  static TextStyle get textMedium1 =>
+      _base(size: _text1, weight: FontWeight.w500);
+  static TextStyle get textMedium2 =>
+      _base(size: _text2, weight: FontWeight.w500);
+  static TextStyle get textMedium3 =>
+      _base(size: _text3, weight: FontWeight.w500);
+  static TextStyle get textMedium4 =>
+      _base(size: _text4, weight: FontWeight.w500);
 
-  static TextStyle get subHeadingMedium1 => _base(size: _subHeading1, weight: FontWeight.w500);
-  static TextStyle get subHeadingMedium2 => _base(size: _subHeading2, weight: FontWeight.w500);
+  static TextStyle get headingSemiBold1 =>
+      _base(size: _heading1, weight: FontWeight.w600);
+  static TextStyle get headingSemiBold2 =>
+      _base(size: _heading2, weight: FontWeight.w600);
+  static TextStyle get headingSemiBold3 =>
+      _base(size: _heading3, weight: FontWeight.w600);
+  static TextStyle get headingSemiBold4 =>
+      _base(size: _heading4, weight: FontWeight.w600);
+  static TextStyle get headingSemiBold5 =>
+      _base(size: _heading5, weight: FontWeight.w600);
 
-  static TextStyle get textMedium1 => _base(size: _text1, weight: FontWeight.w500);
-  static TextStyle get textMedium2 => _base(size: _text2, weight: FontWeight.w500);
-  static TextStyle get textMedium3 => _base(size: _text3, weight: FontWeight.w500);
-  static TextStyle get textMedium4 => _base(size: _text4, weight: FontWeight.w500);
+  static TextStyle get subHeadingSemiBold1 =>
+      _base(size: _subHeading1, weight: FontWeight.w600);
+  static TextStyle get subHeadingSemiBold2 =>
+      _base(size: _subHeading2, weight: FontWeight.w600);
 
+  static TextStyle get textSemiBold1 =>
+      _base(size: _text1, weight: FontWeight.w600);
+  static TextStyle get textSemiBold2 =>
+      _base(size: _text2, weight: FontWeight.w600);
+  static TextStyle get textSemiBold3 =>
+      _base(size: _text3, weight: FontWeight.w600);
+  static TextStyle get textSemiBold4 =>
+      _base(size: _text4, weight: FontWeight.w600);
 
-  static TextStyle get headingSemiBold1 => _base(size: _heading1, weight: FontWeight.w600);
-  static TextStyle get headingSemiBold2 => _base(size: _heading2, weight: FontWeight.w600);
-  static TextStyle get headingSemiBold3 => _base(size: _heading3, weight: FontWeight.w600);
-  static TextStyle get headingSemiBold4 => _base(size: _heading4, weight: FontWeight.w600);
-  static TextStyle get headingSemiBold5 => _base(size: _heading5, weight: FontWeight.w600);
+  static TextStyle get headingBold1 =>
+      _base(size: _heading1, weight: FontWeight.w700);
+  static TextStyle get headingBold2 =>
+      _base(size: _heading2, weight: FontWeight.w700);
+  static TextStyle get headingBold3 =>
+      _base(size: _heading3, weight: FontWeight.w700);
+  static TextStyle get headingBold4 =>
+      _base(size: _heading4, weight: FontWeight.w700);
+  static TextStyle get headingBold5 =>
+      _base(size: _heading5, weight: FontWeight.w700);
 
-  static TextStyle get subHeadingSemiBold1 => _base(size: _subHeading1, weight: FontWeight.w600);
-  static TextStyle get subHeadingSemiBold2 => _base(size: _subHeading2, weight: FontWeight.w600);
+  static TextStyle get subHeadingBold1 =>
+      _base(size: _subHeading1, weight: FontWeight.w700);
+  static TextStyle get subHeadingBold2 =>
+      _base(size: _subHeading2, weight: FontWeight.w700);
 
-  static TextStyle get textSemiBold1 => _base(size: _text1, weight: FontWeight.w600);
-  static TextStyle get textSemiBold2 => _base(size: _text2, weight: FontWeight.w600);
-  static TextStyle get textSemiBold3 => _base(size: _text3, weight: FontWeight.w600);
-  static TextStyle get textSemiBold4 => _base(size: _text4, weight: FontWeight.w600);
-
-  static TextStyle get headingBold1 => _base(size: _heading1, weight: FontWeight.w700);
-  static TextStyle get headingBold2 => _base(size: _heading2, weight: FontWeight.w700);
-  static TextStyle get headingBold3 => _base(size: _heading3, weight: FontWeight.w700);
-  static TextStyle get headingBold4 => _base(size: _heading4, weight: FontWeight.w700);
-  static TextStyle get headingBold5 => _base(size: _heading5, weight: FontWeight.w700);
-
-  static TextStyle get subHeadingBold1 => _base(size: _subHeading1, weight: FontWeight.w700);
-  static TextStyle get subHeadingBold2 => _base(size: _subHeading2, weight: FontWeight.w700);
-
-  static TextStyle get textBold1 => _base(size: _text1, weight: FontWeight.w700);
-  static TextStyle get textBold2 => _base(size: _text2, weight: FontWeight.w700);
-  static TextStyle get textBold3 => _base(size: _text3, weight: FontWeight.w700);
-  static TextStyle get textBold4 => _base(size: _text4, weight: FontWeight.w700);
-
+  static TextStyle get textBold1 =>
+      _base(size: _text1, weight: FontWeight.w700);
+  static TextStyle get textBold2 =>
+      _base(size: _text2, weight: FontWeight.w700);
+  static TextStyle get textBold3 =>
+      _base(size: _text3, weight: FontWeight.w700);
+  static TextStyle get textBold4 =>
+      _base(size: _text4, weight: FontWeight.w700);
 
   static TextTheme textTheme(Color color) {
     return TextTheme(
@@ -120,6 +159,4 @@ class AppTypography {
       labelSmall: textRegular4.copyWith(color: color),
     );
   }
-
-
 }

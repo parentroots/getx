@@ -5,10 +5,7 @@ class AuthRepository extends BaseRepository {
   Future<Map<String, dynamic>> login(String email, String password) async {
     final response = await apiClient.post(
       ApiEndpoint.login,
-      data: {
-        'email': email,
-        'password': password,
-      },
+      data: {'email': email, 'password': password},
     );
     return response.data as Map<String, dynamic>;
   }
@@ -20,11 +17,7 @@ class AuthRepository extends BaseRepository {
   }) async {
     final response = await apiClient.post(
       ApiEndpoint.register,
-      data: {
-        'name': name,
-        'email': email,
-        'password': password,
-      },
+      data: {'name': name, 'email': email, 'password': password},
     );
     return response.data as Map<String, dynamic>;
   }
@@ -35,12 +28,8 @@ class AuthRepository extends BaseRepository {
   }) async {
     final response = await apiClient.post(
       ApiEndpoint.changePassword,
-      data: {
-        'oldPassword': currentPassword,
-        'newPassword': newPassword,
-      },
+      data: {'oldPassword': currentPassword, 'newPassword': newPassword},
     );
     return response.data as Map<String, dynamic>;
   }
 }
-

@@ -75,7 +75,8 @@ class _CommonPhoneTextFieldState extends State<CommonPhoneTextField> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    final defaultFillColor = widget.fillColor ?? context.appColors.surfaceSecondary;
+    final defaultFillColor =
+        widget.fillColor ?? context.appColors.surfaceSecondary;
     final defaultBorderColor = widget.borderColor ?? context.appColors.border;
 
     final borderDecoration = OutlineInputBorder(
@@ -87,11 +88,7 @@ class _CommonPhoneTextFieldState extends State<CommonPhoneTextField> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (widget.label.isNotEmpty) ...[
-          CommonText(
-            widget.label,
-            style: context.textTheme.bodyMedium,
-            fontWeight: FontWeight.w500,
-          ),
+          CommonText(widget.label, fontWeight: FontWeight.w500),
           SizedBox(height: 8.h),
         ],
         IntlPhoneField(
@@ -102,12 +99,14 @@ class _CommonPhoneTextFieldState extends State<CommonPhoneTextField> {
           },
           onCountryChanged: (country) {
             if (widget.onCountryChanged != null) {
-              widget.onCountryChanged!(CountryPhoneCode(
-                name: country.name,
-                code: country.code,
-                dialCode: country.dialCode,
-                flag: country.flag,
-              ));
+              widget.onCountryChanged!(
+                CountryPhoneCode(
+                  name: country.name,
+                  code: country.code,
+                  dialCode: country.dialCode,
+                  flag: country.flag,
+                ),
+              );
             }
           },
           validator: (phone) {
@@ -116,9 +115,7 @@ class _CommonPhoneTextFieldState extends State<CommonPhoneTextField> {
             }
             return null;
           },
-          style: theme.textTheme.bodyMedium?.copyWith(
-            fontSize: 16.sp,
-          ),
+          style: theme.textTheme.bodyMedium?.copyWith(fontSize: 16.sp),
           dropdownTextStyle: theme.textTheme.bodyMedium?.copyWith(
             fontSize: 16.sp,
             fontWeight: FontWeight.bold,
@@ -133,12 +130,23 @@ class _CommonPhoneTextFieldState extends State<CommonPhoneTextField> {
           pickerDialogStyle: PickerDialogStyle(
             backgroundColor: context.appColors.surface,
             countryNameStyle: theme.textTheme.bodyMedium,
-            countryCodeStyle: theme.textTheme.bodyMedium?.copyWith(color: context.appColors.textSecondary),
+            countryCodeStyle: theme.textTheme.bodyMedium?.copyWith(
+              color: context.appColors.textSecondary,
+            ),
             searchFieldInputDecoration: InputDecoration(
               hintText: 'Search country name or code...',
-              hintStyle: TextStyle(fontSize: 14.sp, color: context.appColors.textMuted),
-              prefixIcon: Icon(Icons.search, color: context.appColors.textSecondary),
-              contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
+              hintStyle: TextStyle(
+                fontSize: 14.sp,
+                color: context.appColors.textMuted,
+              ),
+              prefixIcon: Icon(
+                Icons.search,
+                color: context.appColors.textSecondary,
+              ),
+              contentPadding: EdgeInsets.symmetric(
+                horizontal: 16.w,
+                vertical: 12.h,
+              ),
               filled: true,
               fillColor: context.appColors.surfaceSecondary,
               border: OutlineInputBorder(
@@ -155,17 +163,29 @@ class _CommonPhoneTextFieldState extends State<CommonPhoneTextField> {
             ),
             filled: true,
             fillColor: defaultFillColor,
-            contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+            contentPadding: EdgeInsets.symmetric(
+              horizontal: 16.w,
+              vertical: 16.h,
+            ),
             border: borderDecoration,
             enabledBorder: borderDecoration,
             focusedBorder: borderDecoration.copyWith(
-              borderSide: BorderSide(color: context.appColors.primary, width: 1.5.r),
+              borderSide: BorderSide(
+                color: context.appColors.primary,
+                width: 1.5.r,
+              ),
             ),
             errorBorder: borderDecoration.copyWith(
-              borderSide: BorderSide(color: context.appColors.error, width: 1.r),
+              borderSide: BorderSide(
+                color: context.appColors.error,
+                width: 1.r,
+              ),
             ),
             focusedErrorBorder: borderDecoration.copyWith(
-              borderSide: BorderSide(color: context.appColors.error, width: 1.5.r),
+              borderSide: BorderSide(
+                color: context.appColors.error,
+                width: 1.5.r,
+              ),
             ),
           ),
         ),

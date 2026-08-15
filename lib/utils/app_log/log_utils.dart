@@ -152,7 +152,9 @@ abstract final class LogUtils {
         final fileName = filePath.split('/').last;
 
         final lineCol = tokens[1].split(':');
-        final lineNumber = lineCol.isNotEmpty ? (int.tryParse(lineCol[0]) ?? 0) : 0;
+        final lineNumber = lineCol.isNotEmpty
+            ? (int.tryParse(lineCol[0]) ?? 0)
+            : 0;
 
         final memberPart = tokens.sublist(2).join(' ');
         return _extractClassAndMethod(memberPart, fileName, lineNumber);
@@ -164,7 +166,11 @@ abstract final class LogUtils {
   }
 
   /// Extracts class name and method name from the member path.
-  static LogCallerInfo _extractClassAndMethod(String member, String fileName, int lineNumber) {
+  static LogCallerInfo _extractClassAndMethod(
+    String member,
+    String fileName,
+    int lineNumber,
+  ) {
     if (member.isEmpty) {
       return LogCallerInfo(
         fileName: fileName,

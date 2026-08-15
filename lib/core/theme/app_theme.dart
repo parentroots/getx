@@ -5,20 +5,20 @@ import 'package:getx_template/utils/constants/app_colors.dart';
 
 abstract final class AppTheme {
   static ThemeData get light => _build(
-        brightness: Brightness.light,
-        background: ThemeColor.light.background,
-        surface: ThemeColor.light.surface,
-        text: ThemeColor.light.text,
-        primaryColor: ThemeColor.light.primary,
-      );
+    brightness: Brightness.light,
+    background: ThemeColor.light.background,
+    surface: ThemeColor.light.surface,
+    text: ThemeColor.light.text,
+    primaryColor: ThemeColor.light.primary,
+  );
 
   static ThemeData get dark => _build(
-        brightness: Brightness.dark,
-        background: ThemeColor.dark.background,
-        surface: ThemeColor.dark.surface,
-        text: ThemeColor.dark.text,
-        primaryColor: ThemeColor.dark.primary,
-      );
+    brightness: Brightness.dark,
+    background: ThemeColor.dark.background,
+    surface: ThemeColor.dark.surface,
+    text: ThemeColor.dark.text,
+    primaryColor: ThemeColor.dark.primary,
+  );
 
   static ThemeData _build({
     required Brightness brightness,
@@ -84,9 +84,7 @@ abstract final class AppTheme {
           side: BorderSide(color: scheme.outlineVariant),
         ),
       ),
-      extensions: [
-        isLight ? ThemeColor.light : ThemeColor.dark,
-      ],
+      extensions: [isLight ? ThemeColor.light : ThemeColor.dark],
     );
   }
 }

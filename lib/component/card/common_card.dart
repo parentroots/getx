@@ -62,22 +62,17 @@ class CommonCard extends StatelessWidget {
     final defaultPadding = EdgeInsets.all(AppSpacing.md.r);
     final resolvedRadius = BorderRadius.circular((borderRadius ?? 12.0).r);
 
-    final resolvedShape = shape ??
+    final resolvedShape =
+        shape ??
         RoundedRectangleBorder(
           borderRadius: resolvedRadius,
           side: borderColor != null
-              ? BorderSide(
-                  color: borderColor!,
-                  width: (borderWidth ?? 1.0).r,
-                )
+              ? BorderSide(color: borderColor!, width: (borderWidth ?? 1.0).r)
               : BorderSide.none,
         );
 
     // ── Build content with tap handlers ─────────
-    Widget content = Padding(
-      padding: padding ?? defaultPadding,
-      child: child,
-    );
+    Widget content = Padding(padding: padding ?? defaultPadding, child: child);
 
     if (isClickable) {
       final inkBorderRadius = resolvedShape is RoundedRectangleBorder
@@ -87,7 +82,9 @@ class CommonCard extends StatelessWidget {
       content = InkWell(
         onTap: onTap,
         onLongPress: onLongPress,
-        borderRadius: inkBorderRadius is BorderRadius ? inkBorderRadius : resolvedRadius,
+        borderRadius: inkBorderRadius is BorderRadius
+            ? inkBorderRadius
+            : resolvedRadius,
         splashColor: splashColor,
         child: content,
       );
@@ -117,11 +114,7 @@ class CommonCard extends StatelessWidget {
       margin: margin,
       shape: resolvedShape,
       clipBehavior: clipBehavior ?? (isClickable ? Clip.antiAlias : Clip.none),
-      child: SizedBox(
-        width: width?.w,
-        height: height?.h,
-        child: content,
-      ),
+      child: SizedBox(width: width?.w, height: height?.h, child: content),
     );
   }
 }

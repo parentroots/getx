@@ -5,13 +5,7 @@ import 'package:getx_template/component/button/common_button.dart';
 import 'package:getx_template/component/layout/common_text.dart';
 import 'package:getx_template/utils/extensions/context_extensions.dart';
 
-enum DialogType {
-  success,
-  error,
-  warning,
-  info,
-  confirmation,
-}
+enum DialogType { success, error, warning, info, confirmation }
 
 class CommonDialog extends StatelessWidget {
   const CommonDialog({
@@ -67,7 +61,7 @@ class CommonDialog extends StatelessWidget {
   final Color? secondaryButtonColor;
 
   // Static Helpers ========================================================
-  
+
   static Future<bool?> show(
     BuildContext context, {
     required String title,
@@ -292,11 +286,7 @@ class CommonDialog extends StatelessWidget {
         color: finalIconColor.withValues(alpha: 0.12),
         shape: BoxShape.circle,
       ),
-      child: Icon(
-        iconData,
-        size: 40.sp,
-        color: finalIconColor,
-      ),
+      child: Icon(iconData, size: 40.sp, color: finalIconColor),
     );
   }
 
@@ -389,7 +379,9 @@ class CommonDialog extends StatelessWidget {
                     textAlign: TextAlign.center,
                     fontSize: subtitleFontSize,
                     fontWeight: FontWeight.normal,
-                    color: subtitleColor ?? theme.colorScheme.onSurface.withValues(alpha: 0.7),
+                    color:
+                        subtitleColor ??
+                        theme.colorScheme.onSurface.withValues(alpha: 0.7),
                     maxLines: 6,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -409,7 +401,9 @@ class CommonDialog extends StatelessWidget {
                     width: 28.w,
                     height: 28.w,
                     decoration: BoxDecoration(
-                      color: isDark ? Colors.white.withValues(alpha: 0.1) : Colors.black.withValues(alpha: 0.05),
+                      color: isDark
+                          ? Colors.white.withValues(alpha: 0.1)
+                          : Colors.black.withValues(alpha: 0.05),
                       shape: BoxShape.circle,
                     ),
                     child: Icon(

@@ -3,9 +3,9 @@ import 'package:get/get.dart';
 import 'package:getx_template/component/main_bottom_nav/main_bottom_nav_bar.dart';
 import 'package:getx_template/component/layout/common_drawer.dart';
 import 'package:getx_template/component/layout/common_scaffold.dart';
-import 'package:getx_template/features/home/screen/view/home_screen.dart';
-import 'package:getx_template/features/message/screen/view/message_screen.dart';
-import 'package:getx_template/features/profile/screen/view/profile_screen.dart';
+import 'package:getx_template/features/home/presentation/screen/home_screen.dart';
+import 'package:getx_template/features/message/presentation/screen/message_screen.dart';
+import 'package:getx_template/features/profile/presentation/screen/profile_screen.dart';
 import 'package:getx_template/component/main_bottom_nav/main_bottom_nav_controller.dart';
 
 class MainBottomNavScreen extends GetView<MainBottomNavController> {

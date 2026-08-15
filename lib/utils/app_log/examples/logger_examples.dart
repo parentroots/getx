@@ -9,11 +9,7 @@ class SampleUser {
 
   SampleUser({required this.id, required this.name, required this.email});
 
-  Map<String, dynamic> toJson() => {
-        'id': id,
-        'name': name,
-        'email': email,
-      };
+  Map<String, dynamic> toJson() => {'id': id, 'name': name, 'email': email};
 
   @override
   String toString() => 'SampleUser(id: $id, name: $name)';
@@ -49,7 +45,10 @@ void runLoggerExamples() {
 
   log.firebase('FCM Token', 'dGhpcyBpcyBhIHNhbXBsZSB0b2tlbiBmb3IgZmlyZWJhc2U=');
 
-  log.auth('User session refreshed successfully', {'userId': 12459, 'roles': ['admin', 'editor']});
+  log.auth('User session refreshed successfully', {
+    'userId': 12459,
+    'roles': ['admin', 'editor'],
+  });
 
   log.network('Connected to WebSocket server: wss://echo.websocket.org');
 
@@ -92,8 +91,9 @@ void runLoggerExamples() {
         'username': 'john_doe',
         'email': 'john.doe@example.com',
       },
-      'token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwi...',
-    }
+      'token':
+          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwi...',
+    },
   };
 
   log.apiResponse(
@@ -129,8 +129,12 @@ void runLoggerExamples() {
 
   'Immediate Text Debug'.logDebug();
   'Immediate Text Warning'.logWarning();
-  
-  final userModel = SampleUser(id: 101, name: 'Alice Smith', email: 'alice@example.com');
+
+  final userModel = SampleUser(
+    id: 101,
+    name: 'Alice Smith',
+    email: 'alice@example.com',
+  );
   userModel.logSuccess();
 
   final userMap = userModel.toJson();
@@ -141,14 +145,16 @@ void runLoggerExamples() {
   // ==========================================
   log.i('==== STAGE 6: Configuring Dio Network Clients ====');
 
-  final dio = Dio(BaseOptions(
-    baseUrl: 'https://jsonplaceholder.typicode.com',
-    connectTimeout: const Duration(seconds: 5),
-  ));
+  final dio = Dio(
+    BaseOptions(
+      baseUrl: 'https://jsonplaceholder.typicode.com',
+      connectTimeout: const Duration(seconds: 5),
+    ),
+  );
 
   // Add the custom interceptor to Dio
   dio.interceptors.add(const DioLogInterceptor());
-  
+
   log.success('Dio Client initialized with custom DioLogInterceptor.');
 
   // ==========================================
@@ -166,7 +172,9 @@ void runLoggerExamples() {
   //     ),
   //   );
   // }
-  log.success('Riverpod ProviderObserver implementation ready (RiverpodLogger).');
+  log.success(
+    'Riverpod ProviderObserver implementation ready (RiverpodLogger).',
+  );
 
   // ==========================================
   // 8. NAVIGATION OBSERVER SHOWCASE
@@ -207,7 +215,7 @@ void runLoggerExamples() {
   );
 
   log.success('Logger re-configured: API and Performance logs disabled.');
-  
+
   // This request log will be suppressed due to the config changes above
   log.apiRequest(method: 'GET', url: '/should/not/log');
 

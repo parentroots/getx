@@ -65,10 +65,7 @@ class _CommonDrawerState extends State<CommonDrawer> {
           // Drawer Body - Scrolling Menu List
           Expanded(
             child: ListView(
-              padding: EdgeInsets.symmetric(
-                horizontal: 12.w,
-                vertical: 16.h,
-              ),
+              padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 16.h),
               children: [
                 _buildMenuItem(
                   context: context,
@@ -92,10 +89,7 @@ class _CommonDrawerState extends State<CommonDrawer> {
           SafeArea(
             top: false,
             child: Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: 16.w,
-                vertical: 16.h,
-              ),
+              padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
               child: ListTile(
                 onTap: () => _showLogoutDialog(context),
                 leading: Icon(
@@ -105,15 +99,13 @@ class _CommonDrawerState extends State<CommonDrawer> {
                 ),
                 title: CommonText(
                   'Logout',
-                  style: Theme.of(context).textTheme.bodyMedium,
                   fontWeight: FontWeight.w500,
                   color: theme.colorScheme.error,
                 ),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12.r),
                 ),
-                tileColor: theme.colorScheme.error
-                    .withValues(alpha: 0.08),
+                tileColor: theme.colorScheme.error.withValues(alpha: 0.08),
               ),
             ),
           ),
@@ -122,21 +114,15 @@ class _CommonDrawerState extends State<CommonDrawer> {
     );
   }
 
-  Widget _buildProfileHeader(
-    BuildContext context,
-    bool isDark,
-  ) {
+  Widget _buildProfileHeader(BuildContext context, bool isDark) {
     final theme = Theme.of(context);
     return Container(
       width: double.infinity,
       padding: EdgeInsets.fromLTRB(20.w, 60.h, 20.w, 24.h),
       decoration: BoxDecoration(
-        color:context.appColors.background,
+        color: context.appColors.background,
         border: Border(
-          bottom: BorderSide(
-            color: context.appColors.border,
-            width: 1.r,
-          ),
+          bottom: BorderSide(color: context.appColors.border, width: 1.r),
         ),
       ),
       child: Column(
@@ -146,8 +132,7 @@ class _CommonDrawerState extends State<CommonDrawer> {
             children: [
               CircleAvatar(
                 radius: 28.r,
-                backgroundColor: theme.primaryColor
-                    .withValues(alpha: 0.15),
+                backgroundColor: theme.primaryColor.withValues(alpha: 0.15),
                 child: Icon(
                   Icons.person_rounded,
                   size: 28.r,
@@ -157,17 +142,9 @@ class _CommonDrawerState extends State<CommonDrawer> {
             ],
           ),
           SizedBox(height: 16.h),
-          CommonText(
-
-            'MD EBRAHIM NAZMUL',
-            fontWeight: FontWeight.bold,
-          ),
+          CommonText('MD EBRAHIM NAZMUL', fontWeight: FontWeight.bold),
           SizedBox(height: 4.h),
-          CommonText(
-            'ibrahimsparktech@gmail.com',
-            style: Theme.of(context).textTheme.bodySmall,
-            color: Colors.grey,
-          ),
+          CommonText('ibrahimsparktech@gmail.com', color: Colors.grey),
         ],
       ),
     );
@@ -194,11 +171,8 @@ class _CommonDrawerState extends State<CommonDrawer> {
         ),
         title: CommonText(
           label,
-          style: Theme.of(context).textTheme.bodyMedium,
-          fontWeight: isSelected
-              ? FontWeight.bold
-              : FontWeight.w500,
-          color: isSelected ?context.appColors.text : null,
+          fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
+          color: isSelected ? context.appColors.text : null,
         ),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12.r),
@@ -210,29 +184,21 @@ class _CommonDrawerState extends State<CommonDrawer> {
     );
   }
 
-  Widget _buildThemeToggle(
-    BuildContext context,
-    bool isDark,
-  ) {
+  Widget _buildThemeToggle(BuildContext context, bool isDark) {
     return Padding(
       padding: EdgeInsets.only(bottom: 6.h),
       child: SwitchListTile(
         value: isDark,
         onChanged: (bool val) {
-          Get.changeThemeMode(
-            val ? ThemeMode.dark : ThemeMode.light,
-          );
+          Get.changeThemeMode(val ? ThemeMode.dark : ThemeMode.light);
         },
         secondary: Icon(
-          isDark
-              ? Icons.dark_mode_rounded
-              : Icons.light_mode_rounded,
+          isDark ? Icons.dark_mode_rounded : Icons.light_mode_rounded,
           color: context.appColors.primary,
           size: 22.r,
         ),
         title: CommonText(
           isDark ? 'Dark Mode' : 'Light Mode',
-          style: Theme.of(context).textTheme.bodyMedium,
           fontWeight: FontWeight.w500,
         ),
         shape: RoundedRectangleBorder(

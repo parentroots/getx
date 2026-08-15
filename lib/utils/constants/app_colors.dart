@@ -139,10 +139,7 @@ class ThemeColor extends ThemeExtension<ThemeColor> {
   // ===================== LERP =====================
 
   @override
-  ThemeColor lerp(
-      ThemeExtension<ThemeColor>? other,
-      double t,
-      ) {
+  ThemeColor lerp(ThemeExtension<ThemeColor>? other, double t) {
     if (other is! ThemeColor) return this;
 
     return ThemeColor(
@@ -151,12 +148,14 @@ class ThemeColor extends ThemeExtension<ThemeColor> {
       secondary: Color.lerp(secondary, other.secondary, t)!,
       background: Color.lerp(background, other.background, t)!,
       surface: Color.lerp(surface, other.surface, t)!,
-      surfaceSecondary:
-      Color.lerp(surfaceSecondary, other.surfaceSecondary, t)!,
+      surfaceSecondary: Color.lerp(
+        surfaceSecondary,
+        other.surfaceSecondary,
+        t,
+      )!,
       border: Color.lerp(border, other.border, t)!,
       text: Color.lerp(text, other.text, t)!,
-      textSecondary:
-      Color.lerp(textSecondary, other.textSecondary, t)!,
+      textSecondary: Color.lerp(textSecondary, other.textSecondary, t)!,
       textMuted: Color.lerp(textMuted, other.textMuted, t)!,
       success: Color.lerp(success, other.success, t)!,
       warning: Color.lerp(warning, other.warning, t)!,

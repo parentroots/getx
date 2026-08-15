@@ -33,7 +33,8 @@ class CommonCountryPicker {
     final isDark = theme.brightness == Brightness.dark;
 
     // Load countries dynamically from the package
-    final List<CountryModel> countries = customCountries ??
+    final List<CountryModel> countries =
+        customCountries ??
         CountryService().getAll().map((c) {
           return CountryModel(
             name: c.name,
@@ -80,7 +81,8 @@ class _CountryPickerBottomSheet extends StatefulWidget {
   });
 
   @override
-  State<_CountryPickerBottomSheet> createState() => _CountryPickerBottomSheetState();
+  State<_CountryPickerBottomSheet> createState() =>
+      _CountryPickerBottomSheetState();
 }
 
 class _CountryPickerBottomSheetState extends State<_CountryPickerBottomSheet> {
@@ -96,19 +98,19 @@ class _CountryPickerBottomSheetState extends State<_CountryPickerBottomSheet> {
   void initState() {
     super.initState();
     _filteredCountries = widget.countries;
-    
+
     // Define popular countries from the list (e.g. BD, US, GB, IN, CA, AU, AE)
     final popularCodes = {'BD', 'US', 'GB', 'IN', 'CA', 'AU', 'AE'};
     _popularCountries = widget.countries
         .where((c) => popularCodes.contains(c.code.toUpperCase()))
         .toList();
-    
+
     // Sort popular countries to match the order of popularCodes
     final orderList = ['BD', 'US', 'GB', 'IN', 'CA', 'AU', 'AE'];
     _popularCountries.sort((a, b) {
-      return orderList.indexOf(a.code.toUpperCase()).compareTo(
-            orderList.indexOf(b.code.toUpperCase()),
-          );
+      return orderList
+          .indexOf(a.code.toUpperCase())
+          .compareTo(orderList.indexOf(b.code.toUpperCase()));
     });
   }
 
@@ -167,7 +169,7 @@ class _CountryPickerBottomSheetState extends State<_CountryPickerBottomSheet> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    
+
     // Style configurations based on theme
     final backgroundColor = context.appColors.surface;
     final secondaryTextColor = context.appColors.textSecondary;
@@ -193,7 +195,7 @@ class _CountryPickerBottomSheetState extends State<_CountryPickerBottomSheet> {
 
     // Sort the keys
     final sortedKeys = groupedCountries.keys.toList()..sort();
-    
+
     // Build flat list items for display
     final List<dynamic> flatListItems = [];
     for (var key in sortedKeys) {
@@ -229,18 +231,14 @@ class _CountryPickerBottomSheetState extends State<_CountryPickerBottomSheet> {
               borderRadius: BorderRadius.circular(2.5.r),
             ),
           ),
-          
+
           // Header Row with Title & Close Icon
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                CommonText(
-                  widget.title,
-                  style: context.textTheme.titleMedium,
-                  fontWeight: FontWeight.bold,
-                ),
+                CommonText(widget.title, fontWeight: FontWeight.bold),
                 IconButton(
                   onPressed: () => Navigator.of(context).pop(),
                   icon: Container(
@@ -259,17 +257,14 @@ class _CountryPickerBottomSheetState extends State<_CountryPickerBottomSheet> {
               ],
             ),
           ),
-          
+
           // Search Field
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 4.h),
             child: TextField(
               controller: _searchController,
               onChanged: _filter,
-              style: TextStyle(
-                fontSize: 15.sp,
-                color: context.appColors.text,
-              ),
+              style: TextStyle(fontSize: 15.sp, color: context.appColors.text),
               decoration: InputDecoration(
                 hintText: widget.searchHint,
                 hintStyle: TextStyle(
@@ -296,7 +291,10 @@ class _CountryPickerBottomSheetState extends State<_CountryPickerBottomSheet> {
                     : null,
                 filled: true,
                 fillColor: searchFillColor,
-                contentPadding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 16.w),
+                contentPadding: EdgeInsets.symmetric(
+                  vertical: 12.h,
+                  horizontal: 16.w,
+                ),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(16.r),
                   borderSide: BorderSide.none,
@@ -325,7 +323,6 @@ class _CountryPickerBottomSheetState extends State<_CountryPickerBottomSheet> {
                 alignment: Alignment.centerLeft,
                 child: CommonText(
                   "Popular Countries",
-                  style: context.textTheme.bodySmall,
                   color: secondaryTextColor,
                   fontWeight: FontWeight.w500,
                 ),
@@ -340,16 +337,20 @@ class _CountryPickerBottomSheetState extends State<_CountryPickerBottomSheet> {
                 itemCount: _popularCountries.length,
                 itemBuilder: (context, index) {
                   final country = _popularCountries[index];
-                  final isSelected = widget.selectedCountryCode?.toUpperCase() ==
+                  final isSelected =
+                      widget.selectedCountryCode?.toUpperCase() ==
                       country.code.toUpperCase();
-                  
+
                   return Container(
                     margin: EdgeInsets.only(right: 10.w),
                     child: InkWell(
                       onTap: () => Navigator.of(context).pop(country),
                       borderRadius: BorderRadius.circular(12.r),
                       child: Container(
-                        padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 12.w,
+                          vertical: 8.h,
+                        ),
                         decoration: BoxDecoration(
                           color: isSelected
                               ? widget.primaryColor.withValues(alpha: 0.15)
@@ -371,8 +372,9 @@ class _CountryPickerBottomSheetState extends State<_CountryPickerBottomSheet> {
                             SizedBox(width: 6.w),
                             CommonText(
                               country.code,
-                              style: context.textTheme.bodyMedium,
-                              fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
+                              fontWeight: isSelected
+                                  ? FontWeight.bold
+                                  : FontWeight.w500,
                               color: isSelected
                                   ? widget.primaryColor
                                   : context.appColors.text,
@@ -387,9 +389,9 @@ class _CountryPickerBottomSheetState extends State<_CountryPickerBottomSheet> {
             ),
             SizedBox(height: 12.h),
           ],
-          
+
           Divider(height: 1.h, thickness: 1.r, color: dividerColor),
-          
+
           // Country List
           Expanded(
             child: flatListItems.isEmpty
@@ -407,7 +409,6 @@ class _CountryPickerBottomSheetState extends State<_CountryPickerBottomSheet> {
                           SizedBox(height: 12.h),
                           CommonText(
                             'No countries found matching "$_searchQuery"',
-                            style: context.textTheme.bodyMedium,
                             color: context.appColors.textSecondary,
                             textAlign: TextAlign.center,
                           ),
@@ -421,32 +422,40 @@ class _CountryPickerBottomSheetState extends State<_CountryPickerBottomSheet> {
                     itemCount: flatListItems.length,
                     itemBuilder: (context, index) {
                       final item = flatListItems[index];
-                      
+
                       // Render Section Header (Letter)
                       if (item is String) {
                         return Container(
-                          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 6.h),
-                          color: context.appColors.surfaceSecondary.withValues(alpha: widget.isDark ? 0.4 : 0.2),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 20.w,
+                            vertical: 6.h,
+                          ),
+                          color: context.appColors.surfaceSecondary.withValues(
+                            alpha: widget.isDark ? 0.4 : 0.2,
+                          ),
                           child: CommonText(
                             item,
-                            style: context.textTheme.bodyMedium,
                             fontWeight: FontWeight.bold,
                             color: widget.primaryColor,
                           ),
                         );
                       }
-                      
+
                       // Render Country Item
                       final CountryModel country = item as CountryModel;
-                      final isSelected = widget.selectedCountryCode?.toUpperCase() ==
+                      final isSelected =
+                          widget.selectedCountryCode?.toUpperCase() ==
                           country.code.toUpperCase();
-                      
+
                       return InkWell(
                         onTap: () {
                           Navigator.of(context).pop(country);
                         },
                         child: Container(
-                          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 12.h),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 20.w,
+                            vertical: 12.h,
+                          ),
                           decoration: BoxDecoration(
                             color: isSelected
                                 ? widget.primaryColor.withValues(alpha: 0.06)
@@ -465,7 +474,9 @@ class _CountryPickerBottomSheetState extends State<_CountryPickerBottomSheet> {
                                   _searchQuery,
                                   theme.textTheme.bodyMedium!.copyWith(
                                     fontSize: 15.sp,
-                                    fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                                    fontWeight: isSelected
+                                        ? FontWeight.bold
+                                        : FontWeight.normal,
                                     color: context.appColors.text,
                                   ),
                                   highlightStyle,
@@ -473,9 +484,12 @@ class _CountryPickerBottomSheetState extends State<_CountryPickerBottomSheet> {
                               ),
                               CommonText(
                                 country.dialCode,
-                                style: context.textTheme.bodyMedium,
-                                color: isSelected ? widget.primaryColor : secondaryTextColor,
-                                fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
+                                color: isSelected
+                                    ? widget.primaryColor
+                                    : secondaryTextColor,
+                                fontWeight: isSelected
+                                    ? FontWeight.bold
+                                    : FontWeight.w500,
                               ),
                               if (isSelected) ...[
                                 SizedBox(width: 12.w),

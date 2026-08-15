@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:getx_template/component/loading/shimmer_box.dart';
 
@@ -69,13 +69,10 @@ class CommonShimmerCard extends StatelessWidget {
         children: [
           // Top Image Area
           if (showImage) ...[
-            ShimmerBox(
-              height: imageHeight.h,
-              borderRadius: borderRadius,
-            ),
+            ShimmerBox(height: imageHeight.h, borderRadius: borderRadius),
             SizedBox(height: 16.h),
           ],
-          
+
           // Bottom Content Row
           Padding(
             padding: resolvedPadding,
@@ -90,20 +87,16 @@ class CommonShimmerCard extends StatelessWidget {
                   ),
                   SizedBox(width: 12.w),
                 ],
-                
+
                 // Skeleton text lines
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       // Header line
-                      ShimmerBox(
-                        width: 140.w,
-                        height: 16.h,
-                        borderRadius: 4,
-                      ),
+                      ShimmerBox(width: 140.w, height: 16.h, borderRadius: 4),
                       SizedBox(height: 8.h),
-                      
+
                       // Extra sub-lines
                       for (int i = 0; i < lineCount; i++) ...[
                         ShimmerBox(

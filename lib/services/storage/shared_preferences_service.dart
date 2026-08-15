@@ -47,10 +47,7 @@ class SharedPreferencesService {
   }
 
   // Get any model from local storage by deserializing the stored JSON String
-  T? getModel<T>(
-    String key,
-    T Function(Map<String, dynamic>) fromJson,
-  ) {
+  T? getModel<T>(String key, T Function(Map<String, dynamic>) fromJson) {
     final String? jsonStr = getString(key);
     if (jsonStr == null || jsonStr.isEmpty) return null;
     try {

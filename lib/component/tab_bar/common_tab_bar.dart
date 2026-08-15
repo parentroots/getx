@@ -6,7 +6,7 @@ import 'package:getx_template/utils/extensions/context_extensions.dart';
 
 /// Selection styling options for the tab bar indicator.
 enum CommonTabStyle {
-  pill,      // Sliding pill selector background
+  pill, // Sliding pill selector background
   underline, // Inset underline indicator
 }
 
@@ -45,7 +45,10 @@ class CommonTabBar extends StatelessWidget {
     this.padding,
     this.tabStyle = CommonTabStyle.pill,
     this.enableHaptic = true,
-  }) : assert(tabs != null || tabItems != null, 'Either tabs or tabItems must be provided.');
+  }) : assert(
+         tabs != null || tabItems != null,
+         'Either tabs or tabItems must be provided.',
+       );
 
   /// The list of tab titles as simple strings (for backward compatibility).
   final List<String>? tabs;
@@ -98,22 +101,26 @@ class CommonTabBar extends StatelessWidget {
     final isDark = theme.brightness == Brightness.dark;
 
     // Resolve list of items (backward compatible with tabs list)
-    final List<CommonTabItem> resolvedItems = tabItems ??
-        tabs!.map((t) => CommonTabItem(label: t)).toList();
+    final List<CommonTabItem> resolvedItems =
+        tabItems ?? tabs!.map((t) => CommonTabItem(label: t)).toList();
     final tabsLength = resolvedItems.length;
 
-    final resolvedBgColor = backgroundColor ?? context.appColors.surfaceSecondary;
-    
+    final resolvedBgColor =
+        backgroundColor ?? context.appColors.surfaceSecondary;
+
     final trackBgColor = tabStyle == CommonTabStyle.underline
         ? (backgroundColor ?? context.appColors.transparent)
         : resolvedBgColor;
 
-    final resolvedIndicatorColor = indicatorColor ??
+    final resolvedIndicatorColor =
+        indicatorColor ??
         (isDark ? context.appColors.surfaceSecondary : context.appColors.white);
-    
-    final resolvedActiveTextColor = activeTextColor ?? context.appColors.primary;
-    
-    final resolvedInactiveTextColor = inactiveTextColor ?? context.appColors.textSecondary;
+
+    final resolvedActiveTextColor =
+        activeTextColor ?? context.appColors.primary;
+
+    final resolvedInactiveTextColor =
+        inactiveTextColor ?? context.appColors.textSecondary;
 
     final Border? trackBorder = borderColor != null
         ? Border.all(color: borderColor!, width: (borderWidth ?? 1.0).r)
@@ -136,7 +143,9 @@ class CommonTabBar extends StatelessWidget {
               duration: const Duration(milliseconds: 250),
               curve: Curves.easeOutBack, // Springy snap slide
               alignment: Alignment(
-                tabsLength <= 1 ? 0.0 : -1.0 + (selectedIndex * (2.0 / (tabsLength - 1))),
+                tabsLength <= 1
+                    ? 0.0
+                    : -1.0 + (selectedIndex * (2.0 / (tabsLength - 1))),
                 tabStyle == CommonTabStyle.underline ? 1.0 : 0.0,
               ),
               child: FractionallySizedBox(
@@ -157,12 +166,16 @@ class CommonTabBar extends StatelessWidget {
                         height: double.infinity,
                         decoration: BoxDecoration(
                           color: resolvedIndicatorColor,
-                          borderRadius: BorderRadius.circular((borderRadius - 3).r),
+                          borderRadius: BorderRadius.circular(
+                            (borderRadius - 3).r,
+                          ),
                           boxShadow: isDark
                               ? []
                               : [
                                   BoxShadow(
-                                    color: context.appColors.black.withValues(alpha: 0.06),
+                                    color: context.appColors.black.withValues(
+                                      alpha: 0.06,
+                                    ),
                                     blurRadius: 6.r,
                                     offset: Offset(0, 2.r),
                                   ),
@@ -238,7 +251,6 @@ class CommonTabBar extends StatelessWidget {
           ),
           child: CommonText(
             item.label,
-            style: context.textTheme.bodyMedium,
             fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
             color: isSelected ? activeColor : inactiveColor,
           ),

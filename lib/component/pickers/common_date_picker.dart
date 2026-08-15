@@ -51,7 +51,7 @@ class CommonDatePicker {
                   borderRadius: BorderRadius.circular(2),
                 ),
               ),
-              
+
               // Header actions
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -88,9 +88,9 @@ class CommonDatePicker {
                   ],
                 ),
               ),
-              
+
               const Divider(height: 1),
-              
+
               // Cupertino Date Picker
               Expanded(
                 child: CupertinoTheme(

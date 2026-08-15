@@ -5,5 +5,4 @@ abstract final class AppRadius {
   static const double xl = 20;
   static const double full = 999;
   static const double radius = 12;
-
 }

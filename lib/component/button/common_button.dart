@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:getx_template/utils/extensions/context_extensions.dart';
 
-
 class CommonButton extends StatefulWidget {
   const CommonButton({
     required this.titleText,
@@ -101,18 +100,24 @@ class _CommonButtonState extends State<CommonButton>
 
   @override
   Widget build(BuildContext context) {
-    final Color resolvedBackgroundColor = widget.buttonColor ?? context.appColors.primary;
-    final Color resolvedTitleColor = widget.titleColor ?? context.appColors.white;
-    final Color resolvedBorderColor = widget.borderColor ??
-        (widget.border ? context.appColors.primary : context.appColors.transparent);
+    final Color resolvedBackgroundColor =
+        widget.buttonColor ?? context.appColors.primary;
+    final Color resolvedTitleColor =
+        widget.titleColor ?? context.appColors.white;
+    final Color resolvedBorderColor =
+        widget.borderColor ??
+        (widget.border
+            ? context.appColors.primary
+            : context.appColors.transparent);
     final double resolvedBorderWidth =
         widget.borderWidth ?? (widget.border ? 1.0 : 0.0);
     final double resolvedRadius = widget.buttonRadius ?? 16.0;
     final double resolvedHeight = widget.buttonHeight ?? 50.0;
     final double resolvedElevation = widget.elevation ?? 2.0;
-    final EdgeInsets resolvedPadding = (widget.padding ??
-        const EdgeInsets.symmetric(horizontal: 14, vertical: 10))
-        .resolve(Directionality.of(context));
+    final EdgeInsets resolvedPadding =
+        (widget.padding ??
+                const EdgeInsets.symmetric(horizontal: 14, vertical: 10))
+            .resolve(Directionality.of(context));
     final bool canTap = widget.isEnabled && !widget.isLoading;
 
     final TextStyle textStyle = TextStyle(
@@ -139,7 +144,9 @@ class _CommonButtonState extends State<CommonButton>
             final double requestedWidth = widget.buttonWidth ?? double.nan;
             double? calculatedWidth;
 
-            final double safeMin = minRequiredWidth > constraints.maxWidth ? constraints.maxWidth : minRequiredWidth;
+            final double safeMin = minRequiredWidth > constraints.maxWidth
+                ? constraints.maxWidth
+                : minRequiredWidth;
 
             if (requestedWidth == double.infinity) {
               calculatedWidth = hasBoundedWidth ? constraints.maxWidth : null;
@@ -161,28 +168,37 @@ class _CommonButtonState extends State<CommonButton>
                   Positioned.fill(
                     child: ElevatedButton(
                       onPressed: canTap ? widget.onTap : null,
-                      style: ElevatedButton.styleFrom(
-                        elevation: widget.isEnabled ? resolvedElevation : 0,
-                        padding: EdgeInsets.zero,
-                        backgroundColor: Colors.transparent,
-                        shadowColor: resolvedBackgroundColor.withValues(alpha: 0.4),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(resolvedRadius),
-                          side: BorderSide(
-                            color: resolvedBorderColor,
-                            width: resolvedBorderWidth,
+                      style:
+                          ElevatedButton.styleFrom(
+                            elevation: widget.isEnabled ? resolvedElevation : 0,
+                            padding: EdgeInsets.zero,
+                            backgroundColor: Colors.transparent,
+                            shadowColor: resolvedBackgroundColor.withValues(
+                              alpha: 0.4,
+                            ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(
+                                resolvedRadius,
+                              ),
+                              side: BorderSide(
+                                color: resolvedBorderColor,
+                                width: resolvedBorderWidth,
+                              ),
+                            ),
+                          ).copyWith(
+                            overlayColor: WidgetStateProperty.all(
+                              Colors.transparent,
+                            ),
+                            splashFactory: NoSplash.splashFactory,
                           ),
-                        ),
-                      ).copyWith(
-                        overlayColor: WidgetStateProperty.all(Colors.transparent),
-                        splashFactory: NoSplash.splashFactory,
-                      ),
                       child: Ink(
                         decoration: BoxDecoration(
                           color: widget.gradient == null
                               ? (widget.isEnabled
-                              ? resolvedBackgroundColor
-                              : resolvedBackgroundColor.withValues(alpha: 0.5))
+                                    ? resolvedBackgroundColor
+                                    : resolvedBackgroundColor.withValues(
+                                        alpha: 0.5,
+                                      ))
                               : null,
                           gradient: widget.gradient,
                           borderRadius: BorderRadius.circular(resolvedRadius),
@@ -228,24 +244,27 @@ class _CommonButtonState extends State<CommonButton>
     );
   }
 
-  Widget _buildContent({required TextStyle textStyle, required Color textColor}) {
+  Widget _buildContent({
+    required TextStyle textStyle,
+    required Color textColor,
+  }) {
     final Widget title = widget.titleGradient == null
         ? Text(
-      widget.titleText,
-      maxLines: 1,
-      overflow: TextOverflow.ellipsis,
-      style: textStyle.copyWith(color: textColor),
-    )
+            widget.titleText,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: textStyle.copyWith(color: textColor),
+          )
         : ShaderMask(
-      shaderCallback: (Rect bounds) =>
-          widget.titleGradient!.createShader(bounds),
-      child: Text(
-        widget.titleText,
-        maxLines: 1,
-        overflow: TextOverflow.ellipsis,
-        style: textStyle.copyWith(color: Colors.white),
-      ),
-    );
+            shaderCallback: (Rect bounds) =>
+                widget.titleGradient!.createShader(bounds),
+            child: Text(
+              widget.titleText,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: textStyle.copyWith(color: Colors.white),
+            ),
+          );
 
     return Row(
       mainAxisSize: MainAxisSize.min,
@@ -325,4 +344,3 @@ class _BorderLoaderPainter extends CustomPainter {
         oldDelegate.radius != radius;
   }
 }
-

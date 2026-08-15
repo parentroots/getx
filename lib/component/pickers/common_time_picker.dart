@@ -63,7 +63,7 @@ class CommonTimePicker {
                   borderRadius: BorderRadius.circular(2.r),
                 ),
               ),
-              
+
               // Header actions
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 4.h),
@@ -74,21 +74,16 @@ class CommonTimePicker {
                       onPressed: () => Navigator.of(context).pop(),
                       child: CommonText(
                         cancelText,
-                        style: context.textTheme.bodyMedium,
                         color: cancelColor ?? context.appColors.textSecondary,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
-                    CommonText(
-                      title,
-                      style: context.textTheme.titleMedium,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    CommonText(title, fontWeight: FontWeight.bold),
                     TextButton(
-                      onPressed: () => Navigator.of(context).pop(selectedDateTime),
+                      onPressed: () =>
+                          Navigator.of(context).pop(selectedDateTime),
                       child: CommonText(
                         confirmText,
-                        style: context.textTheme.bodyMedium,
                         color: confirmColor ?? context.appColors.primary,
                         fontWeight: FontWeight.bold,
                       ),
@@ -96,9 +91,9 @@ class CommonTimePicker {
                   ],
                 ),
               ),
-              
+
               Divider(height: 1.h, thickness: 1.r),
-              
+
               // Cupertino Time Picker
               Expanded(
                 child: CupertinoTheme(

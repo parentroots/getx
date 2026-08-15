@@ -25,23 +25,18 @@ class NoInternetWidget extends StatelessWidget {
             SizedBox(height: 16.h),
             CommonText(
               'No internet connection',
-              style: context.textTheme.titleMedium,
               fontWeight: FontWeight.bold,
               textAlign: TextAlign.center,
             ),
             SizedBox(height: 8.h),
             CommonText(
               'Check your connection and try again.',
-              style: context.textTheme.bodyMedium,
               textAlign: TextAlign.center,
               color: context.appColors.textSecondary,
             ),
             if (onRetry != null) ...[
               SizedBox(height: 24.h),
-              CommonButton(
-                titleText:"",
-                onTap: onRetry,
-              ),
+              CommonButton(titleText: "", onTap: onRetry),
             ],
           ],
         ),

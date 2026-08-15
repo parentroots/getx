@@ -116,8 +116,10 @@ class _CommonSwitchState extends State<CommonSwitch>
     final double resolvedThumbSize = resolvedHeight - 4.r;
     final double maxMove = resolvedWidth - resolvedThumbSize - 6.r;
 
-    final Color resolvedActiveColor = widget.activeColor ?? context.appColors.primary;
-    final Color resolvedInactiveColor = widget.inactiveColor ?? context.appColors.border;
+    final Color resolvedActiveColor =
+        widget.activeColor ?? context.appColors.primary;
+    final Color resolvedInactiveColor =
+        widget.inactiveColor ?? context.appColors.border;
 
     return GestureDetector(
       onTap: _onTap,
@@ -129,11 +131,19 @@ class _CommonSwitchState extends State<CommonSwitch>
             final t = _positionAnimation.value;
 
             // Elastic stretching: thumb gets wider in the middle of transition
-            final double stretch = 1.0 - (t - 0.5).abs() * 2.0; // 0.0 -> 1.0 -> 0.0
-            final double currentThumbWidth = resolvedThumbSize + (stretch * 8.r);
+            final double stretch =
+                1.0 - (t - 0.5).abs() * 2.0; // 0.0 -> 1.0 -> 0.0
+            final double currentThumbWidth =
+                resolvedThumbSize + (stretch * 8.r);
 
-            final trackColor = Color.lerp(resolvedInactiveColor, resolvedActiveColor, t);
-            final resolvedThumbColor = widget.thumbColor == Colors.white ? context.appColors.white : widget.thumbColor;
+            final trackColor = Color.lerp(
+              resolvedInactiveColor,
+              resolvedActiveColor,
+              t,
+            );
+            final resolvedThumbColor = widget.thumbColor == Colors.white
+                ? context.appColors.white
+                : widget.thumbColor;
             final currentThumbColor = Color.lerp(
               resolvedThumbColor,
               widget.activeThumbColor ?? resolvedThumbColor,
@@ -142,13 +152,20 @@ class _CommonSwitchState extends State<CommonSwitch>
 
             final double baseLeft = 3.r;
             final double moveDistance = t * maxMove;
-            final double leftOffset = baseLeft + moveDistance - (currentThumbWidth - resolvedThumbSize) * (t >= 0.5 ? 1.0 : 0.0);
+            final double leftOffset =
+                baseLeft +
+                moveDistance -
+                (currentThumbWidth - resolvedThumbSize) *
+                    (t >= 0.5 ? 1.0 : 0.0);
 
             Widget? thumbChild;
-            if (widget.activeThumbIcon != null || widget.inactiveThumbIcon != null) {
+            if (widget.activeThumbIcon != null ||
+                widget.inactiveThumbIcon != null) {
               thumbChild = Opacity(
                 opacity: 1.0,
-                child: t >= 0.5 ? widget.activeThumbIcon : widget.inactiveThumbIcon,
+                child: t >= 0.5
+                    ? widget.activeThumbIcon
+                    : widget.inactiveThumbIcon,
               );
             }
 
@@ -168,11 +185,15 @@ class _CommonSwitchState extends State<CommonSwitch>
                       width: currentThumbWidth,
                       height: resolvedThumbSize,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(resolvedThumbSize / 2),
+                        borderRadius: BorderRadius.circular(
+                          resolvedThumbSize / 2,
+                        ),
                         color: currentThumbColor,
                         boxShadow: [
                           BoxShadow(
-                            color: context.appColors.black.withValues(alpha: 0.15),
+                            color: context.appColors.black.withValues(
+                              alpha: 0.15,
+                            ),
                             blurRadius: 4.r,
                             offset: Offset(0, 2.r),
                           ),

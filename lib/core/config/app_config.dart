@@ -7,8 +7,7 @@ class AppConfig {
       'ENABLE_NETWORK_LOGS',
       defaultValue: true,
     ),
-  }
-  );
+  });
 
   final String appName;
   final String apiBaseUrl;

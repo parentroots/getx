@@ -18,10 +18,7 @@ class ApiClient {
   late Dio _dio;
 
   /// Must be called once at app startup before making requests.
-  void init({
-    required AppConfig config,
-    required TokenManager tokenManager,
-  }) {
+  void init({required AppConfig config, required TokenManager tokenManager}) {
     _dio = Dio(
       BaseOptions(
         baseUrl: config.apiBaseUrl,
@@ -30,8 +27,7 @@ class ApiClient {
         responseType: ResponseType.json,
         headers: {
           'Accept': ApiConstants.applicationJson,
-          ApiConstants.contentType:
-              ApiConstants.applicationJson,
+          ApiConstants.contentType: ApiConstants.applicationJson,
         },
       ),
     );
@@ -155,8 +151,7 @@ class ApiClient {
   }) {
     final uploadOptions = options ?? Options();
     uploadOptions.headers ??= {};
-    uploadOptions.headers![ApiConstants.contentType] =
-        'multipart/form-data';
+    uploadOptions.headers![ApiConstants.contentType] = 'multipart/form-data';
 
     return _request(
       () => _dio.post<T>(
@@ -193,9 +188,7 @@ class ApiClient {
   // ─── Error Handling ────────────────────────────
 
   /// Wraps every request — catches Dio errors and maps them to typed exceptions.
-  Future<Response<T>> _request<T>(
-    Future<Response<T>> Function() call,
-  ) async {
+  Future<Response<T>> _request<T>(Future<Response<T>> Function() call) async {
     try {
       return await call();
     } on DioException catch (e) {
@@ -203,15 +196,8 @@ class ApiClient {
     } on AppException {
       rethrow;
     } catch (e, stack) {
-      AppLog.error(
-        'Unexpected network error',
-        error: e,
-        stackTrace: stack,
-      );
-      throw NetworkException(
-        'An unexpected error occurred.',
-        details: e,
-      );
+      AppLog.error('Unexpected network error', error: e, stackTrace: stack);
+      throw NetworkException('An unexpected error occurred.', details: e);
     }
   }
 
@@ -235,9 +221,7 @@ class ApiClient {
 
       // Invalid SSL certificate
       case DioExceptionType.badCertificate:
-        return const NetworkException(
-          'SSL certificate verification failed.',
-        );
+        return const NetworkException('SSL certificate verification failed.');
 
       // Server responded with an error status code
       case DioExceptionType.badResponse:
@@ -245,8 +229,7 @@ class ApiClient {
 
       // Catch-all (SocketException, etc.)
       case DioExceptionType.unknown:
-        if (_isConnectionError(e.message))
-          return const NoInternetException();
+        if (_isConnectionError(e.message)) return const NoInternetException();
         return NetworkException(
           'An unexpected network error occurred.',
           details: e.message,
@@ -261,23 +244,15 @@ class ApiClient {
     final msg = _extractMessage(body);
 
     return switch (status) {
-      400 => BadRequestException(
-        msg ?? 'Bad request',
-        body,
-      ),
+      400 => BadRequestException(msg ?? 'Bad request', body),
       401 => UnauthorizedException(
         msg ?? 'Session expired. Please log in again.',
       ),
       403 => ForbiddenException(
-        msg ??
-            'You do not have permission for this action.',
+        msg ?? 'You do not have permission for this action.',
       ),
-      404 => NotFoundException(
-        msg ?? 'The requested resource was not found.',
-      ),
-      409 => ConflictException(
-        msg ?? 'A conflict occurred with the resource.',
-      ),
+      404 => NotFoundException(msg ?? 'The requested resource was not found.'),
+      409 => ConflictException(msg ?? 'A conflict occurred with the resource.'),
       422 => ValidationException(
         msg ?? 'The submitted data is invalid.',
         details: body,
@@ -320,17 +295,14 @@ class ApiClient {
     if (data is! Map<String, dynamic>) return null;
 
     // Try common keys
-    if (data['message'] is String)
-      return data['message'] as String;
-    if (data['error'] is String)
-      return data['error'] as String;
+    if (data['message'] is String) return data['message'] as String;
+    if (data['error'] is String) return data['error'] as String;
     if (data['msg'] is String) return data['msg'] as String;
 
     // Nested: { "error": { "message": "..." } }
     if (data['error'] is Map) {
       final nested = data['error'] as Map;
-      if (nested['message'] is String)
-        return nested['message'] as String;
+      if (nested['message'] is String) return nested['message'] as String;
     }
 
     // Validation: { "errors": { "email": ["taken"], "name": ["required"] } }
@@ -353,21 +325,13 @@ class ApiClient {
 
 class ApiLoggingInterceptor extends Interceptor {
   @override
-  void onRequest(
-    RequestOptions options,
-    RequestInterceptorHandler handler,
-  ) {
-    AppLog.apiRequest(
-      "Sending Request: ${options.method} ${options.path}",
-    );
+  void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
+    AppLog.apiRequest("Sending Request: ${options.method} ${options.path}");
     handler.next(options);
   }
 
   @override
-  void onResponse(
-    Response response,
-    ResponseInterceptorHandler handler,
-  ) {
+  void onResponse(Response response, ResponseInterceptorHandler handler) {
     AppLog.apiResponse(
       "Received Response: ${response.requestOptions.method} ${response.requestOptions.path} [${response.statusCode}]",
     );
@@ -375,10 +339,7 @@ class ApiLoggingInterceptor extends Interceptor {
   }
 
   @override
-  void onError(
-    DioException err,
-    ErrorInterceptorHandler handler,
-  ) {
+  void onError(DioException err, ErrorInterceptorHandler handler) {
     AppLog.error(
       "API Error: ${err.requestOptions.method} ${err.requestOptions.path} [${err.response?.statusCode ?? 'No Code'}]",
       error: err.message,

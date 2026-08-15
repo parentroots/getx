@@ -69,9 +69,11 @@ lib/
 │
 ├── features/               # Self-contained modules (feature-first)
 │   └── [feature_name]/     # Example: auth, home, profile, settings, splash, message
-│       └── screen/         # UI Presentation Layer
+│       ├── data/           # Data layer for the feature
+│       └── presentation/   # Presentation Layer for the feature
 │           ├── controller/ # GetX Controllers for feature-specific state management
-│           └── view/       # Screens and Views for this feature
+│           ├── screen/     # Screens and Views for this feature
+│           └── widget/     # Reusable widgets specific to this feature
 │
 ├── services/               # Device/system level infrastructure services
 │   ├── connectivity/       # Connectivity observer (ConnectivityService)

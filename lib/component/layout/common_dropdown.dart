@@ -41,12 +41,10 @@ class CommonDropdown<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final defaultBorderColor =
-        borderColor ?? context.appColors.border;
+    final defaultBorderColor = borderColor ?? context.appColors.border;
     final defaultFocusColor = focusBorderColor ?? context.appColors.primary;
     final defaultErrorColor = errorBorderColor ?? context.appColors.error;
-    final defaultFillColor =
-        fillColor ?? context.appColors.surfaceSecondary;
+    final defaultFillColor = fillColor ?? context.appColors.surfaceSecondary;
 
     final responsiveBorderRadius = borderRadius.r;
 

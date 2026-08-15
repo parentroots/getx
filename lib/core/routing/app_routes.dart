@@ -1,19 +1,19 @@
 import 'package:get/get.dart';
-import 'package:getx_template/features/auth/screen/view/auth_welcome_screen.dart';
-import 'package:getx_template/features/auth/screen/view/change_password_screen.dart';
-import 'package:getx_template/features/auth/screen/view/forgot_password_screen.dart';
-import 'package:getx_template/features/auth/screen/view/login_screen.dart';
-import 'package:getx_template/features/auth/screen/view/otp_verification_screen.dart';
-import 'package:getx_template/features/auth/screen/view/register_screen.dart';
-import 'package:getx_template/features/notifications/screen/view/notification_screen.dart';
-import 'package:getx_template/features/onboarding/screen/view/onboarding_screen.dart';
-import 'package:getx_template/features/profile/screen/view/edit_profile_screen.dart';
-import 'package:getx_template/features/settings/screen/view/settings_screen.dart';
-import 'package:getx_template/features/splash/screen/view/splash_screen.dart';
-import 'package:getx_template/features/system/screen/view/error_screen.dart';
-import 'package:getx_template/features/system/screen/view/maintenance_screen.dart';
-import 'package:getx_template/features/system/screen/view/no_internet_screen.dart';
-import 'package:getx_template/features/system/screen/view/update_required_screen.dart';
+import 'package:getx_template/features/auth/presentation/screen/auth_welcome_screen.dart';
+import 'package:getx_template/features/auth/presentation/screen/change_password_screen.dart';
+import 'package:getx_template/features/auth/presentation/screen/forgot_password_screen.dart';
+import 'package:getx_template/features/auth/presentation/screen/login_screen.dart';
+import 'package:getx_template/features/auth/presentation/screen/otp_verification_screen.dart';
+import 'package:getx_template/features/auth/presentation/screen/register_screen.dart';
+import 'package:getx_template/features/notifications/presentation/screen/notification_screen.dart';
+import 'package:getx_template/features/onboarding/presentation/screen/onboarding_screen.dart';
+import 'package:getx_template/features/profile/presentation/screen/edit_profile_screen.dart';
+import 'package:getx_template/features/settings/presentation/screen/settings_screen.dart';
+import 'package:getx_template/features/splash/presentation/screen/splash_screen.dart';
+import 'package:getx_template/features/system/presentation/screen/error_screen.dart';
+import 'package:getx_template/features/system/presentation/screen/maintenance_screen.dart';
+import 'package:getx_template/features/system/presentation/screen/no_internet_screen.dart';
+import 'package:getx_template/features/system/presentation/screen/update_required_screen.dart';
 import 'package:getx_template/component/main_bottom_nav/main_bottom_nav_screen.dart';
 
 class AppRoutes {
@@ -55,10 +55,11 @@ class AppRoutes {
     GetPage(name: changePassword, page: () => const ChangePasswordScreen()),
   ];
 
-  final unknownRoute = GetPage(name: error, page: () =>
-  const ErrorScreen(title: 'Page not found',
+  final unknownRoute = GetPage(
+    name: error,
+    page: () => const ErrorScreen(
+      title: 'Page not found',
       message: 'The route you opened is not registered in this app.',
     ),
   );
-
 }

@@ -12,7 +12,9 @@ class FirebaseService {
     } catch (error) {
       isInitialized = false;
       if (kDebugMode) {
-        AppLog.warning('Firebase not configured yet: $error (Firebase initialization skipped)');
+        AppLog.warning(
+          'Firebase not configured yet: $error (Firebase initialization skipped)',
+        );
       }
     }
   }

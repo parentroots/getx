@@ -33,7 +33,8 @@ class NavigationLogger extends NavigatorObserver {
   void didReplace({Route<dynamic>? newRoute, Route<dynamic>? oldRoute}) {
     super.didReplace(newRoute: newRoute, oldRoute: oldRoute);
     final replaced = oldRoute?.settings.name ?? 'Unknown';
-    final replacement = newRoute?.settings.name ?? _getRouteDescription(newRoute);
+    final replacement =
+        newRoute?.settings.name ?? _getRouteDescription(newRoute);
     logReplace(replaced, replacement);
   }
 

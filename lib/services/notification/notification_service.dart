@@ -6,7 +6,9 @@ import 'package:getx_template/utils/app_log/app_log.dart';
 class NotificationService extends GetxService {
   Future<NotificationService> init() async {
     if (!FirebaseService.isInitialized) {
-      AppLog.warning('Notifications not configured yet (Firebase is not initialized)');
+      AppLog.warning(
+        'Notifications not configured yet (Firebase is not initialized)',
+      );
       return this;
     }
 
@@ -16,8 +18,7 @@ class NotificationService extends GetxService {
       final token = await messaging.getToken();
       AppLog.debug('FCM token: $token');
     } catch (error, stackTrace) {
-      AppLog.warning(
-          'Notifications not configured yet: $error');
+      AppLog.warning('Notifications not configured yet: $error');
       AppLog.error(
         'Notification init skipped',
         error: error,

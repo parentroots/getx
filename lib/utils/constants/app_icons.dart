@@ -3,6 +3,6 @@ abstract final class AppIcons {
 
   // SVG/Vector Assets
   static const String logo = '$_path/logo.svg';
-  
+
   // Add other vector assets here
 }

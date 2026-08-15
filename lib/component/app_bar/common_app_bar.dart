@@ -132,7 +132,8 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     // Build the title widget
-    final Widget? resolvedTitle = titleWidget ??
+    final Widget? resolvedTitle =
+        titleWidget ??
         (title != null
             ? CommonText(
                 title!,
@@ -152,14 +153,12 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
           final bool canPop = parentRoute?.canPop ?? false;
           if (!canPop) return const SizedBox.shrink();
 
-          return backButtonWidget ?? IconButton(
-            icon: const Icon(
-              Icons.arrow_back_ios_new_rounded,
-              size: 20,
-            ),
-            tooltip: 'Back',
-            onPressed: () => Navigator.maybePop(context),
-          );
+          return backButtonWidget ??
+              IconButton(
+                icon: const Icon(Icons.arrow_back_ios_new_rounded, size: 20),
+                tooltip: 'Back',
+                onPressed: () => Navigator.maybePop(context),
+              );
         },
       );
     }

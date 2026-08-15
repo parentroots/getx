@@ -44,7 +44,6 @@ class MainBottomNavBar extends StatelessWidget {
       activeIcon: Icons.person,
       label: 'Profile',
     ),
-
   ];
 
   @override
@@ -68,9 +67,7 @@ class MainBottomNavBar extends StatelessWidget {
           ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withValues(
-                alpha: isDark ? 0.3 : 0.06,
-              ),
+              color: Colors.black.withValues(alpha: isDark ? 0.3 : 0.06),
               blurRadius: 20.r,
               offset: const Offset(0, 8),
             ),
@@ -79,19 +76,12 @@ class MainBottomNavBar extends StatelessWidget {
         child: ClipRRect(
           borderRadius: BorderRadius.circular(24.r),
           child: BackdropFilter(
-            filter: ImageFilter.blur(
-              sigmaX: 10,
-              sigmaY: 10,
-            ),
+            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
             child: Obx(() {
-              final selectedIndex =
-                  controller.currentIndex.value;
+              final selectedIndex = controller.currentIndex.value;
               return Row(
-                mainAxisAlignment:
-                    MainAxisAlignment.spaceAround,
-                children: List.generate(_navItems.length, (
-                  index,
-                ) {
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: List.generate(_navItems.length, (index) {
                   final item = _navItems[index];
                   final isSelected = index == selectedIndex;
                   final iconColor = isSelected
@@ -99,13 +89,10 @@ class MainBottomNavBar extends StatelessWidget {
                       : context.appColors.textSecondary;
 
                   return GestureDetector(
-                    onTap: () =>
-                        controller.changeTab(index),
+                    onTap: () => controller.changeTab(index),
                     behavior: HitTestBehavior.opaque,
                     child: AnimatedContainer(
-                      duration: const Duration(
-                        milliseconds: 250,
-                      ),
+                      duration: const Duration(milliseconds: 250),
                       curve: Curves.easeInOut,
                       padding: EdgeInsets.symmetric(
                         horizontal: 16.w,
@@ -114,41 +101,31 @@ class MainBottomNavBar extends StatelessWidget {
                       decoration: BoxDecoration(
                         color: isSelected
                             ? (isDark
-                                  ? context.appColors.primary
-                                        .withValues(alpha: 0.15)
-                                  : context.appColors.primary
-                                        .withValues(alpha: 0.08))
+                                  ? context.appColors.primary.withValues(
+                                      alpha: 0.15,
+                                    )
+                                  : context.appColors.primary.withValues(
+                                      alpha: 0.08,
+                                    ))
                             : Colors.transparent,
-                        borderRadius: BorderRadius.circular(
-                          16.r,
-                        ),
+                        borderRadius: BorderRadius.circular(16.r),
                       ),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          _buildIcon(
-                            isSelected,
-                            item,
-                            iconColor,
-                          ),
+                          _buildIcon(isSelected, item, iconColor),
                           AnimatedSize(
-                            duration: const Duration(
-                              milliseconds: 200,
-                            ),
+                            duration: const Duration(milliseconds: 200),
                             curve: Curves.easeInOut,
                             child: isSelected
                                 ? Padding(
-                                    padding:
-                                        EdgeInsets.only(
-                                          left: 8.w,
-                                        ),
+                                    padding: EdgeInsets.only(left: 8.w),
                                     child: Text(
                                       item.label,
                                       style: TextStyle(
                                         color: context.appColors.primary,
                                         fontSize: 13.sp,
-                                        fontWeight:
-                                            FontWeight.w600,
+                                        fontWeight: FontWeight.w600,
                                       ),
                                     ),
                                   )
@@ -167,21 +144,14 @@ class MainBottomNavBar extends StatelessWidget {
     );
   }
 
-  Widget _buildIcon(
-    bool isSelected,
-    _BottomNavItem item,
-    Color color,
-  ) {
+  Widget _buildIcon(bool isSelected, _BottomNavItem item, Color color) {
     if (item.svgIcon != null) {
       final svgAsset = isSelected
           ? (item.svgActiveIcon ?? item.svgIcon!)
           : item.svgIcon!;
       return SvgPicture.asset(
         svgAsset,
-        colorFilter: ColorFilter.mode(
-          color,
-          BlendMode.srcIn,
-        ),
+        colorFilter: ColorFilter.mode(color, BlendMode.srcIn),
         width: 22.r,
         height: 22.r,
       );

@@ -12,7 +12,7 @@ class CommonMultiImagePicker extends StatefulWidget {
     this.initialImages = const [],
     this.maxImages = 10,
     this.imageQuality = 70, // Memory management: Compress image quality
-    this.maxWidth = 1080,   // Memory management: Resize huge images
+    this.maxWidth = 1080, // Memory management: Resize huge images
     this.maxHeight = 1080,
     this.crossAxisCount = 3,
     this.spacing = 8.0,
@@ -27,11 +27,11 @@ class CommonMultiImagePicker extends StatefulWidget {
   final int imageQuality;
   final double maxWidth;
   final double maxHeight;
-  
+
   final int crossAxisCount;
   final double spacing;
   final double imageSize;
-  
+
   final Widget? addButtonWidget;
   final Color errorColor;
 
@@ -90,8 +90,7 @@ class _CommonMultiImagePickerState extends State<CommonMultiImagePicker> {
         ...List.generate(_selectedImages.length, (index) {
           return _buildImageItem(index);
         }),
-        if (_selectedImages.length < widget.maxImages)
-          _buildAddButton(),
+        if (_selectedImages.length < widget.maxImages) _buildAddButton(),
       ],
     );
   }
@@ -123,7 +122,11 @@ class _CommonMultiImagePickerState extends State<CommonMultiImagePicker> {
                 color: context.appColors.black.withOpacity(0.6),
                 shape: BoxShape.circle,
               ),
-              child: Icon(Icons.close, color: context.appColors.white, size: 16.r),
+              child: Icon(
+                Icons.close,
+                color: context.appColors.white,
+                size: 16.r,
+              ),
             ),
           ),
         ),
@@ -135,27 +138,36 @@ class _CommonMultiImagePickerState extends State<CommonMultiImagePicker> {
     final responsiveSize = widget.imageSize.w;
     return GestureDetector(
       onTap: _pickImages,
-      child: widget.addButtonWidget ?? Container(
-        width: responsiveSize,
-        height: responsiveSize,
-        decoration: BoxDecoration(
-          color: context.appColors.surfaceSecondary,
-          borderRadius: BorderRadius.circular(12.r),
-          border: Border.all(color: context.appColors.border, style: BorderStyle.solid, width: 1.r),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(Icons.add_photo_alternate_outlined, size: 32.r, color: context.appColors.textSecondary),
-            SizedBox(height: 8.h),
-            CommonText(
-              '${_selectedImages.length}/${widget.maxImages}',
-              style: context.textTheme.bodySmall,
-              color: context.appColors.textSecondary,
+      child:
+          widget.addButtonWidget ??
+          Container(
+            width: responsiveSize,
+            height: responsiveSize,
+            decoration: BoxDecoration(
+              color: context.appColors.surfaceSecondary,
+              borderRadius: BorderRadius.circular(12.r),
+              border: Border.all(
+                color: context.appColors.border,
+                style: BorderStyle.solid,
+                width: 1.r,
+              ),
             ),
-          ],
-        ),
-      ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.add_photo_alternate_outlined,
+                  size: 32.r,
+                  color: context.appColors.textSecondary,
+                ),
+                SizedBox(height: 8.h),
+                CommonText(
+                  '${_selectedImages.length}/${widget.maxImages}',
+                  color: context.appColors.textSecondary,
+                ),
+              ],
+            ),
+          ),
     );
   }
 }

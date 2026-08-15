@@ -10,7 +10,6 @@ extension StringExtensions on String {
         !parts.last.endsWith('.');
   }
 
-  
   String capitalizeFirst() =>
       isEmpty ? this : '${this[0].toUpperCase()}${substring(1)}';
 }

@@ -5,10 +5,7 @@ import 'package:flutter/widgets.dart';
 extension WidgetExtensions on Widget {
   /// Wraps the widget with padding on all sides.
   Widget paddingAll(double value) {
-    return Padding(
-      padding: EdgeInsets.all(value),
-      child: this,
-    );
+    return Padding(padding: EdgeInsets.all(value), child: this);
   }
 
   /// Wraps the widget with symmetric padding.
@@ -40,10 +37,7 @@ extension WidgetExtensions on Widget {
   /// Controls the visibility of this widget dynamically.
   Widget visible(bool isVisible, {bool keepAlive = false}) {
     if (keepAlive) {
-      return Visibility(
-        visible: isVisible,
-        child: this,
-      );
+      return Visibility(visible: isVisible, child: this);
     }
     return isVisible ? this : const SizedBox.shrink();
   }

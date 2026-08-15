@@ -52,31 +52,31 @@ class LoggerConfig {
 
   /// Factory constructor to disable all logging (useful in production releases).
   factory LoggerConfig.silent() => const LoggerConfig(
-        enableDebug: false,
-        enableApi: false,
-        enableFirebase: false,
-        enableAuth: false,
-        enablePerformance: false,
-        enableNavigation: false,
-        enableAnalytics: false,
-        enableErrors: false,
-        enableDatabase: false,
-        enableCache: false,
-      );
+    enableDebug: false,
+    enableApi: false,
+    enableFirebase: false,
+    enableAuth: false,
+    enablePerformance: false,
+    enableNavigation: false,
+    enableAnalytics: false,
+    enableErrors: false,
+    enableDatabase: false,
+    enableCache: false,
+  );
 
   /// Factory constructor to enable only error-related logs.
   factory LoggerConfig.errorsOnly() => const LoggerConfig(
-        enableDebug: false,
-        enableApi: false,
-        enableFirebase: false,
-        enableAuth: false,
-        enablePerformance: false,
-        enableNavigation: false,
-        enableAnalytics: false,
-        enableErrors: true,
-        enableDatabase: false,
-        enableCache: false,
-      );
+    enableDebug: false,
+    enableApi: false,
+    enableFirebase: false,
+    enableAuth: false,
+    enablePerformance: false,
+    enableNavigation: false,
+    enableAnalytics: false,
+    enableErrors: true,
+    enableDatabase: false,
+    enableCache: false,
+  );
 }
 
 /// The core Logging class implementing the Clean Architecture logging interface.
@@ -90,9 +90,9 @@ class AppLogger {
     LoggerConfig? config,
     LogFormatter? formatter,
     LogPrinter? printer,
-  })  : _config = config ?? const LoggerConfig(),
-        _formatter = formatter ?? const BeautifulLogFormatter(),
-        _printer = printer ?? const ConsoleLogPrinter();
+  }) : _config = config ?? const LoggerConfig(),
+       _formatter = formatter ?? const BeautifulLogFormatter(),
+       _printer = printer ?? const ConsoleLogPrinter();
 
   /// The static singleton instance of the logger.
   static final AppLogger instance = AppLogger._internal();
@@ -111,11 +111,15 @@ class AppLogger {
   /// Checks if a given log level is enabled under the current configuration.
   bool _isLevelEnabled(LogLevel level) {
     return switch (level) {
-      LogLevel.debug || LogLevel.info || LogLevel.success => _config.enableDebug,
+      LogLevel.debug ||
+      LogLevel.info ||
+      LogLevel.success => _config.enableDebug,
       LogLevel.warning || LogLevel.error => _config.enableErrors,
       LogLevel.firebase => _config.enableFirebase,
       LogLevel.auth => _config.enableAuth,
-      LogLevel.apiRequest || LogLevel.apiResponse || LogLevel.network => _config.enableApi,
+      LogLevel.apiRequest ||
+      LogLevel.apiResponse ||
+      LogLevel.network => _config.enableApi,
       LogLevel.cache => _config.enableCache,
       LogLevel.database => _config.enableDatabase,
       LogLevel.navigation => _config.enableNavigation,
@@ -177,10 +181,7 @@ class AppLogger {
   /// Logs Firebase-specific events (e.g. notifications, FCM tokens).
   void firebase(dynamic message, [dynamic detail]) {
     if (detail != null) {
-      _log(LogLevel.firebase, {
-        'message': message,
-        'detail': detail,
-      });
+      _log(LogLevel.firebase, {'message': message, 'detail': detail});
     } else {
       _log(LogLevel.firebase, message);
     }
@@ -189,10 +190,7 @@ class AppLogger {
   /// Logs Authentication status, processes, or token cycles.
   void auth(dynamic message, [dynamic detail]) {
     if (detail != null) {
-      _log(LogLevel.auth, {
-        'message': message,
-        'detail': detail,
-      });
+      _log(LogLevel.auth, {'message': message, 'detail': detail});
     } else {
       _log(LogLevel.auth, message);
     }
@@ -243,10 +241,7 @@ class AppLogger {
 
   /// Logs operation execution durations for benchmarks.
   void performance(String name, Duration duration) {
-    _log(LogLevel.performance, {
-      'name': name,
-      'duration': duration,
-    });
+    _log(LogLevel.performance, {'name': name, 'duration': duration});
   }
 }
 

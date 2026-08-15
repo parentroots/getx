@@ -62,16 +62,41 @@ class BeautifulLogFormatter implements LogFormatter {
 
     // 1. FORMAT BY LOG LEVEL CATEGORY
     if (level == LogLevel.apiRequest) {
-      lines.addAll(_formatApiRequest(message, headerLabel, timestamp, color, reset));
+      lines.addAll(
+        _formatApiRequest(message, headerLabel, timestamp, color, reset),
+      );
     } else if (level == LogLevel.apiResponse) {
       lines.addAll(_formatApiResponse(message, headerLabel, color, reset));
     } else if (level == LogLevel.performance) {
       lines.addAll(_formatPerformance(message, color, reset));
     } else if (level == LogLevel.error) {
-      lines.addAll(_formatError(message, headerLabel, callerInfo, timestamp, error, stackTrace, color, reset));
+      lines.addAll(
+        _formatError(
+          message,
+          headerLabel,
+          callerInfo,
+          timestamp,
+          error,
+          stackTrace,
+          color,
+          reset,
+        ),
+      );
     } else {
       // Standard log level (debug, info, success, warning, firebase, auth, network, database, cache, navigation, analytics)
-      lines.addAll(_formatStandard(level, message, headerLabel, callerInfo, timestamp, error, stackTrace, color, reset));
+      lines.addAll(
+        _formatStandard(
+          level,
+          message,
+          headerLabel,
+          callerInfo,
+          timestamp,
+          error,
+          stackTrace,
+          color,
+          reset,
+        ),
+      );
     }
 
     return lines;
@@ -202,7 +227,9 @@ class BeautifulLogFormatter implements LogFormatter {
       lines.add('$color$_vertical$reset $method');
       lines.add('$color$_vertical$reset $url');
 
-      if (headers != null && headers.toString().isNotEmpty && headers.toString() != '{}') {
+      if (headers != null &&
+          headers.toString().isNotEmpty &&
+          headers.toString() != '{}') {
         lines.add('$color$_vertical$reset');
         lines.add('$color$_vertical$reset Headers');
         final formattedHeaders = LogUtils.formatJson(headers);
@@ -211,7 +238,9 @@ class BeautifulLogFormatter implements LogFormatter {
         }
       }
 
-      if (body != null && body.toString().isNotEmpty && body.toString() != '{}') {
+      if (body != null &&
+          body.toString().isNotEmpty &&
+          body.toString() != '{}') {
         lines.add('$color$_vertical$reset');
         lines.add('$color$_vertical$reset Body');
         final formattedBody = LogUtils.formatJson(body);
@@ -251,13 +280,17 @@ class BeautifulLogFormatter implements LogFormatter {
       }
       if (duration != null) {
         if (duration is Duration) {
-          lines.add('$color$_vertical$reset Time : ${duration.inMilliseconds} ms');
+          lines.add(
+            '$color$_vertical$reset Time : ${duration.inMilliseconds} ms',
+          );
         } else {
           lines.add('$color$_vertical$reset Time : $duration');
         }
       }
 
-      if (body != null && body.toString().isNotEmpty && body.toString() != '{}') {
+      if (body != null &&
+          body.toString().isNotEmpty &&
+          body.toString() != '{}') {
         lines.add('$color$_vertical$reset');
         lines.add('$color$_vertical$reset Response');
         final formattedBody = LogUtils.formatJson(body);
@@ -274,17 +307,15 @@ class BeautifulLogFormatter implements LogFormatter {
   }
 
   /// Formats stopwatch performance outputs.
-  List<String> _formatPerformance(
-    dynamic message,
-    String color,
-    String reset,
-  ) {
+  List<String> _formatPerformance(dynamic message, String color, String reset) {
     final lines = <String>[];
 
     if (message is Map<String, dynamic>) {
       final name = message['name'] ?? 'Action';
       final duration = message['duration'];
-      final formattedDuration = duration is Duration ? '${duration.inMilliseconds} ms' : duration.toString();
+      final formattedDuration = duration is Duration
+          ? '${duration.inMilliseconds} ms'
+          : duration.toString();
 
       lines.add('$color⏱ $name$reset');
       lines.add('${color}Finished in $formattedDuration$reset');

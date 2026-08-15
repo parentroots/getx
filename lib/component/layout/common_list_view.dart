@@ -6,7 +6,7 @@ import 'package:getx_template/data/models/paginated_response.dart';
 /// A premium, highly optimized list view component that supports
 /// high-performance lazy rendering, automatic scroll-to-load pagination,
 /// pull-to-refresh, custom separators, and empty state fallbacks.
-/// 
+///
 /// Can run in **Autonomous Mode** (simply pass [onLoadPage] and the widget
 /// manages all list data and page states internally) or **Manual Mode** (pass
 /// [items], [isLoading], [hasMore], and scroll/refresh callbacks).
@@ -46,7 +46,7 @@ class CommonListView<T> extends StatefulWidget {
   /// Page fetching callback (activates **Autonomous Mode**).
   /// Receives the target page index and returns a [PaginatedResponse] containing the items.
   final Future<PaginatedResponse<T>> Function(int page)? onLoadPage;
-  
+
   /// Status showing if a page is currently loading (used in Manual Mode).
   final bool isLoading;
 
@@ -64,7 +64,7 @@ class CommonListView<T> extends StatefulWidget {
 
   /// The total count of items across all pages.
   final int? total;
-  
+
   /// Custom fallback view when the list is empty.
   final Widget? emptyWidget;
 
@@ -96,9 +96,7 @@ class _CommonListViewState<T> extends State<CommonListView<T>> {
   bool get _isAutonomousMode => widget.onLoadPage != null;
 
   bool get _isPaginationActive =>
-      widget.enablePagination ||
-      widget.onLoadMore != null ||
-      _isAutonomousMode;
+      widget.enablePagination || widget.onLoadMore != null || _isAutonomousMode;
 
   bool get _hasMoreItems {
     if (_isAutonomousMode) {
@@ -138,11 +136,14 @@ class _CommonListViewState<T> extends State<CommonListView<T>> {
   @override
   void didUpdateWidget(covariant CommonListView<T> oldWidget) {
     super.didUpdateWidget(oldWidget);
-    
+
     // Dynamically manage scroll listener on parameter updates
-    final oldActive = oldWidget.enablePagination || oldWidget.onLoadMore != null || oldWidget.onLoadPage != null;
+    final oldActive =
+        oldWidget.enablePagination ||
+        oldWidget.onLoadMore != null ||
+        oldWidget.onLoadPage != null;
     final newActive = _isPaginationActive;
-    
+
     if (newActive != oldActive) {
       if (newActive) {
         _scrollController.addListener(_onScroll);
@@ -219,7 +220,8 @@ class _CommonListViewState<T> extends State<CommonListView<T>> {
   }
 
   void _onScroll() {
-    if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent - 200) {
+    if (_scrollController.position.pixels >=
+        _scrollController.position.maxScrollExtent - 200) {
       if (!_isLoadingState && _hasMoreItems) {
         if (_isAutonomousMode) {
           _loadNextPage();
@@ -238,9 +240,7 @@ class _CommonListViewState<T> extends State<CommonListView<T>> {
     // Initial first-page load or empty state routing
     if (displayList.isEmpty) {
       if (loading) {
-        return Center(
-          child: _buildLoadingIndicator(),
-        );
+        return Center(child: _buildLoadingIndicator());
       }
       return widget.emptyWidget ?? _buildDefaultEmptyState(context);
     }
@@ -252,7 +252,11 @@ class _CommonListViewState<T> extends State<CommonListView<T>> {
               (context, index) {
                 final itemIndex = index ~/ 2;
                 if (index.isEven) {
-                  return widget.itemBuilder(context, displayList[itemIndex], itemIndex);
+                  return widget.itemBuilder(
+                    context,
+                    displayList[itemIndex],
+                    itemIndex,
+                  );
                 }
                 return widget.separatorWidget!;
               },
@@ -261,7 +265,8 @@ class _CommonListViewState<T> extends State<CommonListView<T>> {
           )
         : SliverList(
             delegate: SliverChildBuilderDelegate(
-              (context, index) => widget.itemBuilder(context, displayList[index], index),
+              (context, index) =>
+                  widget.itemBuilder(context, displayList[index], index),
               childCount: displayList.length,
             ),
           );
@@ -272,22 +277,14 @@ class _CommonListViewState<T> extends State<CommonListView<T>> {
       physics: widget.scrollPhysics,
       scrollDirection: widget.scrollDirection,
       slivers: [
-        SliverPadding(
-          padding: widget.padding,
-          sliver: sliverList,
-        ),
+        SliverPadding(padding: widget.padding, sliver: sliverList),
         if (loading && _hasMoreItems)
-          SliverToBoxAdapter(
-            child: _buildLoadingIndicator(),
-          ),
+          SliverToBoxAdapter(child: _buildLoadingIndicator()),
       ],
     );
 
     if (widget.onRefresh != null || _isAutonomousMode) {
-      return RefreshIndicator(
-        onRefresh: _handleRefresh,
-        child: scrollView,
-      );
+      return RefreshIndicator(onRefresh: _handleRefresh, child: scrollView);
     }
 
     return scrollView;
@@ -313,11 +310,17 @@ class _CommonListViewState<T> extends State<CommonListView<T>> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.inbox_outlined, size: 64.r, color: context.appColors.textMuted),
+            Icon(
+              Icons.inbox_outlined,
+              size: 64.r,
+              color: context.appColors.textMuted,
+            ),
             SizedBox(height: 16.h),
             Text(
               'No items found',
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(color: context.appColors.textSecondary),
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                color: context.appColors.textSecondary,
+              ),
             ),
           ],
         ),

@@ -48,7 +48,7 @@ class CommonTextField extends StatefulWidget {
     this.enableSuggestions = true,
     this.autofillHints,
     this.showPasswordToggle = true,
-    this.autoValidateMode=AutovalidateMode.onUserInteraction,
+    this.autoValidateMode = AutovalidateMode.onUserInteraction,
   });
 
   /// Label shown above or floating inside input frame.
@@ -65,7 +65,7 @@ class CommonTextField extends StatefulWidget {
 
   /// Input validator function.
   final String? Function(String?)? validator;
-  
+
   /// Icon displayed on the prefix edge of input.
   final IconData? prefixIcon;
 
@@ -80,7 +80,7 @@ class CommonTextField extends StatefulWidget {
 
   /// Custom suffix widget (overrides [suffixIcon]).
   final Widget? suffixWidget;
-  
+
   /// Obscures characters for sensitive entries (e.g. passwords).
   final bool obscureText;
 
@@ -89,7 +89,7 @@ class CommonTextField extends StatefulWidget {
 
   /// Keyboard return action symbol.
   final TextInputAction? textInputAction;
-  
+
   /// Callback on input text modifications.
   final Function(String)? onChanged;
 
@@ -98,7 +98,7 @@ class CommonTextField extends StatefulWidget {
 
   /// Tap callback inside text field boundaries.
   final VoidCallback? onTap;
-  
+
   /// Keyboard focus manager node.
   final FocusNode? focusNode;
 
@@ -116,13 +116,13 @@ class CommonTextField extends StatefulWidget {
 
   /// Absolute limit on text length count.
   final int? maxLength;
-  
+
   /// Standard text input format restrictions.
   final List<TextInputFormatter>? inputFormatters;
 
   /// Input alignment.
   final TextAlign textAlign;
-  
+
   /// Input fill color.
   final Color? fillColor;
 
@@ -143,7 +143,7 @@ class CommonTextField extends StatefulWidget {
 
   /// Inner padding spacing.
   final EdgeInsetsGeometry? contentPadding;
-  
+
   /// Input text style styling.
   final TextStyle? textStyle;
 
@@ -195,9 +195,10 @@ class _CommonTextFieldState extends State<CommonTextField> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    
+
     final defaultBorderColor = widget.borderColor ?? context.appColors.border;
-    final defaultFocusColor = widget.focusBorderColor ?? context.appColors.primary;
+    final defaultFocusColor =
+        widget.focusBorderColor ?? context.appColors.primary;
     final defaultErrorColor = widget.errorBorderColor ?? context.appColors.red;
     final defaultFillColor = widget.fillColor ?? context.appColors.surface;
 
@@ -225,7 +226,9 @@ class _CommonTextFieldState extends State<CommonTextField> {
     } else if (widget.obscureText && widget.showPasswordToggle) {
       resolvedSuffix = IconButton(
         icon: Icon(
-          _obscureText ? Icons.visibility_off_outlined : Icons.visibility_outlined,
+          _obscureText
+              ? Icons.visibility_off_outlined
+              : Icons.visibility_outlined,
           size: 20.r,
           color: context.appColors.textSecondary,
         ),
@@ -263,26 +266,44 @@ class _CommonTextFieldState extends State<CommonTextField> {
       enableSuggestions: widget.enableSuggestions,
       autofillHints: widget.autofillHints,
       style: (widget.textStyle ?? theme.textTheme.bodyLarge)?.copyWith(
-        fontSize: (widget.textStyle?.fontSize ?? theme.textTheme.bodyLarge?.fontSize ?? 16).sp,
+        fontSize:
+            (widget.textStyle?.fontSize ??
+                    theme.textTheme.bodyLarge?.fontSize ??
+                    16)
+                .sp,
       ),
       decoration: InputDecoration(
         labelText: widget.label,
         labelStyle: (widget.labelStyle ?? theme.textTheme.bodyMedium)?.copyWith(
           color: context.appColors.textSecondary,
-          fontSize: (widget.labelStyle?.fontSize ?? theme.textTheme.bodyMedium?.fontSize ?? 14).sp,
+          fontSize:
+              (widget.labelStyle?.fontSize ??
+                      theme.textTheme.bodyMedium?.fontSize ??
+                      14)
+                  .sp,
         ),
         hintText: widget.hint,
         hintStyle: (widget.hintStyle ?? theme.textTheme.bodyMedium)?.copyWith(
           color: context.appColors.textMuted,
-          fontSize: (widget.hintStyle?.fontSize ?? theme.textTheme.bodyMedium?.fontSize ?? 14).sp,
+          fontSize:
+              (widget.hintStyle?.fontSize ??
+                      theme.textTheme.bodyMedium?.fontSize ??
+                      14)
+                  .sp,
         ),
         errorStyle: widget.errorStyle?.copyWith(
           fontSize: (widget.errorStyle?.fontSize ?? 12).sp,
         ),
         filled: widget.filled,
         fillColor: defaultFillColor,
-        contentPadding: widget.contentPadding ?? EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
-        prefixIcon: widget.prefixWidget ?? (widget.prefixIcon != null ? Icon(widget.prefixIcon, size: 22.r) : null),
+        contentPadding:
+            widget.contentPadding ??
+            EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+        prefixIcon:
+            widget.prefixWidget ??
+            (widget.prefixIcon != null
+                ? Icon(widget.prefixIcon, size: 22.r)
+                : null),
         suffixIcon: resolvedSuffix,
         border: border,
         enabledBorder: border,

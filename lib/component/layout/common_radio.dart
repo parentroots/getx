@@ -23,7 +23,7 @@ class CommonRadio<T> extends StatelessWidget {
   final ValueChanged<T?> onChanged;
   final String title;
   final String? subtitle;
-  
+
   final Color? activeColor;
   final Color? tileColor;
   final Color? selectedTileColor;
@@ -37,8 +37,11 @@ class CommonRadio<T> extends StatelessWidget {
     final isDark = theme.brightness == Brightness.dark;
 
     final defaultTileColor = tileColor ?? Colors.transparent;
-    final defaultSelectedTileColor = selectedTileColor ?? 
-        (isDark ? theme.primaryColor.withOpacity(0.15) : theme.primaryColor.withOpacity(0.05));
+    final defaultSelectedTileColor =
+        selectedTileColor ??
+        (isDark
+            ? theme.primaryColor.withOpacity(0.15)
+            : theme.primaryColor.withOpacity(0.05));
 
     return Theme(
       data: theme.copyWith(
@@ -51,19 +54,18 @@ class CommonRadio<T> extends StatelessWidget {
         onChanged: onChanged,
         activeColor: activeColor ?? theme.primaryColor,
         tileColor: isSelected ? defaultSelectedTileColor : defaultTileColor,
-        shape: shape ?? RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
-        contentPadding: contentPadding ?? EdgeInsets.symmetric(horizontal: 16.w, vertical: 4.h),
+        shape:
+            shape ??
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
+        contentPadding:
+            contentPadding ??
+            EdgeInsets.symmetric(horizontal: 16.w, vertical: 4.h),
         title: CommonText(
           title,
-          style: context.textTheme.titleMedium,
           fontWeight: isSelected ? FontWeight.w500 : FontWeight.normal,
         ),
         subtitle: subtitle != null
-            ? CommonText(
-                subtitle!,
-                style: context.textTheme.bodyMedium,
-                color: Colors.grey,
-              )
+            ? CommonText(subtitle!, color: Colors.grey)
             : null,
         controlAffinity: ListTileControlAffinity.trailing,
       ),
@@ -97,7 +99,9 @@ class CommonMultiRadio<T> extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: List.generate(items.length, (index) {
         final item = items[index];
-        final title = itemTitleBuilder != null ? itemTitleBuilder!(item) : item.toString();
+        final title = itemTitleBuilder != null
+            ? itemTitleBuilder!(item)
+            : item.toString();
         final subtitle = itemSubtitleBuilder?.call(item);
 
         final radio = CommonRadio<T>(
@@ -112,10 +116,7 @@ class CommonMultiRadio<T> extends StatelessWidget {
         if (separator != null && index < items.length - 1) {
           return Column(
             mainAxisSize: MainAxisSize.min,
-            children: [
-              radio,
-              separator!,
-            ],
+            children: [radio, separator!],
           );
         }
 
