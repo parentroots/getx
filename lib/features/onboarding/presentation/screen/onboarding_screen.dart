@@ -6,6 +6,7 @@ import 'package:getx_template/component/image/common_image.dart';
 import 'package:getx_template/component/layout/common_text.dart';
 import 'package:getx_template/component/layout/common_scaffold.dart';
 import 'package:getx_template/utils/constants/app_colors.dart';
+import 'package:getx_template/utils/constants/app_string.dart';
 import 'package:getx_template/utils/extensions/context_extensions.dart';
 import 'package:getx_template/features/onboarding/presentation/controller/onboarding_controller.dart';
 
@@ -36,9 +37,9 @@ class OnboardingScreen extends StatelessWidget {
                         child: TextButton(
                           onPressed: controller.finish,
                           child: CommonText(
-                            'Skip',
+                            AppString.skip,
                             fontWeight: FontWeight.w500,
-                            color: Colors.grey,
+                            color: context.appColors.textSecondary,
                           ),
                         ),
                       ),
@@ -56,23 +57,20 @@ class OnboardingScreen extends StatelessWidget {
                 children: const [
                   _OnboardingPage(
                     icon: "assets/images/onboarding_one.png",
-                    title: "Fast Development",
-                    description:
-                        "Pre-wired boilerplate with GetX, routing, dependency injection, and theme management ready to roll.",
+                    title: AppString.fastDevelopment,
+                    description: AppString.fastDevelopmentDesc,
                     colors: [Color(0xFFFF8C00), Color(0xFFFF3E00)],
                   ),
                   _OnboardingPage(
                     icon: "assets/images/onboarding_two.png",
-                    title: "Robust Networking",
-                    description:
-                        "Fully integrated Dio API client with status mapping, auto token refresh, and complete error handling.",
+                    title: AppString.robustNetworking,
+                    description: AppString.robustNetworkingDesc,
                     colors: [Color(0xFF00C6FF), Color(0xFF0072FF)],
                   ),
                   _OnboardingPage(
                     icon: "assets/images/onboarding_three.png",
-                    title: "Beautiful UI Components",
-                    description:
-                        "Interactive pre-built widgets like animated buttons, indicators, loaders, and glassmorphic navigation bars.",
+                    title: AppString.beautifulUi,
+                    description: AppString.beautifulUiDesc,
                     colors: [Color(0xFF9D50BB), Color(0xFF6E48AA)],
                   ),
                 ],
@@ -100,7 +98,7 @@ class OnboardingScreen extends StatelessWidget {
                       borderColor: context.appColors.white,
                       borderWidth: 1,
                       buttonColor: context.appColors.primary,
-                      titleText: isLast ? "Explore Now" : "Next",
+                      titleText: isLast ? AppString.exploreNow : AppString.next,
                       buttonWidth: double.maxFinite,
                       onTap: isLast ? controller.finish : controller.nextPage,
                     );
@@ -151,8 +149,6 @@ class _OnboardingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 24.w),
       child: Column(
@@ -170,7 +166,7 @@ class _OnboardingPage extends StatelessWidget {
           SizedBox(height: 16.h),
           CommonText(
             description,
-            color: isDark ? Colors.grey.shade400 : Colors.grey.shade600,
+            color: context.appColors.textSecondary,
             textAlign: TextAlign.center,
           ),
         ],

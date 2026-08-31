@@ -6,6 +6,7 @@ import 'package:getx_template/component/button/common_button.dart';
 import 'package:getx_template/component/layout/common_text.dart';
 import 'package:getx_template/component/layout/common_scaffold.dart';
 import 'package:getx_template/utils/constants/app_colors.dart';
+import 'package:getx_template/utils/constants/app_string.dart';
 import 'package:getx_template/utils/extensions/context_extensions.dart';
 import 'package:getx_template/core/theme/app_spacing.dart';
 import 'package:getx_template/utils/helper/validators.dart';
@@ -53,18 +54,18 @@ class OtpVerificationScreen extends StatelessWidget {
     );
 
     return CommonScaffold(
-      appBar: const CommonAppBar(title: 'Verification'),
+      appBar: const CommonAppBar(title: AppString.verification),
       body: Form(
         key: controller.otpFormKey,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             SizedBox(height: 16.h),
-            CommonText('Enter code', fontWeight: FontWeight.bold),
+            CommonText(AppString.enterCode, fontWeight: FontWeight.bold),
             SizedBox(height: AppSpacing.md.h),
             CommonText(
-              'This screen is provider-neutral and ready for SMS, email, or authenticator-code flows.',
-              color: Colors.grey,
+              AppString.verificationDesc,
+              color: context.appColors.textSecondary,
             ),
             SizedBox(height: AppSpacing.xl.h),
 
@@ -72,7 +73,7 @@ class OtpVerificationScreen extends StatelessWidget {
               child: Pinput(
                 length: 6,
                 controller: controller.otpController,
-                validator: (value) => Validators.required(value, field: 'Code'),
+                validator: (value) => Validators.required(value, field: AppString.code),
                 defaultPinTheme: defaultPinTheme,
                 focusedPinTheme: focusedPinTheme,
                 submittedPinTheme: submittedPinTheme,
@@ -83,7 +84,7 @@ class OtpVerificationScreen extends StatelessWidget {
             ),
 
             SizedBox(height: AppSpacing.lg.h),
-            CommonButton(titleText: 'Verify', onTap: controller.verifyOtp),
+            CommonButton(titleText: AppString.verify, onTap: controller.verifyOtp),
           ],
         ),
       ),

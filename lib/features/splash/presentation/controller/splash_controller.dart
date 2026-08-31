@@ -13,7 +13,7 @@ class SplashController extends BaseController {
   }
 
   Future<void> _bootstrap() async {
-    await Future<void>.delayed(const Duration(milliseconds: 900));
+    await Future<void>.delayed(const Duration(seconds: 3));
     final storage = Get.find<SharedPreferencesService>();
 
     final user = storage.getUser();

@@ -43,10 +43,17 @@ class SplashScreen extends GetView<SplashController> {
                 fontWeight: FontWeight.bold,
                 textAlign: TextAlign.center,
               ),
-              SizedBox(height: AppSpacing.md.h),
-              SizedBox.square(
-                dimension: 24.r,
-                child: const CircularProgressIndicator(strokeWidth: 2),
+              SizedBox(height: AppSpacing.xl.h),
+              SizedBox(
+                width: 140.w,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(10.r),
+                  child: LinearProgressIndicator(
+                    minHeight: 4.h,
+                    backgroundColor: context.appColors.primary.withOpacity(0.15),
+                    valueColor: AlwaysStoppedAnimation<Color>(context.appColors.primary),
+                  ),
+                ),
               ),
             ],
           ),

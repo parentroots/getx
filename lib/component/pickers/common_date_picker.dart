@@ -17,7 +17,6 @@ class CommonDatePicker {
   }) async {
     DateTime selectedDate = initialDate ?? DateTime.now();
     final theme = Theme.of(context);
-    final isDark = theme.brightness == Brightness.dark;
 
     return showModalBottomSheet<DateTime>(
       context: context,
@@ -95,7 +94,7 @@ class CommonDatePicker {
               Expanded(
                 child: CupertinoTheme(
                   data: CupertinoThemeData(
-                    brightness: isDark ? Brightness.dark : Brightness.light,
+                    brightness: theme.brightness,
                     textTheme: CupertinoTextThemeData(
                       dateTimePickerTextStyle: TextStyle(
                         color: context.appColors.text,

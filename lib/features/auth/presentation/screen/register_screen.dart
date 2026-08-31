@@ -6,6 +6,7 @@ import 'package:getx_template/component/button/common_button.dart';
 import 'package:getx_template/component/text_field/common_text_field.dart';
 import 'package:getx_template/component/layout/common_text.dart';
 import 'package:getx_template/component/layout/common_scaffold.dart';
+import 'package:getx_template/utils/constants/app_string.dart';
 import 'package:getx_template/core/theme/app_spacing.dart';
 import 'package:getx_template/utils/helper/validators.dart';
 import 'package:getx_template/features/auth/presentation/controller/auth_controller.dart';
@@ -18,7 +19,7 @@ class RegisterScreen extends StatelessWidget {
     final controller = Get.find<AuthController>();
 
     return CommonScaffold(
-      appBar: const CommonAppBar(title: 'Create account'),
+      appBar: const CommonAppBar(title: AppString.createAccount),
       body: Form(
         key: controller.registerFormKey,
         child: ListView(
@@ -27,28 +28,28 @@ class RegisterScreen extends StatelessWidget {
             Align(
               alignment: Alignment.center,
               child: CommonText(
-                'Sign-Up',
+                AppString.signUp,
                 fontWeight: FontWeight.bold,
                 fontSize: 22,
               ),
             ),
             SizedBox(height: AppSpacing.xl.h),
             CommonTextField(
-              label: 'Name',
+              label: AppString.name,
               controller: controller.nameController,
-              validator: (value) => Validators.required(value, field: 'Name'),
+              validator: (value) => Validators.required(value, field: AppString.name),
               prefixIcon: Icons.person_outline,
             ),
             SizedBox(height: AppSpacing.md.h),
             CommonTextField(
-              label: 'Email',
+              label: AppString.email,
               controller: controller.emailController,
               validator: Validators.email,
               prefixIcon: Icons.email_outlined,
             ),
             SizedBox(height: AppSpacing.md.h),
             CommonTextField(
-              label: 'Password',
+              label: AppString.password,
               controller: controller.passwordController,
               validator: Validators.password,
               obscureText: true,
@@ -56,9 +57,13 @@ class RegisterScreen extends StatelessWidget {
             ),
             SizedBox(height: AppSpacing.lg.h),
             CommonButton(
-              titleText: 'Create account',
+              titleText: AppString.createAccount,
               onTap: controller.submitRegister,
             ),
+
+
+
+
           ],
         ),
       ),

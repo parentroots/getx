@@ -100,13 +100,7 @@ class MainBottomNavBar extends StatelessWidget {
                       ),
                       decoration: BoxDecoration(
                         color: isSelected
-                            ? (isDark
-                                  ? context.appColors.primary.withValues(
-                                      alpha: 0.15,
-                                    )
-                                  : context.appColors.primary.withValues(
-                                      alpha: 0.08,
-                                    ))
+                            ? context.appColors.primary.withValues(alpha: 0.1)
                             : Colors.transparent,
                         borderRadius: BorderRadius.circular(16.r),
                       ),

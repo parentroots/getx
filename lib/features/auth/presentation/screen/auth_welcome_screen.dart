@@ -7,6 +7,7 @@ import 'package:getx_template/component/layout/common_text.dart';
 import 'package:getx_template/core/routing/app_routes.dart';
 import 'package:getx_template/core/theme/app_spacing.dart';
 import 'package:getx_template/utils/constants/app_colors.dart';
+import 'package:getx_template/utils/constants/app_string.dart';
 import 'package:getx_template/utils/extensions/context_extensions.dart';
 import 'package:getx_template/utils/extensions/screen_extensions.dart';
 
@@ -27,7 +28,7 @@ class AuthWelcomeScreen extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.xl),
           Text(
-            'Welcome',
+            AppString.welcome,
             style: Theme.of(context).textTheme.headlineMedium,
             textAlign: TextAlign.center,
           ),
@@ -36,7 +37,7 @@ class AuthWelcomeScreen extends StatelessWidget {
           CommonText(
             fontSize: 12.sp,
             textAlign: TextAlign.center,
-            'Use this neutral authentication entry point as the starting surface for your app.',
+            AppString.welcomeDesc,
           ),
 
           60.height,
@@ -46,7 +47,7 @@ class AuthWelcomeScreen extends StatelessWidget {
               //login button=====================
               Expanded(
                 child: CommonButton(
-                  titleText: "Login",
+                  titleText: AppString.login,
                   onTap: () => Get.toNamed(AppRoutes.login),
                 ),
               ),
@@ -58,7 +59,7 @@ class AuthWelcomeScreen extends StatelessWidget {
                   buttonColor: context.appColors.white,
                   border: true,
                   borderColor: context.appColors.primary,
-                  titleText: 'Sign-Up',
+                  titleText: AppString.signUp,
                   titleColor: Colors.black,
                   onTap: () => Get.toNamed(AppRoutes.register),
                 ),

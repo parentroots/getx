@@ -6,7 +6,9 @@ import 'package:getx_template/component/button/common_button.dart';
 import 'package:getx_template/component/text_field/common_text_field.dart';
 import 'package:getx_template/component/layout/common_text.dart';
 import 'package:getx_template/component/layout/common_scaffold.dart';
+import 'package:getx_template/utils/constants/app_string.dart';
 import 'package:getx_template/core/theme/app_spacing.dart';
+import 'package:getx_template/utils/extensions/context_extensions.dart';
 import 'package:getx_template/utils/helper/validators.dart';
 import 'package:getx_template/features/auth/presentation/controller/auth_controller.dart';
 
@@ -18,29 +20,29 @@ class ForgotPasswordScreen extends StatelessWidget {
     final controller = Get.find<AuthController>();
 
     return CommonScaffold(
-      appBar: const CommonAppBar(title: 'Forgot password'),
+      appBar: const CommonAppBar(title: AppString.forgotPasswordTitle),
       body: Form(
         key: controller.forgotPasswordFormKey,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             SizedBox(height: 16.h),
-            CommonText('Reset access', fontWeight: FontWeight.bold),
+            CommonText(AppString.resetAccess, fontWeight: FontWeight.bold),
             SizedBox(height: AppSpacing.md.h),
             CommonText(
-              'Enter the email connected to the account. Wire this to your auth provider when you build the app.',
-              color: Colors.grey,
+              AppString.forgotPasswordDesc,
+              color: context.appColors.textSecondary,
             ),
             SizedBox(height: AppSpacing.xl.h),
             CommonTextField(
-              label: 'Email',
+              label: AppString.email,
               controller: controller.emailController,
               validator: Validators.email,
               prefixIcon: Icons.email_outlined,
             ),
             SizedBox(height: AppSpacing.lg.h),
             CommonButton(
-              titleText: 'Continue',
+              titleText: AppString.continues,
               onTap: controller.submitForgotPassword,
             ),
           ],

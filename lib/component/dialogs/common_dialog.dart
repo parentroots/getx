@@ -247,7 +247,7 @@ class CommonDialog extends StatelessWidget {
     }
   }
 
-  Widget _buildIconHeader(BuildContext context, bool isDark) {
+  Widget _buildIconHeader(BuildContext context) {
     if (image != null) {
       return Image.asset(
         image!,
@@ -290,7 +290,7 @@ class CommonDialog extends StatelessWidget {
     );
   }
 
-  Widget _buildButtons(BuildContext context, Color accentColor, bool isDark) {
+  Widget _buildButtons(BuildContext context, Color accentColor) {
     final bool hasTwoButtons =
         primaryButtonText != null && secondaryButtonText != null;
 
@@ -315,7 +315,7 @@ class CommonDialog extends StatelessWidget {
               titleText: secondaryButtonText!,
               titleSize: 13,
               buttonHeight: 46.h,
-              buttonColor: isDark ? Colors.transparent : Colors.white,
+              buttonColor: context.appColors.transparent,
               titleColor: resolvedSecondaryColor,
               borderColor: resolvedSecondaryColor,
               border: true,
@@ -342,7 +342,6 @@ class CommonDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final isDark = theme.brightness == Brightness.dark;
     final Color resolvedBg = context.appColors.surface;
     final Color accentColor = _getAccentColor(context);
 
@@ -362,7 +361,7 @@ class CommonDialog extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  _buildIconHeader(context, isDark),
+                  _buildIconHeader(context),
                   SizedBox(height: 20.h),
                   CommonText(
                     title,
@@ -386,7 +385,7 @@ class CommonDialog extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                   ),
                   SizedBox(height: 24.h),
-                  _buildButtons(context, accentColor, isDark),
+                  _buildButtons(context, accentColor),
                 ],
               ),
             ),
@@ -401,15 +400,13 @@ class CommonDialog extends StatelessWidget {
                     width: 28.w,
                     height: 28.w,
                     decoration: BoxDecoration(
-                      color: isDark
-                          ? Colors.white.withValues(alpha: 0.1)
-                          : Colors.black.withValues(alpha: 0.05),
+                      color: context.appColors.surfaceSecondary,
                       shape: BoxShape.circle,
                     ),
                     child: Icon(
                       Icons.close_rounded,
                       size: 16.sp,
-                      color: isDark ? Colors.white70 : Colors.black54,
+                      color: context.appColors.textSecondary,
                     ),
                   ),
                 ),

@@ -34,14 +34,10 @@ class CommonRadio<T> extends StatelessWidget {
   Widget build(BuildContext context) {
     final isSelected = value == groupValue;
     final theme = Theme.of(context);
-    final isDark = theme.brightness == Brightness.dark;
 
     final defaultTileColor = tileColor ?? Colors.transparent;
     final defaultSelectedTileColor =
-        selectedTileColor ??
-        (isDark
-            ? theme.primaryColor.withOpacity(0.15)
-            : theme.primaryColor.withOpacity(0.05));
+        selectedTileColor ?? context.appColors.primary.withOpacity(0.1);
 
     return Theme(
       data: theme.copyWith(
@@ -65,7 +61,7 @@ class CommonRadio<T> extends StatelessWidget {
           fontWeight: isSelected ? FontWeight.w500 : FontWeight.normal,
         ),
         subtitle: subtitle != null
-            ? CommonText(subtitle!, color: Colors.grey)
+            ? CommonText(subtitle!, color: context.appColors.textSecondary)
             : null,
         controlAffinity: ListTileControlAffinity.trailing,
       ),

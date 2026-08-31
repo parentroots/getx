@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:getx_template/component/loading/shimmer_box.dart';
+import 'package:getx_template/utils/extensions/context_extensions.dart';
 
 /// A premium, highly customizable skeleton loading mockup card
 /// used to show outstanding skeleton layouts during asynchronous data fetching.
@@ -47,19 +48,16 @@ class CommonShimmerCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final isDark = theme.brightness == Brightness.dark;
-
     final resolvedPadding = padding ?? EdgeInsets.all(16.w);
 
     return Container(
       width: width ?? double.infinity,
       height: height,
       decoration: BoxDecoration(
-        color: isDark ? Colors.grey.shade900 : Colors.white,
+        color: context.appColors.surface,
         borderRadius: BorderRadius.circular(borderRadius.r),
         border: Border.all(
-          color: isDark ? Colors.grey.shade800 : Colors.grey.shade100,
+          color: context.appColors.border,
           width: 1.r,
         ),
       ),

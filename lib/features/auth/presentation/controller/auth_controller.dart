@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getx_template/component/dialogs/common_snackbar.dart';
@@ -7,22 +6,19 @@ import 'package:getx_template/data/models/user_model.dart';
 import 'package:getx_template/data/repositories/auth_repository.dart';
 import 'package:getx_template/services/storage/shared_preferences_service.dart';
 import 'package:getx_template/shared/controllers/base_controller.dart';
-import 'package:getx_template/component/pickers/common_country_picker.dart';
-import 'package:getx_template/utils/app_log/app_log.dart';
 
 class AuthController extends BaseController {
   final AuthRepository _authRepository = Get.find<AuthRepository>();
-  final SharedPreferencesService _storage =
-      Get.find<SharedPreferencesService>();
+  final SharedPreferencesService _storage = Get.find<SharedPreferencesService>();
 
-  List<String> tabList = ['All', 'new', 'old'];
-
+  // Global Keys for Forms validation
   final loginFormKey = GlobalKey<FormState>();
   final registerFormKey = GlobalKey<FormState>();
   final forgotPasswordFormKey = GlobalKey<FormState>();
   final otpFormKey = GlobalKey<FormState>();
   final changePasswordFormKey = GlobalKey<FormState>();
 
+  // Controllers for text input fields
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final nameController = TextEditingController();
@@ -32,88 +28,69 @@ class AuthController extends BaseController {
   final newPasswordTEController = TextEditingController();
   final confirmNewPasswordTEController = TextEditingController();
 
+  // Remember me switch state
   final RxBool isSwitchOn = false.obs;
-  final RxInt currentTabIndex = 0.obs;
 
-  final phoneController = TextEditingController();
-  final RxDouble appRating = 5.0.obs;
-  final RxBool obscurePassword = true.obs;
-  final Rxn<CountryModel> selectedCountry = Rxn<CountryModel>();
-  final Rxn<DateTime> selectedDate = Rxn<DateTime>();
-  final RxList<File> selectedImages = <File>[].obs;
-
+  /// Submit Login credentials to API
   Future<void> submitLogin() async {
-    debugPrint("--> [Login] submitLogin button clicked");
-
-    AppLog.info("Login Button Clicked");
-
     final isValid = loginFormKey.currentState?.validate() ?? false;
+    if (!isValid) return;
 
-    AppLog.info("Form validation status: $isValid");
+    try {
+      isLoading.value = true;
 
-    if (isValid) {
-      try {
-        /* await runWithLoading(() => _authRepository.login(
-          emailController.text.trim(),
-          passwordController.text,
-        ));*/
+      // 1. Perform login API call
+      final responseData = await _authRepository.login(
+        emailController.text.trim(),
+        passwordController.text,
+      );
 
-        // Save mock user details locally
-        final user = UserModel(
-          id: '123',
-          name: emailController.text.trim().split('@').first.capitalizeFirst,
-          email: emailController.text.trim(),
-          token: 'hello-i-am-dummy-jwt-token',
-        );
-        debugPrint("--> [Login] Saving User to Storage: ${user.toJson()}");
+      // 2. Parse user from API response
+      final user = UserModel.fromJson((responseData['data'] ?? responseData) as Map<String, dynamic>);
 
-        await _storage.saveUser(user);
+      // 3. Save user info locally
+      await _storage.saveUser(user);
 
-        debugPrint(
-          "--> [Login] Read back user from Storage: ${_storage.getUser()?.toJson()}",
-        );
-
-        Get.offAllNamed(AppRoutes.mainBottomNavScreen);
-      } catch (error) {
-        CommonSnackbar.showError(title: 'Error', message: error.toString());
-      }
+      // 4. Navigate to Home
+      Get.offAllNamed(AppRoutes.mainBottomNavScreen);
+    } catch (error) {
+      CommonSnackbar.showError(title: 'Error', message: error.toString());
+    } finally {
+      isLoading.value = false;
     }
   }
 
+  /// Submit Registration details to API
   Future<void> submitRegister() async {
-    debugPrint("--> [Register] submitRegister button clicked");
     final isValid = registerFormKey.currentState?.validate() ?? false;
-    debugPrint("--> [Register] Form validation status: $isValid");
-    if (isValid) {
-      try {
-        /* await runWithLoading(
-          () => _authRepository.register(
-            name: nameController.text.trim(),
-            email: emailController.text.trim(),
-            password: passwordController.text,
-          ),
-        ); */
+    if (!isValid) return;
 
-        // Save registered user details locally
-        final user = UserModel(
-          id: '124',
-          name: nameController.text.trim(),
-          email: emailController.text.trim(),
-          token: 'dummy_jwt_token_register',
-        );
-        debugPrint("--> [Register] Saving User to Storage: ${user.toJson()}");
-        await _storage.saveUser(user);
-        debugPrint(
-          "--> [Register] Read back user from Storage: ${_storage.getUser()?.toJson()}",
-        );
+    try {
+      isLoading.value = true;
 
-        Get.offAllNamed(AppRoutes.mainBottomNavScreen);
-      } catch (error) {
-        CommonSnackbar.showError(title: 'Error', message: error.toString());
-      }
+      // 1. Perform registration API call
+      final responseData = await _authRepository.register(
+        name: nameController.text.trim(),
+        email: emailController.text.trim(),
+        password: passwordController.text,
+      );
+
+      // 2. Parse user from API response
+      final user = UserModel.fromJson((responseData['data'] ?? responseData) as Map<String, dynamic>);
+
+      // 3. Save user info locally
+      await _storage.saveUser(user);
+
+      // 4. Navigate to Home
+      Get.offAllNamed(AppRoutes.mainBottomNavScreen);
+    } catch (error) {
+      CommonSnackbar.showError(title: 'Error', message: error.toString());
+    } finally {
+      isLoading.value = false;
     }
   }
 
+  /// Change Password API call
   Future<void> changePassword() async {
     final isValid = changePasswordFormKey.currentState?.validate() ?? false;
     if (!isValid) return;
@@ -128,11 +105,12 @@ class AuthController extends BaseController {
     }
 
     try {
-      await runWithLoading(
-        () => _authRepository.changePassword(
-          currentPassword: currentPasswordTEController.text,
-          newPassword: newPasswordTEController.text,
-        ),
+      isLoading.value = true;
+
+      // 1. Perform change password API call
+      await _authRepository.changePassword(
+        currentPassword: currentPasswordTEController.text,
+        newPassword: newPasswordTEController.text,
       );
 
       CommonSnackbar.showSuccess(
@@ -140,7 +118,7 @@ class AuthController extends BaseController {
         message: "Password changed successfully",
       );
 
-      // Clear fields
+      // 2. Clear password input fields
       currentPasswordTEController.clear();
       newPasswordTEController.clear();
       confirmNewPasswordTEController.clear();
@@ -148,17 +126,24 @@ class AuthController extends BaseController {
       Get.back();
     } catch (error) {
       CommonSnackbar.showError(title: "Error", message: error.toString());
+    } finally {
+      isLoading.value = false;
     }
   }
 
-  void submitForgotPassword() =>
-      _validate(forgotPasswordFormKey, AppRoutes.otpVerification);
+  /// Submit Forgot Password
+  void submitForgotPassword() {
+    final isValid = forgotPasswordFormKey.currentState?.validate() ?? false;
+    if (isValid) {
+      Get.offAllNamed(AppRoutes.otpVerification);
+    }
+  }
 
-  void verifyOtp() => _validate(otpFormKey, AppRoutes.login);
-
-  void _validate(GlobalKey<FormState> key, String nextRoute) {
-    if (key.currentState?.validate() ?? false) {
-      Get.offAllNamed(nextRoute);
+  /// Verify OTP
+  void verifyOtp() {
+    final isValid = otpFormKey.currentState?.validate() ?? false;
+    if (isValid) {
+      Get.offAllNamed(AppRoutes.login);
     }
   }
 

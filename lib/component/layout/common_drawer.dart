@@ -144,7 +144,7 @@ class _CommonDrawerState extends State<CommonDrawer> {
           SizedBox(height: 16.h),
           CommonText('MD EBRAHIM NAZMUL', fontWeight: FontWeight.bold),
           SizedBox(height: 4.h),
-          CommonText('ibrahimsparktech@gmail.com', color: Colors.grey),
+          CommonText('ibrahimsparktech@gmail.com', color: context.appColors.textSecondary),
         ],
       ),
     );

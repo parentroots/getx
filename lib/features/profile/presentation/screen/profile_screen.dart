@@ -8,6 +8,7 @@ import 'package:getx_template/component/layout/common_scaffold.dart';
 import 'package:getx_template/core/routing/app_routes.dart';
 import 'package:getx_template/core/theme/app_spacing.dart';
 import 'package:getx_template/features/profile/presentation/controller/profile_controller.dart';
+import 'package:getx_template/utils/constants/app_string.dart';
 import 'package:getx_template/utils/extensions/screen_extensions.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -38,24 +39,24 @@ class ProfileScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   CommonText(
-                    user?.name ?? 'Guest User',
+                    user?.name ?? AppString.guestUser,
                     fontWeight: FontWeight.bold,
                   ),
                   SizedBox(height: AppSpacing.sm.h),
-                  CommonText(user?.email ?? 'No email associated'),
+                  CommonText(user?.email ?? AppString.noEmail),
                 ],
               ),
             );
           }),
           SizedBox(height: AppSpacing.lg.h),
           CommonButton(
-            titleText: "Edit Profile",
+            titleText: AppString.editProfile,
             onTap: () => Get.toNamed(AppRoutes.editProfile),
           ),
 
           10.height,
           CommonButton(
-            titleText: "Change Password",
+            titleText: AppString.changePassword,
             onTap: () => Get.toNamed(AppRoutes.changePassword),
           ),
         ],

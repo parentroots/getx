@@ -5,6 +5,8 @@ import 'package:getx_template/component/app_bar/common_app_bar.dart';
 import 'package:getx_template/component/card/common_card.dart';
 import 'package:getx_template/component/layout/common_text.dart';
 import 'package:getx_template/component/layout/common_scaffold.dart';
+import 'package:getx_template/utils/constants/app_string.dart';
+import 'package:getx_template/utils/extensions/context_extensions.dart';
 import 'package:getx_template/core/theme/app_spacing.dart';
 import 'package:getx_template/features/settings/presentation/controller/settings_controller.dart';
 
@@ -17,7 +19,7 @@ class SettingsScreen extends StatelessWidget {
     return CommonScaffold(
       appBar: const CommonAppBar(
         centerTitle: true,
-        title: 'Settings',
+        title: AppString.settings,
         showBack: true,
       ),
       body: ListView(
@@ -30,7 +32,7 @@ class SettingsScreen extends StatelessWidget {
                   contentPadding: EdgeInsets.zero,
                   leading: Icon(Icons.person_outline, size: 24.r),
                   title: CommonText(
-                    'Profile Details',
+                    AppString.profileDetails,
                     fontWeight: FontWeight.w500,
                   ),
                   trailing: Icon(Icons.chevron_right, size: 24.r),
@@ -43,17 +45,17 @@ class SettingsScreen extends StatelessWidget {
                     segments: [
                       ButtonSegment(
                         value: ThemeMode.system,
-                        label: CommonText('System', fontSize: 11),
+                        label: CommonText(AppString.system, fontSize: 11),
                         icon: Icon(Icons.brightness_auto, size: 16.r),
                       ),
                       ButtonSegment(
                         value: ThemeMode.light,
-                        label: CommonText('Light', fontSize: 11),
+                        label: CommonText(AppString.light, fontSize: 11),
                         icon: Icon(Icons.light_mode, size: 16.r),
                       ),
                       ButtonSegment(
                         value: ThemeMode.dark,
-                        label: CommonText('Dark', fontSize: 11),
+                        label: CommonText(AppString.dark, fontSize: 11),
                         icon: Icon(Icons.dark_mode, size: 16.r),
                       ),
                     ],
@@ -67,8 +69,8 @@ class SettingsScreen extends StatelessWidget {
           ),
           SizedBox(height: AppSpacing.lg.h),
           CommonText(
-            'Keep app-level settings here. Feature-specific settings should live with their feature module.',
-            color: Colors.grey,
+            AppString.keepSettingsNote,
+            color: context.appColors.textSecondary,
           ),
         ],
       ),

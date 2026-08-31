@@ -25,13 +25,11 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.find<AuthController>();
     final theme = Theme.of(context);
-    final isDark = theme.brightness == Brightness.dark;
 
     return CommonScaffold(
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
-            padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 16.h),
             child: Form(
               key: controller.loginFormKey,
               child: Column(
@@ -59,7 +57,7 @@ class LoginScreen extends StatelessWidget {
                   Center(
                     child: CommonText(
                       color: context.appColors.text,
-                      "Welcome Back!",
+                      AppString.welcomeBack,
                       fontWeight: FontWeight.bold,
                       textAlign: TextAlign.center,
                     ),
@@ -67,16 +65,14 @@ class LoginScreen extends StatelessWidget {
                   SizedBox(height: 8.h),
                   Center(
                     child: CommonText(
-                      "Enter your credentials to continue into the app",
-                      color: isDark
-                          ? Colors.grey.shade400
-                          : Colors.grey.shade600,
+                      AppString.loginCredentialsDesc,
+                      color: context.appColors.textSecondary,
                       textAlign: TextAlign.center,
                     ),
                   ),
                   SizedBox(height: 36.h),
 
-                  CommonText("Email Address", fontWeight: FontWeight.bold),
+                  CommonText(AppString.emailAddress, fontWeight: FontWeight.bold),
 
                   6.height,
 
@@ -90,7 +86,7 @@ class LoginScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 12.h),
 
-                  CommonText("Password", fontWeight: FontWeight.bold),
+                  CommonText(AppString.password, fontWeight: FontWeight.bold),
 
                   6.height,
 
@@ -124,17 +120,15 @@ class LoginScreen extends StatelessWidget {
                           ),
                           SizedBox(width: 8.w),
                           CommonText(
-                            "Remember me",
-                            color: isDark
-                                ? Colors.grey.shade300
-                                : Colors.grey.shade700,
+                            AppString.rememberMe,
+                            color: context.appColors.textSecondary,
                           ),
                         ],
                       ),
                       GestureDetector(
                         onTap: () => Get.toNamed(AppRoutes.forgotPassword),
                         child: CommonText(
-                          "Forgot Password?",
+                          AppString.forgotPasswordQuestion,
                           color: theme.primaryColor,
                           fontWeight: FontWeight.w500,
                           decoration: TextDecoration.underline,
@@ -154,7 +148,7 @@ class LoginScreen extends StatelessWidget {
                       isLoading: controller.isLoading.value,
                       borderColor: context.appColors.white,
                       borderWidth: 1,
-                      titleText: "Log In",
+                      titleText: AppString.logInButton,
                       buttonWidth: double.maxFinite,
                       onTap: controller.submitLogin,
                     );
@@ -167,15 +161,13 @@ class LoginScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       CommonText(
-                        "Don't have an account? ",
-                        color: isDark
-                            ? Colors.grey.shade400
-                            : Colors.grey.shade600,
+                        AppString.dontHaveAccount,
+                        color: context.appColors.textSecondary,
                       ),
                       GestureDetector(
                         onTap: () => Get.toNamed(AppRoutes.register),
                         child: CommonText(
-                          "Sign Up",
+                          AppString.signUpButton,
                           color: context.appColors.primary,
                           fontWeight: FontWeight.bold,
                         ),

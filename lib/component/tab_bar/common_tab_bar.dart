@@ -113,8 +113,7 @@ class CommonTabBar extends StatelessWidget {
         : resolvedBgColor;
 
     final resolvedIndicatorColor =
-        indicatorColor ??
-        (isDark ? context.appColors.surfaceSecondary : context.appColors.white);
+        indicatorColor ?? context.appColors.surface;
 
     final resolvedActiveTextColor =
         activeTextColor ?? context.appColors.primary;

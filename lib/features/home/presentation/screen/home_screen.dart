@@ -8,6 +8,7 @@ import 'package:getx_template/component/layout/common_text.dart';
 import 'package:getx_template/core/theme/app_spacing.dart';
 import 'package:getx_template/features/home/presentation/controller/home_controller.dart';
 import 'package:getx_template/component/main_bottom_nav/main_bottom_nav_controller.dart';
+import 'package:getx_template/utils/constants/app_string.dart';
 import 'package:getx_template/utils/extensions/context_extensions.dart';
 
 class HomeScreen extends GetView<HomeController> {
@@ -19,7 +20,7 @@ class HomeScreen extends GetView<HomeController> {
       appBar: CommonAppBar(
         centerTitle: true,
         titleColor: context.appColors.primary,
-        title: 'Home',
+        title: AppString.home,
         showBack: false,
         leading: IconButton(
           icon: Icon(Icons.menu, color: context.appColors.primary),
@@ -33,13 +34,13 @@ class HomeScreen extends GetView<HomeController> {
         children: [
           CommonButton(
             buttonColor: context.appColors.primary,
-            titleText: "This Is Button",
+            titleText: AppString.thisIsButton,
           ),
           SizedBox(height: AppSpacing.md),
           CommonCard(
             color: context.appColors.border,
             child: CommonText(
-              "Welcome to GetX Template",
+              AppString.welcomeToTemplate,
               color: context.appColors.text,
             ),
           ),
