@@ -24,6 +24,8 @@ class MainBottomNavScreen extends GetView<MainBottomNavController> {
       drawer: const CommonDrawer(),
       bottomNavigationBar: const MainBottomNavBar(),
       extendBody: true,
+      safeArea: false,
+      padding: EdgeInsets.zero,
       body: Obx(
         () => IndexedStack(
           index: controller.currentIndex.value,
