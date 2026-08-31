@@ -1,3 +1,7 @@
+## 1.0.10
+
+* Resolved `intl` and `shimmer` version conflicts in the template's `pubspec.yaml` to ensure clean dependency resolution during project creation.
+
 ## 1.0.9
 
 * Bumped version to 1.0.9.
