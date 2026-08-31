@@ -2,7 +2,8 @@ name: getx_template
 description: "Production-ready generic Flutter starter template with GetX and Clean Architecture."
 repository: https://github.com/parentroots/getx
 issue_tracker: https://github.com/parentroots/getx/issues
-version: 1.0.1
+publish_to: 'none'
+version: 1.0.0+1
 
 environment:
   sdk: ">=3.9.0 <4.0.0"
