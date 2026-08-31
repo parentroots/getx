@@ -1,3 +1,7 @@
+## 1.0.9
+
+* Bumped version to 1.0.9.
+
 ## 1.0.8
 
 * Restructured feature folders (`data`, `presentation/controller`, `presentation/screen`, `presentation/widget`) globally.
