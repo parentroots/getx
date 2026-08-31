@@ -14,6 +14,7 @@ class CommonScaffold extends StatelessWidget {
     this.safeArea = true,
     this.padding = const EdgeInsets.all(AppSpacing.md),
     this.scaffoldKey,
+    this.extendBody = false,
   });
 
   final Widget body;
@@ -24,6 +25,7 @@ class CommonScaffold extends StatelessWidget {
   final bool safeArea;
   final EdgeInsetsGeometry padding;
   final GlobalKey<ScaffoldState>? scaffoldKey;
+  final bool extendBody;
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +45,7 @@ class CommonScaffold extends StatelessWidget {
       drawer: drawer,
       bottomNavigationBar: bottomNavigationBar,
       floatingActionButton: floatingActionButton,
+      extendBody: extendBody,
       body: safeArea ? SafeArea(child: content) : content,
     );
   }

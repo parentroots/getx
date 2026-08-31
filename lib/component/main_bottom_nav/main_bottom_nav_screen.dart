@@ -23,6 +23,7 @@ class MainBottomNavScreen extends GetView<MainBottomNavController> {
       scaffoldKey: controller.scaffoldKey,
       drawer: const CommonDrawer(),
       bottomNavigationBar: const MainBottomNavBar(),
+      extendBody: true,
       body: Obx(
         () => IndexedStack(
           index: controller.currentIndex.value,

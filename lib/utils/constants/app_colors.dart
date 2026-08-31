@@ -21,81 +21,120 @@ class ThemeColor extends ThemeExtension<ThemeColor> {
     required this.tertiary,
   });
 
+  // ===================== PRIMARY COLORS =====================
+
   final Color primary;
   final Color primaryHover;
   final Color secondary;
+
+  // ===================== BACKGROUND COLORS =====================
+
   final Color background;
   final Color surface;
   final Color surfaceSecondary;
   final Color border;
+
+  // ===================== TEXT COLORS =====================
+
   final Color text;
   final Color textSecondary;
   final Color textMuted;
+
+  // ===================== STATUS COLORS =====================
+
   final Color success;
   final Color warning;
   final Color error;
   final Color info;
+
+  // ===================== ACCENT COLORS =====================
+
   final Color accent;
   final Color tertiary;
 
-  // ===================== DARK THEME =====================
+  // ==========================================================
+  // DARK THEME
+  // "Facebook Midnight"
+  // Professional Blue + Deep Dark
+  // ==========================================================
 
   static const ThemeColor dark = ThemeColor(
-    primary: Color(0xFF22C55E),
-    primaryHover: Color(0xFF16A34A),
-    secondary: Color(0xFF94A3B8),
+    // Primary
+    primary: Color(0xFF1877F2),
+    primaryHover: Color(0xFF0D65D9),
+    secondary: Color(0xFF8AB4F8),
 
-    background: Color(0xFF0F172A),
-    surface: Color(0xFF1E293B),
-    surfaceSecondary: Color(0xFF334155),
-    border: Color(0xFF475569),
+    // Background
+    background: Color(0xFF18191A),
+    surface: Color(0xFF242526),
+    surfaceSecondary: Color(0xFF3A3B3C),
+    border: Color(0xFF3E4042),
 
-    text: Color(0xFFF8FAFC),
-    textSecondary: Color(0xFFCBD5E1),
-    textMuted: Color(0xFF94A3B8),
+    // Text
+    text: Color(0xFFF5F6F7),
+    textSecondary: Color(0xFFB8BBBF),
+    textMuted: Color(0xFF8A8D91),
 
-    success: Color(0xFF22C55E),
-    warning: Color(0xFFF59E0B),
-    error: Color(0xFFEF4444),
-    info: Color(0xFF38BDF8),
+    // Status
+    success: Color(0xFF42B72A),
+    warning: Color(0xFFF7B928),
+    error: Color(0xFFFA383E),
+    info: Color(0xFF4599FF),
 
-    accent: Color(0xFF6366F1),
-    tertiary: Color(0xFF8B5CF6),
+    // Accent
+    accent: Color(0xFF4599FF),
+    tertiary: Color(0xFF0866FF),
   );
 
-  // ===================== LIGHT THEME =====================
+  // ==========================================================
+  // LIGHT THEME
+  // "Facebook Clean"
+  // Professional Blue + Soft Gray
+  // ==========================================================
 
   static const ThemeColor light = ThemeColor(
-    primary: Color(0xFF16A34A),
-    primaryHover: Color(0xFF15803D),
-    secondary: Color(0xFF64748B),
+    // Primary
+    primary: Color(0xFF1877F2),
+    primaryHover: Color(0xFF0D65D9),
+    secondary: Color(0xFF65676B),
 
-    background: Color(0xFFF8FAFC),
+    // Background
+    background: Color(0xFFF0F2F5),
     surface: Color(0xFFFFFFFF),
-    surfaceSecondary: Color(0xFFF1F5F9),
-    border: Color(0xFFE2E8F0),
+    surfaceSecondary: Color(0xFFF5F6F7),
+    border: Color(0xFFDADDE1),
 
-    text: Color(0xFF0F172A),
-    textSecondary: Color(0xFF475569),
-    textMuted: Color(0xFF64748B),
+    // Text
+    text: Color(0xFF1C1E21),
+    textSecondary: Color(0xFF65676B),
+    textMuted: Color(0xFF8A8D91),
 
-    success: Color(0xFF16A34A),
-    warning: Color(0xFFD97706),
-    error: Color(0xFFDC2626),
-    info: Color(0xFF0284C7),
+    // Status
+    success: Color(0xFF42B72A),
+    warning: Color(0xFFF7B928),
+    error: Color(0xFFFA383E),
+    info: Color(0xFF1877F2),
 
-    accent: Color(0xFF4F46E5),
-    tertiary: Color(0xFF7C3AED),
+    // Accent
+    accent: Color(0xFF4599FF),
+    tertiary: Color(0xFF0866FF),
   );
 
-  // ===================== COMMON COLORS =====================
+  // ==========================================================
+  // COMMON COLORS
+  // ==========================================================
 
   Color get transparent => Colors.transparent;
+
   Color get white => Colors.white;
+
   Color get black => Colors.black;
+
   Color get red => Colors.red;
 
-  // ===================== COPY WITH =====================
+  // ==========================================================
+  // COPY WITH
+  // ==========================================================
 
   @override
   ThemeColor copyWith({
@@ -136,11 +175,15 @@ class ThemeColor extends ThemeExtension<ThemeColor> {
     );
   }
 
-  // ===================== LERP =====================
+  // ==========================================================
+  // LERP
+  // ==========================================================
 
   @override
   ThemeColor lerp(ThemeExtension<ThemeColor>? other, double t) {
-    if (other is! ThemeColor) return this;
+    if (other is! ThemeColor) {
+      return this;
+    }
 
     return ThemeColor(
       primary: Color.lerp(primary, other.primary, t)!,
