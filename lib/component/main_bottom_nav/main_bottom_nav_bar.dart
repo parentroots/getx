@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -35,9 +34,6 @@ class MainBottomNavBar extends StatelessWidget {
       icon: Icons.message_outlined,
       activeIcon: Icons.message,
       label: 'Message',
-      // If you want to use SVG, you can do:
-      // svgIcon: 'assets/icons/profile.svg',
-      // svgActiveIcon: 'assets/icons/profile_active.svg',
     ),
     _BottomNavItem(
       icon: Icons.person_2_outlined,
@@ -48,90 +44,96 @@ class MainBottomNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final isDark = theme.brightness == Brightness.dark;
     final controller = Get.find<MainBottomNavController>();
 
-    return SafeArea(
-      bottom: true,
-      child: Container(
-        height: 64.h,
-        margin: EdgeInsets.fromLTRB(20.w, 0, 20.w, 12.h),
-        padding: EdgeInsets.symmetric(horizontal: 12.w),
-        decoration: BoxDecoration(
-          color: theme.colorScheme.surface.withValues(alpha: 0.9),
-          borderRadius: BorderRadius.circular(24.r),
-          border: Border.all(
-            color: theme.colorScheme.outlineVariant.withValues(alpha: 0.5),
-            width: 1,
+    return Container(
+      decoration: BoxDecoration(
+        color: context.appColors.surface,
+        border: Border(
+          top: BorderSide(
+            color: context.appColors.border.withValues(alpha: 0.4),
+            width: 1.r,
           ),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withValues(alpha: isDark ? 0.3 : 0.06),
-              blurRadius: 20.r,
-              offset: const Offset(0, 8),
-            ),
-          ],
         ),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(24.r),
-          child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-            child: Obx(() {
-              final selectedIndex = controller.currentIndex.value;
-              return Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: List.generate(_navItems.length, (index) {
-                  final item = _navItems[index];
-                  final isSelected = index == selectedIndex;
-                  final iconColor = isSelected
-                      ? context.appColors.primary
-                      : context.appColors.textSecondary;
-
-                  return GestureDetector(
-                    onTap: () => controller.changeTab(index),
-                    behavior: HitTestBehavior.opaque,
-                    child: AnimatedContainer(
-                      duration: const Duration(milliseconds: 250),
-                      curve: Curves.easeInOut,
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 16.w,
-                        vertical: 8.h,
-                      ),
+      ),
+      child: SafeArea(
+        top: false,
+        bottom: true,
+        child: SizedBox(
+          height: 60.h,
+          child: Stack(
+            children: [
+              // Top sliding indicator line
+              Obx(() {
+                final selectedIndex = controller.currentIndex.value;
+                return AnimatedAlign(
+                  duration: const Duration(milliseconds: 250),
+                  curve: Curves.easeInOut,
+                  alignment: Alignment(
+                    -1.0 + (selectedIndex * (2.0 / (_navItems.length - 1))),
+                    -1.0, // Top aligned
+                  ),
+                  child: FractionallySizedBox(
+                    widthFactor: 1 / _navItems.length,
+                    child: Container(
+                      height: 3.h,
+                      margin: EdgeInsets.symmetric(horizontal: 24.w),
                       decoration: BoxDecoration(
-                        color: isSelected
-                            ? context.appColors.primary.withValues(alpha: 0.1)
-                            : Colors.transparent,
-                        borderRadius: BorderRadius.circular(16.r),
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          _buildIcon(isSelected, item, iconColor),
-                          AnimatedSize(
-                            duration: const Duration(milliseconds: 200),
-                            curve: Curves.easeInOut,
-                            child: isSelected
-                                ? Padding(
-                                    padding: EdgeInsets.only(left: 8.w),
-                                    child: Text(
-                                      item.label,
-                                      style: TextStyle(
-                                        color: context.appColors.primary,
-                                        fontSize: 13.sp,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                  )
-                                : const SizedBox.shrink(),
-                          ),
-                        ],
+                        color: context.appColors.primary,
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(3.r),
+                          bottomRight: Radius.circular(3.r),
+                        ),
                       ),
                     ),
-                  );
-                }),
-              );
-            }),
+                  ),
+                );
+              }),
+
+              // Tab Item Buttons
+              Obx(() {
+                final selectedIndex = controller.currentIndex.value;
+                return Row(
+                  children: List.generate(_navItems.length, (index) {
+                    final item = _navItems[index];
+                    final isSelected = index == selectedIndex;
+                    final activeColor = context.appColors.primary;
+                    final inactiveColor = context.appColors.textSecondary;
+
+                    return Expanded(
+                      child: GestureDetector(
+                        onTap: () => controller.changeTab(index),
+                        behavior: HitTestBehavior.opaque,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(height: 4.h),
+                            AnimatedScale(
+                              scale: isSelected ? 1.12 : 1.0,
+                              duration: const Duration(milliseconds: 200),
+                              child: _buildIcon(
+                                isSelected,
+                                item,
+                                isSelected ? activeColor : inactiveColor,
+                              ),
+                            ),
+                            SizedBox(height: 4.h),
+                            Text(
+                              item.label,
+                              style: TextStyle(
+                                color: isSelected ? activeColor : inactiveColor,
+                                fontSize: 11.sp,
+                                fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  }),
+                );
+              }),
+            ],
           ),
         ),
       ),
