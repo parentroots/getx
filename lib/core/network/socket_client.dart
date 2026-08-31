@@ -31,7 +31,7 @@ class SocketClient {
       io.OptionBuilder()
           .setTransports(['websocket']) // Use WebSockets for performance
           .disableAutoConnect() // Disable auto-connect to control the flow
-          .setExtraHeaders(headers ?? {}) // Pass any required headers
+          .setExtraHeaders((headers ?? {}).map((key, value) => MapEntry(key, value.toString()))) // Pass any required headers
           .build(),
     );
 
