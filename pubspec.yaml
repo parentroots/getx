@@ -16,7 +16,7 @@ dependencies:
   connectivity_plus: ^7.3.1
   cupertino_icons: ^1.0.9
   dio: ^5.11.0
-  file_picker: ^12.1.2
+  file_picker: ^13.1.0
   firebase_core: ^4.14.0
   firebase_messaging: ^16.6.0
   flutter_secure_storage: ^11.0.0
